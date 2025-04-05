@@ -19,11 +19,9 @@ class PendudukController extends Controller
         $user = Auth::user();
 
         if ($user->username === 'admin') {
-            // Jika admin, tampilkan semua data
             $penduduk = Penduduk::paginate(5);
             $total = Penduduk::count();
         } else {
-            // Jika bukan admin, tampilkan hanya data yang sesuai banjar
             $penduduk = Penduduk::where('banjar', $user->banjar)->paginate(5);
             $total = Penduduk::where('banjar', $user->banjar)->count();
         }
