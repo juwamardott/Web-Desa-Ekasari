@@ -15,11 +15,13 @@
                 
                </div>
           </td>
-          @if ($p->jenis_kelamin == 'Laki-laki')
-          <td><img src="{{ asset('lte/dist/assets/img/user1.png') }}" alt="" width="50"></td>
-          @else
-          <td><img src="{{ asset('lte/dist/assets/img/user2.png') }}" alt="" width="50"></td>
-          @endif
+          @if ($p->image)
+            <td><img src="{{ asset('storage/'.$p->image) }}" alt="" width="50"></td>
+        @elseif ($p->image == null && $p->jenis_kelamin == "Laki-laki")
+            <td><img src="{{ asset('lte/dist/assets/img/user1.png') }}" alt="" width="50"></td>
+        @else
+            <td><img src="{{ asset('lte/dist/assets/img/user2.png') }}" alt="" width="50"></td>
+        @endif
           <td class="text-info">{{ $p->no_kk }}</td>
           <td>{{ $p->nama }}</td>
           <td class="text-info">{{ $p->nik }}</td>

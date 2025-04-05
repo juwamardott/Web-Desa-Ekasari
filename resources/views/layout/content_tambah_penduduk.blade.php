@@ -60,7 +60,7 @@
                <div class="card-header"><div class="card-title">Biodata Penduduk</div></div>
                <!--end::Header-->
                <!--begin::Form-->
-               <form class="needs-validation" novalidate action="{{ Route('penduduk.store') }}" method="POST">
+               <form class="needs-validation" novalidate action="{{ Route('penduduk.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                  <!--begin::Body-->
                  <div class="card-body">
@@ -73,7 +73,7 @@
                          type="number"
                          class="form-control"
                          id="no_kk"
-                         value=""
+                         value="{{ old('no_kk') }}"
                          name="no_kk"
                          required
                        />
@@ -87,7 +87,7 @@
                          class="form-control"
                          id="nik"
                          name="nik"
-                         value=""
+                         value="{{ old('nik') }}"
                          required
                        />
                      </div>
@@ -101,7 +101,7 @@
                            type="text"
                            class="form-control"
                            id="nama"
-                           value=""
+                           value="{{ old('nama') }}"
                            name="nama"
                            aria-describedby=""
                            required
@@ -119,7 +119,7 @@
                              class="form-control"
                              id="warga_negara"
                              name="warga_negara"
-                             value=""
+                             value="{{ old('warga_negara') }}"
                              aria-describedby=""
                              required
                            />
@@ -136,7 +136,7 @@
                              class="form-control"
                              id="nama_ayah"
                              name="nama_ayah"
-                             value=""
+                             value="{{ old('nama_ayah') }}"
                              aria-describedby=""
                              required
                            />
@@ -153,7 +153,7 @@
                              class="form-control"
                              id="nama_ibu"
                              name="nama_ibu"
-                             value=""
+                             value="{{ old('nama_ibu') }}"
                              aria-describedby=""
                              required
                            />
@@ -168,7 +168,7 @@
                            class="form-control"
                            id="nik_ayah"
                            name="nik_ayah"
-                           value=""
+                           value="{{ old('nik_ayah') }}"
                            required
                          />
                        </div>
@@ -181,7 +181,7 @@
                            class="form-control"
                            id="nik_ibu"
                            name="nik_ibu"
-                           value=""
+                           value="{{ old('nik_ibu') }}"
                            required
                          />
                        </div>
@@ -197,7 +197,7 @@
                               name="alamat"
                               rows="2"
                               required
-                         ></textarea>
+                         >{{ old('alamat') }}</textarea>
                          </div>
                     </div>
                     <!--end::Col-->
@@ -207,10 +207,12 @@
                          <div class="input-group has-validation">
                               <span class="input-group-text"><i class="bi bi-house-fill"></i></span>
                               <select class="form-control" id="banjar" name="banjar" required>
-                                   <option value="">Pilih Banjar</option>
-                                   @foreach($banjar as $b)
-                                        <option value="{{ $b->banjar }}">{{ $b->banjar }}</option>
-                                   @endforeach
+                                <option value="">Pilih Banjar</option>
+                                @foreach($banjar as $b)
+                                    <option value="{{ $b->banjar }}" {{ old('banjar') == $b->banjar ? 'selected' : '' }}>
+                                        {{ $b->banjar }}
+                                    </option>
+                                @endforeach
                               </select>
                          </div>
                     </div>
@@ -225,7 +227,7 @@
                              class="form-control"
                              id="pendidikan"
                              name="pendidikan"
-                             value=""
+                             value="{{ old('pendidikan') }}"
                              aria-describedby=""
                              required
                            />
@@ -240,49 +242,49 @@
                            class="form-control"
                            id="umur"
                            name="umur"
-                           value=""
+                           value="{{ old('umur') }}"
                            required
                          />
                        </div>
                      <!--end::Col-->
                      <!--begin::Col-->
-                    <div class="col-md-6">
-                         <label for="kawin" class="form-label">Status Kawin</label>
-                         <select class="form-control" id="kawin" name="kawin" required>
-                         <option value="">Pilih Status</option>
-                         <option value="Kawin">Kawin</option>
-                         <option value="Belum Kawin">Belum Kawin</option>
-                         <option value="Cerai">Cerai</option>
-                         <option value="Cerai Mati">Cerai Mati</option>
-                         </select>
-                    </div>
+                     <div class="col-md-6">
+                      <label for="kawin" class="form-label">Status Kawin</label>
+                      <select class="form-control" id="kawin" name="kawin" required>
+                          <option value="">Pilih Status</option>
+                          <option value="Kawin" {{ old('kawin') == 'Kawin' ? 'selected' : '' }}>Kawin</option>
+                          <option value="Belum Kawin" {{ old('kawin') == 'Belum Kawin' ? 'selected' : '' }}>Belum Kawin</option>
+                          <option value="Cerai" {{ old('kawin') == 'Cerai' ? 'selected' : '' }}>Cerai</option>
+                          <option value="Cerai Mati" {{ old('kawin') == 'Cerai Mati' ? 'selected' : '' }}>Cerai Mati</option>
+                      </select>
+                  </div>                  
                     <!--end::Col-->
                          <!--begin::Col-->
-                    <div class="col-md-6">
-                         <label for="hubungan_keluarga" class="form-label">Hubungan Keluarga</label>
-                         <select class="form-control" id="hubungan_keluarga" name="hubungan_keluarga" required>
-                         <option value="">Pilih Hubungan Keluarga</option>
-                         <option value="Kepala Keluarga">Kepala Keluarga</option>
-                         <option value="Istri">Istri</option>
-                         <option value="Anak">Anak</option>
-                         <option value="Menantu">Menantu</option>
-                         <option value="Family Lain">Family Lain</option>
-                         <option value="Anak Angkat">Anak Angkat</option>
-                         </select>
-                    </div>
+                         <div class="col-md-6">
+                          <label for="hubungan_keluarga" class="form-label">Hubungan Keluarga</label>
+                          <select class="form-control" id="hubungan_keluarga" name="hubungan_keluarga" required>
+                              <option value="">Pilih Hubungan Keluarga</option>
+                              <option value="Kepala Keluarga" {{ old('hubungan_keluarga') == 'Kepala Keluarga' ? 'selected' : '' }}>Kepala Keluarga</option>
+                              <option value="Istri" {{ old('hubungan_keluarga') == 'Istri' ? 'selected' : '' }}>Istri</option>
+                              <option value="Anak" {{ old('hubungan_keluarga') == 'Anak' ? 'selected' : '' }}>Anak</option>
+                              <option value="Menantu" {{ old('hubungan_keluarga') == 'Menantu' ? 'selected' : '' }}>Menantu</option>
+                              <option value="Family Lain" {{ old('hubungan_keluarga') == 'Family Lain' ? 'selected' : '' }}>Family Lain</option>
+                              <option value="Anak Angkat" {{ old('hubungan_keluarga') == 'Anak Angkat' ? 'selected' : '' }}>Anak Angkat</option>
+                          </select>
+                      </div>                      
                     <!--end::Col-->
                    <!--begin::Col-->
-                    <div class="col-md-6">
-                         <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
-                         <div class="input-group has-validation">
-                         <span class="input-group-text"><i class="bi bi-gender-ambiguous"></i></span>
-                         <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required onchange="updateProfileImage()">
-                              <option value ="">Pilih Jenis Kelamin</option>
-                              <option value="Laki-laki">Laki-laki</option>
-                              <option value="Perempuan">Perempuan</option>
-                         </select>
-                         </div>
+                   <div class="col-md-6">
+                    <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text"><i class="bi bi-gender-ambiguous"></i></span>
+                        <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required onchange="updateProfileImage()">
+                            <option value="">Pilih Jenis Kelamin</option>
+                            <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                            <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                        </select>
                     </div>
+                </div>                
                     <!--end::Col-->
                      <!--begin::Col-->
                      <div class="col-md-6">
@@ -292,20 +294,21 @@
                            class="form-control"
                            id="agama"
                            name="agama"
-                           value=""
+                           value="{{ old('agama') }}"
                            required
                          />
                        </div>
                      <!--end::Col-->
                      <!--begin::Col-->
-                    <div class="col-md-6">
-                         <label for="status_penduduk" class="form-label">Status Penduduk</label>
-                         <select class="form-control" id="status_penduduk" name="status_penduduk" required>
-                         <option value="">Pilih Status</option>
-                         <option value="Aktif">Aktif</option>
-                         <option value="Tidak Aktif">Tidak Aktif</option>
-                         </select>
-                    </div>
+                     <div class="col-md-6">
+                      <label for="status_penduduk" class="form-label">Status Penduduk</label>
+                      <select class="form-control" id="status_penduduk" name="status_penduduk" required>
+                          <option value="">Pilih Status</option>
+                          <option value="Aktif" {{ old('status_penduduk') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
+                          <option value="Tidak Aktif" {{ old('status_penduduk') == 'Tidak Aktif' ? 'selected' : '' }}>Tidak Aktif</option>
+                      </select>
+                  </div>
+                  
                     <!--end::Col-->
                     
                        <!--begin::Col-->
@@ -316,7 +319,7 @@
                            class="form-control"
                            id="akta_kelahiran"
                            name="akta_kelahiran"
-                           value=""
+                           value="{{ old('akta_kelahiran') }}"
                            required
                          />
                        </div>
@@ -331,7 +334,7 @@
                              class="form-control"
                              id="ttl"
                              name="ttl"
-                             value=""
+                             value="{{ old('ttl') }}"
                              aria-describedby=""
                              required
                            />
@@ -348,7 +351,7 @@
                              class="form-control"
                              id="pendidikan_sedang_ditempuh"
                              name="pendidikan_sedang_ditempuh"
-                             value=""
+                             value="{{ old('pendidikan_sedang_ditempuh') }}"
                              aria-describedby=""
                              required
                            />
@@ -364,13 +367,18 @@
                              type="text"
                              class="form-control"
                              id="pekerjaan"
-                             value=""
+                             value="{{ old('pekerjaan') }}"
                              name="pekerjaan"
                              aria-describedby=""
                              required
                            />
                          </div>
                        </div>
+
+                       <div class="col-md-6">
+                        <label for="image" class="form-label">Upload Image</label>
+                        <input class="form-control" type="file" id="image" name="image">
+                      </div>
                      <!--end::Col-->
 
 

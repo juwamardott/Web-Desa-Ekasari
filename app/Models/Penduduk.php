@@ -8,6 +8,7 @@ class Penduduk extends Model
 {
     //
     protected $fillable = [
+        'image',
         'no_kk',
         'nik',
         'nama',

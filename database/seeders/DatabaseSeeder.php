@@ -68,6 +68,7 @@ class DatabaseSeeder extends Seeder
             $nikIbu = $nikBase + $i + 2000;
 
             Penduduk::create([
+                'image'=> '', 
                 'no_kk' => $noKK, // 10 digit
                 'nik' => $nik, // 16 digit
                 'nama' => $faker->name,

@@ -32,10 +32,18 @@
                  <!--begin::Body-->
                  <div class="card-body">
                    <div class="mb-3">
-                    @if ($penduduk->jenis_kelamin == "Laki-laki")
+                    {{-- @if ($penduduk->jenis_kelamin == "Laki-laki")
                     <img src="{{ asset('lte/dist/assets/img/user1.png') }}" alt="" width="200" class="rounded mx-auto d-block">
                     @else
                     <img src="{{ asset('lte/dist/assets/img/user2.png') }}" alt="" width="200" class="rounded mx-auto d-block">
+                    @endif --}}
+
+                    @if ($penduduk->image)
+                      <td><img src="{{ asset('storage/'.$penduduk->image) }}" alt="" width="200" class="rounded mx-auto d-block"></td>
+                    @elseif ($penduduk->image == null && $penduduk->jenis_kelamin == "Laki-laki")
+                      <td><img src="{{ asset('lte/dist/assets/img/user1.png') }}" alt="" width="200" class="rounded mx-auto d-block"></td>
+                    @else
+                      <td><img src="{{ asset('lte/dist/assets/img/user2.png') }}" alt="" width="200" class="rounded mx-auto d-block"></td>
                     @endif
                     
                  </div>
@@ -65,11 +73,12 @@
                <div class="card-header"><div class="card-title">Biodata Penduduk</div></div>
                <!--end::Header-->
                <!--begin::Form-->
-               <form class="needs-validation" novalidate action="{{ Route($type. '.update', $penduduk->id) }}" method="POST">
+               <form class="needs-validation" novalidate action="{{ Route($type. '.update', $penduduk->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                  <!--begin::Body-->
                  <input type="hidden" name="type" value="{{ $type }}">
+                 <input type="hidden" name="oldImage" value="{{ $penduduk->image }}">
                  <div class="card-body">
                    <!--begin::Row-->
                    <div class="row g-3">
@@ -281,6 +290,7 @@
                            <option value="Istri" {{ $penduduk->hubungan_keluarga == 'Istri' ? 'selected' : '' }}>Istri</option>
                            <option value="Anak" {{ $penduduk->hubungan_keluarga == 'Anak' ? 'selected' : '' }}>Anak</option>
                            <option value="Menantu" {{ $penduduk->hubungan_keluarga == 'Menantu' ? 'selected' : '' }}>Menantu</option>
+                           <option value="Menantu" {{ $penduduk->hubungan_keluarga == 'Saudara' ? 'selected' : '' }}>Saudara</option>
                            <option value="Family Lain" {{ $penduduk->hubungan_keluarga == 'Family Lain' ? 'selected' : '' }}>Family Lain</option>
                            <option value="Anak Angkat" {{ $penduduk->hubungan_keluarga == 'Anak Angkat' ? 'selected' : '' }}>Anak Angkat</option>
                          </select>
@@ -388,6 +398,13 @@
                            />
                          </div>
                        </div>
+
+
+                       
+                       <div class="col-md-6">
+                        <label for="image" class="form-label">Upload Image</label>
+                        <input class="form-control" type="file" id="image" name="image">
+                      </div>
                      <!--end::Col-->
 
 

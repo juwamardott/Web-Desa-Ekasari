@@ -33,7 +33,7 @@
                  <div class="col-sm-6">
                      <h5 class="mb-0">Data Keluarga</h5>
                  </div>
-                 <div class="d-flex mt-3 align-items-center border-top border-info border-4">
+                 <div class="d-flex mt-3 align-items-center border-top border-info border-4" id="filter">
                     <!-- Container Filter (Kiri) -->
                     <div class="d-flex gap-2 my-2">
                         <input type="hidden" name="hubungan_keluarga" id="type" value="Kepala Keluarga">
@@ -122,7 +122,9 @@
                                              </ul>
                                              </div>
                                         </td>
-                                        @if ($p->jenis_kelamin == 'Laki-laki')
+                                        @if ($p->image)
+                                        <td><img src="{{ asset('storage/'.$p->image) }}" alt="" width="50"></td>
+                                        @elseif ($p->image == null && $p->jenis_kelamin == "Laki-laki")
                                         <td><img src="{{ asset('lte/dist/assets/img/user1.png') }}" alt="" width="50"></td>
                                         @else
                                         <td><img src="{{ asset('lte/dist/assets/img/user2.png') }}" alt="" width="50"></td>
@@ -160,6 +162,10 @@
      .table th, .table td {
          padding: 0.8rem; /* Add padding for smaller screens */
          font-size: 12px; /* Slightly reduce font size */
+     }
+
+     #filter{
+        display: block !important;
      }
 
      ul li a,

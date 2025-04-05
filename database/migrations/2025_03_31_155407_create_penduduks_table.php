@@ -17,6 +17,7 @@ return new class extends Migration
 {
     Schema::create('penduduks', function (Blueprint $table) {
         $table->id();
+        $table->string('image')->nullable();
         $table->bigInteger('no_kk');
         $table->bigInteger('nik');
         $table->string('nama');

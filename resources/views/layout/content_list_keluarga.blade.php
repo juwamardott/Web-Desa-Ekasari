@@ -23,11 +23,14 @@
              <div class="card mb-4">
                <div class="px-3 py-3 bg-info">
                     <div class="mb-2">
-                         @if ($kepala->jenis_kelamin == 'Laki-laki')
-                         <img src="{{ asset('lte/dist/assets/img/user1.png') }}" class="rounded mx-auto d-block" alt="..." width="100">
-                         @else
-                         <img src="{{ asset('lte/dist/assets/img/user2.png') }}" class="rounded mx-auto d-block" alt="..." width="100">
-                         @endif
+                      
+                         @if ($kepala->image)
+                         <img src="{{ asset('storage/'.$kepala->image) }}" class="rounded mx-auto d-block" alt="..." width="100">
+                        @elseif ($kepala->image == null && $kepala->jenis_kelamin == "Laki-laki")
+                        <img src="{{ asset('lte/dist/assets/img/user1.png') }}" class="rounded mx-auto d-block" alt="..." width="100">
+                        @else
+                        <img src="{{ asset('lte/dist/assets/img/user2.png') }}" class="rounded mx-auto d-block" alt="..." width="100">
+                        @endif
                          
                       </div>
                     <div class="card shadow-sm rounded px-2">
@@ -65,19 +68,25 @@
                          @foreach ($penduduk as $p)
                          <tr>
                               <td>
-                                   @if ($p->jenis_kelamin == 'Laki-laki')
+                                   @if ($p->image)
                                    <img
+                                   src="{{ asset('storage/'.$p->image) }}"
+                                   alt="Product 1"
+                                   class="rounded-circle img-size-32 me-2"
+                                 />
+                                        @elseif ($p->image == null && $p->jenis_kelamin == "Laki-laki")
+                                        <img
                                    src="{{ asset('lte/dist/assets/img/user1.png') }}"
                                    alt="Product 1"
                                    class="rounded-circle img-size-32 me-2"
                                    />
-                                   @else
-                                   <img
+                                        @else
+                                        <img
                                   src="{{ asset('lte/dist/assets/img/user2.png') }}"
                                   alt="Product 1"
                                   class="rounded-circle img-size-32 me-2"
                                 />
-                                   @endif
+                                        @endif
                                 {{ $p->nama }}
                               </td>
                               <td>{{ $p->alamat }}</td>

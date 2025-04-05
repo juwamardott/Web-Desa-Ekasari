@@ -7,6 +7,7 @@ use App\Models\Banjar;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PendudukController extends Controller
 {
@@ -85,10 +86,12 @@ class PendudukController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->file('image')->store('post-images');
         // dd($request->input());
         try {
             // Validasi data request
             $validated = $request->validate([
+                'image' => 'image',
                 'no_kk' => 'required',
                 'nik' => 'required',
                 'nama' => 'required',
@@ -111,6 +114,12 @@ class PendudukController extends Controller
                 'pendidikan_sedang_ditempuh' => 'required',
                 'pekerjaan' => 'required', 
             ]);
+
+            if($request->file('image')){
+                $validated['image'] = $request->file('image')->store('post-images');
+            }
+            
+            
     
             // Jika validasi berhasil, lanjutkan menyimpan data
             Penduduk::create($validated);
@@ -151,7 +160,17 @@ class PendudukController extends Controller
         
         $penduduk = Penduduk::find($id);
 
+        if($request->file('image')){
+            if($request->oldImage){
+                Storage::delete($request->oldImage);
+            }
+            $image = $request->file('image')->store('post-images');
+        }else{
+            $image = $penduduk->image;
+        }
+        
         $penduduk->update([
+            'image' => $image,
             'no_kk' => $request->no_kk,
             'nik' => $request->nik,
             'nama' => $request->nama,
@@ -173,6 +192,15 @@ class PendudukController extends Controller
             'pendidikan_sedang_ditempuh' => $request->pendidikan_sedang_ditempuh,
             'pekerjaan' => $request->pekerjaan
         ]);
+        
+
+        
+        
+
+       
+
+      
+        
 
 
         
@@ -195,6 +223,9 @@ class PendudukController extends Controller
     {
         //
         $penduduk = Penduduk::findOrFail($id);
+        if($penduduk->image){
+            Storage::delete($penduduk->image);
+        }
         $penduduk->delete();
 
         return response()->json(['success' => true]);
