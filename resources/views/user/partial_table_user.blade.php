@@ -8,7 +8,7 @@
                </button>
                <ul class="dropdown-menu">
                     <!-- Dropdown menu links -->
-                    <li><a class="dropdown-item" href="/{{ request()->segment(1) }}/">Detail Biodata</a></li>
+                    <li><a class="dropdown-item" href="/user/edit/{{ $u->id }}">Update Biodata</a></li>
                     <li>
                          <button class="dropdown-item btn-delete" data-id="{{ $u->id }}">Hapus User</button>
                     </li>

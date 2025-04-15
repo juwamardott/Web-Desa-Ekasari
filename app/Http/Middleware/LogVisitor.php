@@ -34,7 +34,7 @@ class LogVisitor
              if ($visitor) {
                  // Jika sudah ada, update jumlahnya hanya jika session belum ada
                  // Jangan lakukan increment jika session key ada
-                 $visitor->increment('count');
+                //  $visitor->increment('count');
              } else {
                  // Jika belum ada, buat record baru
                  Visitor::create([

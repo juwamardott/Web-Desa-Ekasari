@@ -8,7 +8,7 @@
                </button>
                <ul class="dropdown-menu">
                     <!-- Dropdown menu links -->
-                    <li><a class="dropdown-item" href="/{{ request()->segment(1) }}/">Detail Biodata</a></li>
+                    <li><a class="dropdown-item" href="/banjar/edit/{{ $b->id }}">Update Biodata</a></li>
                     <li>
                          <button class="dropdown-item btn-delete" data-id="{{ $b->id }}">Hapus Banjar</button>
                     </li>

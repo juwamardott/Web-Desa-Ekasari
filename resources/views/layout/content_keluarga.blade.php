@@ -64,13 +64,20 @@
                                 <option value="{{ $i }}">{{ $i }}</option>
                             @endfor
                         </select>
-                        <a id="export-button" href="#" class="btn btn-success" target="_blank">Export</a>
                     </div>
-                
-                    <!-- Input Search (Kanan) -->
+
+                    
+                </div>
+
+                <div class="d-flex justify-between align-items-center">
+                    <div class="">
+                        <a id="export-button" href="#" class="btn btn-danger" target="_blank">Export Excel</a>
+                        
+                    </div>
                     <div class="ms-auto" style="width: 250px;">
-                        <input type="text" id="searchInput" class="form-control" placeholder="Cari Keluarga...">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Cari Penduduk...">
                     </div>
+                    
                 </div>
                 
              </div>
@@ -437,7 +444,7 @@
 </script>
 
 
-<script>
+{{-- <script>
     function updateExportLink() {
     let search = $('#searchInput').val();
     let status = $('#statusFilter').val();
@@ -456,12 +463,62 @@
     $('#export-button').attr('href', "/export-keluarga?" + query);
 }
 
-// Panggil setiap kali filter berubah
 $('#searchInput, #statusFilter, #jenisKelaminFilter, #banjarFilter, #umurFilter').on('change keyup', function () {
     updateExportLink();
 });
 
-// Panggil juga saat pertama kali halaman siap
 updateExportLink();
 
+</script> --}}
+
+
+<script>
+    function updateExportLink() {
+        let search = $('#searchInput').val();
+        let status = $('#statusFilter').val();
+        let jenis_kelamin = $('#jenisKelaminFilter').val();
+        let banjar = $('#banjarFilter').val();
+        let umur = $('#umurFilter').val();
+
+        let query = $.param({
+            search: search,
+            status: status,
+            jenis_kelamin: jenis_kelamin,
+            banjar: banjar,
+            umur: umur
+        });
+
+        $('#export-button').data('href', "/export-keluarga?" + query); // Simpan link di data-href
+    }
+
+    $('#searchInput, #statusFilter, #jenisKelaminFilter, #banjarFilter, #umurFilter').on('change keyup', function () {
+        updateExportLink();
+    });
+
+    updateExportLink();
+
+    // Tambahkan event handler untuk konfirmasi SweetAlert
+    $('#export-button').on('click', function (e) {
+        e.preventDefault(); // Cegah link langsung jalan
+
+        const exportUrl = $(this).data('href'); // Ambil URL dari data-href
+
+        Swal.fire({
+            title: 'Yakin ingin export data?',
+            text: "File akan diunduh dalam format Excel.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, export sekarang!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.open(exportUrl, '_blank'); // Buka link export di tab baru
+            }
+        });
+    });
 </script>
+
+
+

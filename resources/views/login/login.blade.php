@@ -15,7 +15,7 @@
               <form action="{{ route('post.login') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" name="username" placeholder="Username" />
+                  <input type="text" class="form-control" name="username" placeholder="Username"  value="{{ old('username') }}"/>
                   <div class="input-group-text"><span class="bi bi-person"></span></div>
                 </div>
                 <div class="input-group mb-3">

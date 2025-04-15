@@ -55,7 +55,7 @@
                             placeholder="Kosongkan jika tidak ingin mengubah password"
                             aria-describedby="password"
                         />
-                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                        <button class="btn btn-secondary" type="button" id="togglePassword">
                          👁️
                      </button>
                     </div>
