@@ -35,7 +35,8 @@ return new class extends Migration
         $table->string('agama');
         $table->string('status_penduduk');
         $table->bigInteger('akta_kelahiran');
-        $table->string('ttl');  // Perbaikan disini
+        $table->string('tempat_lahir');
+        $table->date('tgl_lahir');
         $table->string('pendidikan_sedang_ditempuh');
         $table->string('pekerjaan');
         $table->string('warga_negara');

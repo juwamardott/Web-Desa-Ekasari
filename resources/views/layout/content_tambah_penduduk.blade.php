@@ -326,21 +326,38 @@
                        <!--end::Col-->
                         <!--begin::Col-->
                      <div class="col-md-6">
-                         <label for="ttl" class="form-label">Tempat, Tanggal Lahir</label>
+                         <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
                          <div class="input-group has-validation">
                            <span class="input-group-text" id=""><i class="bi bi-house-heart"></i></span>
                            <input
                              type="text"
                              class="form-control"
-                             id="ttl"
-                             name="ttl"
-                             value="{{ old('ttl') }}"
+                             id="tempat_lahir"
+                             name="tempat_lahir"
+                             value="{{ old('tempat_lahir') }}"
                              aria-describedby=""
                              required
                            />
                          </div>
                        </div>
                      <!--end::Col-->
+                        <!--begin::Col-->
+                        <div class="col-md-6">
+                          <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
+                          <div class="input-group has-validation">
+                            <span class="input-group-text" id=""><i class="bi bi-calendar-event"></i></span>
+                            <input
+                              type="date"
+                              class="form-control"
+                              id="tgl_lahir"
+                              name="tgl_lahir"
+                              value="{{ old('tgl_lahir') }}"
+                              aria-describedby=""
+                              required
+                            />
+                          </div>
+                        </div>
+                      <!--end::Col-->
                       <!--begin::Col-->
                       <div class="col-md-6">
                          <label for="pendidikan_sedang_ditempuh" class="form-label">Pendidikan saat ini</label>
@@ -362,7 +379,7 @@
                      <div class="col-md-6">
                          <label for="pekerjaan" class="form-label">Pekerjaan</label>
                          <div class="input-group has-validation">
-                           <span class="input-group-text" id=""><i class="bi bi-book"></i></span>
+                           <span class="input-group-text" id=""><i class="bi bi-briefcase"></i></span>
                            <input
                              type="text"
                              class="form-control"
@@ -375,7 +392,7 @@
                          </div>
                        </div>
 
-                       <div class="col-md-6">
+                       <div class="col-md-12">
                         <label for="image" class="form-label">Upload Image</label>
                         <input class="form-control" type="file" id="image" name="image">
                       </div>

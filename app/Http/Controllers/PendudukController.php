@@ -110,7 +110,8 @@ class PendudukController extends Controller
                 'agama' => 'nullable',
                 'status_penduduk' => 'required',
                 'akta_kelahiran' => 'required',
-                'ttl' => 'required',
+                'tempat_lahir' => 'required',
+                'tgl_lahir' => 'required|date',
                 'pendidikan_sedang_ditempuh' => 'required',
                 'pekerjaan' => 'required', 
             ]);
@@ -188,21 +189,11 @@ class PendudukController extends Controller
             'jenis_kelamin' => $request->jenis_kelamin,
             'agama' => $request->agama,
             'status_penduduk' => $request->status_penduduk,
-            'ttl' => $request->ttl,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tgl_lahir' => $request->tgl_lahir,
             'pendidikan_sedang_ditempuh' => $request->pendidikan_sedang_ditempuh,
             'pekerjaan' => $request->pekerjaan
         ]);
-        
-
-        
-        
-
-       
-
-      
-        
-
-
         
         // Redirect berdasarkan tipe request
         if ($request->type == 'penduduk') {
@@ -210,10 +201,7 @@ class PendudukController extends Controller
         } else {
             return redirect()->route('keluarga.index')->with('success', 'Data keluarga berhasil diperbarui');
         }
-                
-        
-        
-        
+            
     }
 
     /**

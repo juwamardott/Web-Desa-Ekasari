@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitorController;
 use App\Exports\PendudukExport;
 use App\Exports\KeluargaExport;
+use App\Http\Controllers\SuratController;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Banjar;
 use App\Models\Penduduk;
@@ -65,4 +66,13 @@ Route::get('/export-penduduk', function (Illuminate\Http\Request $request) {
 
  Route::get('/export-keluarga', function (Illuminate\Http\Request $request) {
      return Excel::download(new KeluargaExport($request->all()), 'keluarga.xlsx');
+ });
+
+
+
+ Route::get('/surat',[SuratController::class, 'index'])->name('surat')->middleware('auth');
+ Route::post('/surat',[SuratController::class, 'post'])->name('post.surat')->middleware('auth');
+
+ Route::get('/tes', function(){
+    return view('surat.template');
  });

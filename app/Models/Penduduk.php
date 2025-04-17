@@ -27,7 +27,8 @@ class Penduduk extends Model
         'agama',
         'status_penduduk',
         'akta_kelahiran',
-        'ttl',
+        'tempat_lahir',
+        'tgl_lahir',
         'pendidikan_sedang_ditempuh',
         'pekerjaan',  // Perhatikan ini duplikat, Anda mungkin ingin menghapusnya
         'warga_negara'
@@ -37,4 +38,8 @@ class Penduduk extends Model
     // {
     //     return $this->belongsTo(Banjar::class, 'banjar_id');
     // }
+
+    public function surat(){
+        return $this->hasMany(Surat::class);
+    }
 }

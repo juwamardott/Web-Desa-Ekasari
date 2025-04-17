@@ -104,6 +104,26 @@
                          </ul>
                     </li>
                    @endif
+
+                   @if (Auth::user()->username == 'admin')
+                    <li class="nav-item {{ request()->is('surat') ? 'menu-open' : '' }}">
+                         <a href="#" class="nav-link">
+                            <i class="bi bi-envelope-fill"></i>
+                         <p>
+                              Surat
+                              <i class="nav-arrow bi bi-chevron-right"></i>
+                         </p>
+                         </a>
+                         <ul class="nav nav-treeview" style="display: {{ request()->is('surat') ? 'block' : 'none' }};">
+                         <li class="nav-item">
+                              <a href="/surat" class="nav-link {{ request()->is('surat') ? 'active' : '' }}">
+                                   <i class="nav-icon bi bi-circle"></i>
+                                   <p>Surat</p>
+                              </a>
+                         </li>
+                         </ul>
+                    </li>
+                   @endif
                    
 
 

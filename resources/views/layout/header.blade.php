@@ -4,7 +4,7 @@
 
 <head>
      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-     <title>Desa Ekasari</title>
+     <title>@yield('title')</title>
      <!--begin::Primary Meta Tags-->
      <meta name="csrf-token" content="{{ csrf_token() }}">
 

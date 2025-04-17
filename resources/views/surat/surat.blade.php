@@ -1,5 +1,5 @@
 @section('title')
-Tambah Data Penduduk
+Data Surat
 @endsection
 @include('layout.header')
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -12,7 +12,7 @@ Tambah Data Penduduk
           @include('layout.sidebar')
           <!--end::Sidebar-->
           <!--begin::App Main-->
-          @include('layout.content_tambah_penduduk')
+          @include('layout.content_surat')
           <!--end::App Main-->
           @include('layout.copyright')
           <!--end::Footer-->
@@ -22,33 +22,6 @@ Tambah Data Penduduk
 <!--end::Body-->
 @include('layout.lib')
 @include('layout.footer')
-
-
-<script>
-     function updateProfileImage() {
-    // Ambil nilai dari select jenis_kelamin
-    var gender = document.getElementById("jenis_kelamin").value;
-    
-    // Ambil elemen gambar
-    var profileImage = document.getElementById("profileImage");
-
-    // Gunakan URL gambar langsung
-    var maleImage = "{{ asset('lte/dist/assets/img/user1.png') }}";
-    var femaleImage = "{{ asset('lte/dist/assets/img/user2.png') }}";
-    var defaultImage = "{{ asset('lte/dist/assets/img/default.png') }}";
-
-    // Perbarui sumber gambar berdasarkan jenis kelamin
-    if (gender === "Laki-laki") {
-        profileImage.src = maleImage;
-    } else if (gender === "Perempuan") {
-        profileImage.src = femaleImage;
-    } else {
-        profileImage.src = defaultImage;
-    }
-}
-
-</script>
-
 <script>
      @if(session('success'))
          toastr.options = {
@@ -70,3 +43,22 @@ Tambah Data Penduduk
           toastr.error("{{ session('error') }}");
      @endif
  </script>
+
+ <!-- Di bagian <head> -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Di bagian bawah sebelum </body> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#penduduk_id').select2({
+            placeholder: "-- Cari berdasarkan Nama / NIK --",
+            allowClear: true
+        });
+    });
+</script>
+
+
+

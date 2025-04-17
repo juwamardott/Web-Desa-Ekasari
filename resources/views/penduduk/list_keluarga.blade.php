@@ -1,3 +1,6 @@
+@section('title')
+List Data Penduduk
+@endsection
 @include('layout.header')
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
      <!--begin::App Wrapper-->

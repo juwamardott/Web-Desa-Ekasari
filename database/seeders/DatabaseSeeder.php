@@ -87,7 +87,8 @@ class DatabaseSeeder extends Seeder
                 'agama' => $faker->randomElement(['Islam', 'Kristen', 'Hindu', 'Buddha', 'Katholik']),
                 'status_penduduk' => $faker->randomElement(['Aktif', 'Tidak Aktif']),
                 'akta_kelahiran' => $nik + 5000, // Akta Kelahiran unik
-                'ttl' => $faker->randomElement($placesOfBirth) . ', ' . $faker->date('Y-m-d'),
+                'tempat_lahir' => $faker->randomElement($placesOfBirth),
+                'tgl_lahir' => $faker->date('Y-m-d'),
                 'pendidikan_sedang_ditempuh' => $faker->randomElement(['SD', 'SMP', 'SMA', 'D1', 'D2', 'D3', 'S1', 'S2', 'S3']),
                 'warga_negara' => 'Indonesia',
             ]);
@@ -117,6 +118,34 @@ class DatabaseSeeder extends Seeder
                 'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
             ]);
         }
+
+
+        DB::table('jenis_surats')->insert([
+            [
+                'jenis_surat' => 'Surat Keterangan Domisili',
+                'keterangan' => 'Digunakan untuk menerangkan alamat domisili penduduk',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'jenis_surat' => 'Surat Keterangan Usaha',
+                'keterangan' => 'Digunakan untuk mengurus perizinan usaha skala kecil',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'jenis_surat' => 'Surat Keterangan Tidak Mampu',
+                'keterangan' => 'Digunakan untuk keperluan bantuan sosial atau pendidikan',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'jenis_surat' => 'Surat Pengantar SKCK',
+                'keterangan' => 'Digunakan sebagai pengantar untuk pembuatan SKCK di kepolisian',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        ]);
     }
 
     // Fungsi untuk menghasilkan nomor dengan panjang 16 digit
