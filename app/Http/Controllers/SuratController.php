@@ -30,7 +30,7 @@ class SuratController extends Controller
 
         // Ambil data penduduk
         $penduduk = Penduduk::findOrFail($request->penduduk_id);
-        $logoPath = public_path('lte/dist/assets/img/logo.png');
+        $logoPath = public_path('lte\dist\assets\img\Picture1.png');
 
         // Ambil jenis surat
         $jenisSurat = JenisSurat::findOrFail($request->jenis_surat);

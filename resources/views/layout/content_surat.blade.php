@@ -78,9 +78,7 @@
                              id="tanggal_dibuat"
                              aria-describedby="tanggal_dibuat"
                          />
-                     </div>                     
-                    
-                
+                     </div>
                  </div>
                  <!--end::Body-->
                  <!--begin::Footer-->

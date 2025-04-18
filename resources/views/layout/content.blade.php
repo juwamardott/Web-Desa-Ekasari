@@ -144,7 +144,7 @@ crossorigin="anonymous"
                      }],
                      chart: {
                          type: 'area',
-                         height: 300
+                         height: 400
                      },
                      xaxis: {
                          categories: data.map(item => item.date),

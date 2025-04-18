@@ -74,5 +74,5 @@ Route::get('/export-penduduk', function (Illuminate\Http\Request $request) {
  Route::post('/surat',[SuratController::class, 'post'])->name('post.surat')->middleware('auth');
 
  Route::get('/tes', function(){
-    return view('surat.template');
+    return view('surat.contoh');
  });
