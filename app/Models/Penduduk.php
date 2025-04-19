@@ -35,12 +35,32 @@ class Penduduk extends Model
         'status_dasar'
     ];
 
-    // public function banjar()
-    // {
-    //     return $this->belongsTo(Banjar::class, 'banjar_id');
-    // }
+    public function banjar()
+    {
+        return $this->belongsTo(Banjar::class, 'banjar_id');
+    }
+
+    public function pendidikan(){
+        return $this->belongsTo(Pendidikan::class, 'pendidikan_id');
+    }
+
+    public function pendidikan_sedang(){
+        return $this->belongsTo(Pendidikan::class, 'pendidikan_sedang_id');
+    }
+
+    public function pekerjaan(){
+        return $this->belongsTo(Pekerjaan::class, 'pekerjaan_id');
+    }
+
+    public function agama(){
+        return $this->belongsTo(Agama::class, 'agama_id');
+    }
 
     public function surat(){
         return $this->hasMany(Surat::class);
+    }
+
+    public function hubungan_keluarga(){
+        return $this->belongsTo(HubunganKeluarga::class, 'hubungan_keluarga_id');
     }
 }
