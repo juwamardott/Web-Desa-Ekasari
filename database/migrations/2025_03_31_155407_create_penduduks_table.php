@@ -40,6 +40,7 @@ return new class extends Migration
         $table->string('pendidikan_sedang_ditempuh');
         $table->string('pekerjaan');
         $table->string('warga_negara');
+        $table->string('status_dasar');
         $table->timestamps();
     });
 }

@@ -22,7 +22,7 @@
          <!--begin::Row-->
          <div class="row g-4">  
            <!--begin::Col-->
-           <div class="col-md-4">
+           <div class="col-md-3">
              <!--begin::Quick Example-->
              <div class="card card-primary card-outline mb-4">
                <!--begin::Header-->
@@ -63,7 +63,7 @@
            </div>
            <!--end::Col-->
            <!--begin::Col-->
-           <div class="col-md-8">
+           <div class="col-md-9">
              <!--begin::Different Height-->
              
              <!--end::Different Height-->
@@ -252,6 +252,24 @@
                          </div>
                        </div>
                      <!--end::Col-->
+                     <!--begin::Col-->
+                     <div class="col-md-6">
+                      <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text" id=""><i class="bi bi-calendar-event"></i></span>
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="tgl_lahir"
+                          name="tgl_lahir"
+                          value="{{ $penduduk->tgl_lahir }}"
+                          aria-describedby=""
+                          required
+                          onchange="hitungUmur()"
+                        />
+                      </div>
+                    </div>
+                  <!--end::Col-->
                       <!--begin::Col-->
                       <div class="col-md-6">
                          <label for="" class="form-label">Umur</label>
@@ -261,7 +279,8 @@
                            id="umur"
                            name="umur"
                            value="{{ $penduduk->umur }}"
-                           required
+                           
+                           readonly
                          />
                        </div>
                      <!--end::Col-->
@@ -277,6 +296,19 @@
                          </select>
                      </div>                     
                        <!--end::Col-->
+                        <!--begin::Col-->
+                        <div class="col-md-6">
+                          <label for="status_dasar" class="form-label">Status Dasar</label>
+                          <select class="form-control" id="status_dasar" name="status_dasar" required>
+                              <option value="">Pilih Status Dasar</option>
+                              <option value="Pindah" {{ $penduduk->status_dasar == 'Pindah' ? 'selected' : '' }}>Pindah</option>
+                              <option value="Mati" {{ $penduduk->status_dasar == 'Mati' ? 'selected' : '' }}>Mati</option>
+                              <option value="Pergi" {{ $penduduk->status_dasar == 'Pergi' ? 'selected' : '' }}>Pergi</option>
+                              <option value="Hidup" {{ $penduduk->status_dasar == 'Hidup' ? 'selected' : '' }}>Hidup</option>
+                              <option value="Hilang" {{ $penduduk->status_dasar == 'Hilang' ? 'selected' : '' }}>Hilang</option>s
+                          </select>
+                      </div>                     
+                        <!--end::Col-->
                         <!--begin::Col-->
                         <div class="col-md-6">
                          <label for="hubungan_keluarga" class="form-label">Hubungan Keluarga</label>
@@ -365,23 +397,7 @@
                          </div>
                        </div>
                      <!--end::Col-->
-                         <!--begin::Col-->
-                         <div class="col-md-6">
-                          <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                          <div class="input-group has-validation">
-                            <span class="input-group-text" id=""><i class="bi bi-calendar-event"></i></span>
-                            <input
-                              type="date"
-                              class="form-control"
-                              id="tgl_lahir"
-                              name="tgl_lahir"
-                              value="{{ $penduduk->tgl_lahir }}"
-                              aria-describedby=""
-                              required
-                            />
-                          </div>
-                        </div>
-                      <!--end::Col-->
+                         
                       <!--begin::Col-->
                       <div class="col-md-6">
                          <label for="pendidikan_sedang_ditempuh" class="form-label">Pendidikan saat ini</label>
@@ -458,3 +474,23 @@
           font-size: 12px;
      }
 </style>
+<script>
+  function hitungUmur() {
+    const tglLahir = document.getElementById('tgl_lahir').value;
+    if (!tglLahir) return;
+  
+    const lahir = new Date(tglLahir);
+    const hariIni = new Date();
+  
+    let umur = hariIni.getFullYear() - lahir.getFullYear();
+    const bulan = hariIni.getMonth() - lahir.getMonth();
+    const tanggal = hariIni.getDate() - lahir.getDate();
+  
+    // Cek jika belum ulang tahun tahun ini
+    if (bulan < 0 || (bulan === 0 && tanggal < 0)) {
+      umur--;
+    }
+  
+    document.getElementById('umur').value = umur;
+  }
+  </script> 

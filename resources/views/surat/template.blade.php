@@ -266,8 +266,8 @@
         <tr><td>Alamat</td><td>: {{ $data->alamat }}</td></tr>
       </table>
 
-      <div class="income">
-        <p>Orang tersebut diatas sepanjang pengetahuan saya memang benar berpenghasilan sekitar <strong>Rp. 1.500.000</strong> (Satu juta lima ratus ribu rupiah)</p>
+      <div class="income">  
+        <p>{{ $jenis_surat->keterangan }}  {{ $keterangan }}</p>
       </div>
 
       <div class="closing">

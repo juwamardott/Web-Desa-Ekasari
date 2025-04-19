@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('jenis_surats', function (Blueprint $table) {
             $table->id();
             $table->string('jenis_surat');
-            $table->string('keterangan');
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }

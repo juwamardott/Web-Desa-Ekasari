@@ -22,7 +22,7 @@
          <!--begin::Row-->
          <div class="row g-4">
            <!--begin::Col-->
-           <div class="col-md-4">
+           <div class="col-md-3">
              <!--begin::Quick Example-->
              <div class="card card-primary card-outline mb-4">
                <!--begin::Header-->
@@ -50,7 +50,7 @@
            </div>
            <!--end::Col-->
            <!--begin::Col-->
-           <div class="col-md-8">
+           <div class="col-md-9">
              <!--begin::Different Height-->
              
              <!--end::Different Height-->
@@ -234,6 +234,23 @@
                          </div>
                        </div>
                      <!--end::Col-->
+                     <!--begin::Col-->
+                     <div class="col-md-6">
+                      <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text" id=""><i class="bi bi-calendar-event"></i></span>
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="tgl_lahir"
+                          name="tgl_lahir"
+                          value="{{ old('tgl_lahir') }}"
+                          aria-describedby=""
+                          required
+                        />
+                      </div>
+                    </div>
+                  <!--end::Col-->
                       <!--begin::Col-->
                       <div class="col-md-6">
                          <label for="" class="form-label">Umur</label>
@@ -257,7 +274,20 @@
                           <option value="Cerai" {{ old('kawin') == 'Cerai' ? 'selected' : '' }}>Cerai</option>
                           <option value="Cerai Mati" {{ old('kawin') == 'Cerai Mati' ? 'selected' : '' }}>Cerai Mati</option>
                       </select>
-                  </div>                  
+                    </div>                  
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-md-6">
+                      <label for="status_dasar" class="form-label">Status Dasar</label>
+                      <select class="form-control" id="status_dasar" name="status_dasar" required>
+                          <option value="">Pilih Status Dasar</option>
+                          <option value="Hidup" {{ old('status_dasar') == 'Hidup' ? 'selected' : '' }}>Hidup</option>
+                          <option value="Pindah" {{ old('status_dasar') == 'Pindah' ? 'selected' : '' }}>Pindah</option>
+                          <option value="Pergi" {{ old('status_dasar') == 'Pergi' ? 'selected' : '' }}>Pergi</option>
+                          <option value="Mati" {{ old('status_dasar') == 'Mati' ? 'selected' : '' }}>Mati</option>
+                          <option value="Hilang" {{ old('status_dasar') == 'Hilang' ? 'selected' : '' }}>Hilang</option>
+                      </select>
+                    </div>                  
                     <!--end::Col-->
                          <!--begin::Col-->
                          <div class="col-md-6">
@@ -341,23 +371,7 @@
                          </div>
                        </div>
                      <!--end::Col-->
-                        <!--begin::Col-->
-                        <div class="col-md-6">
-                          <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                          <div class="input-group has-validation">
-                            <span class="input-group-text" id=""><i class="bi bi-calendar-event"></i></span>
-                            <input
-                              type="date"
-                              class="form-control"
-                              id="tgl_lahir"
-                              name="tgl_lahir"
-                              value="{{ old('tgl_lahir') }}"
-                              aria-describedby=""
-                              required
-                            />
-                          </div>
-                        </div>
-                      <!--end::Col-->
+                        
                       <!--begin::Col-->
                       <div class="col-md-6">
                          <label for="pendidikan_sedang_ditempuh" class="form-label">Pendidikan saat ini</label>

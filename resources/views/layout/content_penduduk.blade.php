@@ -70,6 +70,14 @@
                                 <option value="{{ $i }}">{{ $i }}</option>
                             @endfor
                         </select>
+                        <select id="statusDasarFilter" class="form-select">
+                            <option value="">-- Pilih Status Dasar --</option>
+                            <option value="Hidup">Hidup</option>
+                            <option value="Mati">Mati</option>
+                            <option value="Pindah">Pindah</option>
+                            <option value="Hilang">Hilang</option>
+                            <option value="Pergi">Pergi</option>
+                        </select>
                         
                         
                     </div>
@@ -103,9 +111,9 @@
                  <div class="col-12">
                      <!-- Begin responsive table -->
                      <div class="table-responsive">
-                         <table class="table table-bordered  table-hover ">
+                         <table class="table table-bordered  table-hover">
                              <thead class="">
-                                 <tr>
+                                 <tr class="table-light">
                                      <th>ACTION</th>
                                      <th>PHOTO</th>
                                      <th>NO KK</th>
@@ -205,6 +213,7 @@
      #banjarFilter,
      #searchInput,
      #umurFilter,
+     #statusDasarFilter,
      #export-button{
         font-size: 12px;
      }
@@ -227,6 +236,7 @@
      #banjarFilter,
      #searchInput,
      #umurFilter,
+     #statusDasarFilter,
      #export-button{
         font-size: 12px;
      }
@@ -278,13 +288,20 @@
     
 <script>
     $(document).ready(function () {
-        function loadData(search, status, jenis_kelamin, banjar,umur, page = 1) {
+        function loadData(search, status, jenis_kelamin, banjar,umur, status_dasar, page = 1) {
     
          $('#loading').show();
             $.ajax({
                 url: "{{ route('penduduk.filter') }}?page=" + page,
                 type: "GET",
-                data: { search: search, status: status, jenis_kelamin: jenis_kelamin, banjar: banjar, umur:umur, },
+                data: { 
+                    search: search,
+                    status: status,
+                    jenis_kelamin: jenis_kelamin,
+                    banjar: banjar,
+                    umur:umur,
+                    status_dasar:status_dasar
+                },
                 success: function (data) {
                     $('#penduduk-table-body').html(data.table);
                     $('.pagination-container').html(data.pagination);
@@ -309,17 +326,19 @@
             let jenis_kelamin = $('#jenisKelaminFilter').val();
             let banjar = $('#banjarFilter').val();
             let umur = $('#umurFilter').val();
-            loadData(search, status, jenis_kelamin, banjar,umur, 1);
+            let status_dasar = $('#statusDasarFilter').val();
+            loadData(search, status, jenis_kelamin, banjar,umur, status_dasar, 1);
         });
     
         // ✅ Saat salah satu filter berubah, reload data
-        $('#statusFilter, #jenisKelaminFilter, #banjarFilter, #umurFilter').on('change', function () {
+        $('#statusFilter, #jenisKelaminFilter, #banjarFilter, #umurFilter, #statusDasarFilter').on('change', function () {
             let search = $('#searchInput').val();
             let status = $('#statusFilter').val();
             let jenis_kelamin = $('#jenisKelaminFilter').val();
             let banjar = $('#banjarFilter').val();
             let umur = $('#umurFilter').val();
-            loadData(search, status, jenis_kelamin, banjar, umur,1);
+            let status_dasar = $('#statusDasarFilter').val();
+            loadData(search, status, jenis_kelamin, banjar, umur,status_dasar ,  1);
         });
     
         // ✅ AJAX Pagination
@@ -331,7 +350,8 @@
             let jenis_kelamin = $('#jenisKelaminFilter').val();
             let banjar = $('#banjarFilter').val();
             let umur = $('#umurFilter').val();
-            loadData(search, status, jenis_kelamin, banjar, umur,page);
+            let status_dasar = $('#statusDasarFilter').val();
+            loadData(search, status, jenis_kelamin, banjar, umur,status_dasar,page);
         });
     });
     </script>
@@ -340,7 +360,7 @@
 
 <script>
     $(document).ready(function () {
-        function loadData(search, status, jenis_kelamin, umur, page = 1) {
+        function loadData(search, status, jenis_kelamin, umur, status_dasar ,page = 1) {
             $('#loading').show();
             $.ajax({
                 url: "{{ route('penduduk.filter') }}?page=" + page,
@@ -349,7 +369,8 @@
                     search: search, 
                     status: status, 
                     jenis_kelamin: jenis_kelamin, 
-                    umur: umur 
+                    umur: umur ,
+                    status_dasar:status_dasar
                 },
                 success: function (data) {
                     $('#penduduk-table-body').html(data.table);
@@ -373,16 +394,18 @@
             let status = $('#statusFilter').val();
             let jenis_kelamin = $('#jenisKelaminFilter').val();
             let umur = $('#umurFilter').val();
-            loadData(search, status, jenis_kelamin, umur, 1);
+            let status_dasar = $('#statusDasarFilter').val();
+            loadData(search, status, jenis_kelamin, umur, status_dasar,1);
         });
 
         // Event: Filter berubah
-        $('#statusFilter, #jenisKelaminFilter, #umurFilter').on('change', function () {
+        $('#statusFilter, #jenisKelaminFilter, #umurFilter, #statusDasarFilter').on('change', function () {
             let search = $('#searchInput').val();
             let status = $('#statusFilter').val();
             let jenis_kelamin = $('#jenisKelaminFilter').val();
             let umur = $('#umurFilter').val();
-            loadData(search, status, jenis_kelamin, umur, 1);
+            let status_dasar = $('#statusDasarFilter').val();
+            loadData(search, status, jenis_kelamin, umur, status_dasar, 1);
         });
 
         // Event: Pagination
@@ -393,7 +416,8 @@
             let status = $('#statusFilter').val();
             let jenis_kelamin = $('#jenisKelaminFilter').val();
             let umur = $('#umurFilter').val();
-            loadData(search, status, jenis_kelamin, umur, page);
+            let status_dasar = $('#statusDasarFilter').val();
+            loadData(search, status, jenis_kelamin, umur, status_dasar ,page);
         });
     });
 </script>
@@ -455,37 +479,6 @@
 });
 
 </script>
-
-
-
-{{-- <script>
-        function updateExportLink() {
-        let search = $('#searchInput').val();
-        let status = $('#statusFilter').val();
-        let jenis_kelamin = $('#jenisKelaminFilter').val();
-        let banjar = $('#banjarFilter').val();
-        let umur = $('#umurFilter').val();
-
-        let query = $.param({
-            search: search,
-            status: status,
-            jenis_kelamin: jenis_kelamin,
-            banjar: banjar,
-            umur: umur
-        });
-
-        $('#export-button').attr('href', "/export-penduduk?" + query);
-    }
-
-    
-    $('#searchInput, #statusFilter, #jenisKelaminFilter, #banjarFilter, #umurFilter').on('change keyup', function () {
-        updateExportLink();
-    });
-
-    updateExportLink();
-
-</script> --}}
-
 
 
 <script>

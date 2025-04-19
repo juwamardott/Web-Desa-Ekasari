@@ -53,7 +53,7 @@ class PendudukController extends Controller
 
 
     public function penduduk_list_keluarga($no_kk){
-        $penduduk = Penduduk::where('no_kk', $no_kk)->get();
+        $penduduk = Penduduk::where('no_kk', $no_kk)->orderByRaw("FIELD(hubungan_keluarga, 'Kepala Keluarga', 'Istri', 'Anak','Menantu','Anak Angkat','Saudara','Family Lain')")->get();
         $kepala = Penduduk::where('no_kk', $no_kk)->where('hubungan_keluarga', 'Kepala Keluarga')->first();
         if (!$kepala) {
             return redirect()->route('penduduk.index')->with('error', 'Kepala keluarga tidak ditemukan.');
@@ -62,7 +62,7 @@ class PendudukController extends Controller
     }
 
     public function keluarga_list_keluarga($no_kk){
-        $penduduk = Penduduk::where('no_kk', $no_kk)->get();
+        $penduduk = Penduduk::where('no_kk', $no_kk)->orderByRaw("FIELD(hubungan_keluarga, 'Kepala Keluarga', 'Istri', 'Anak','Menantu','Anak Angkat','Saudara','Family Lain')")->get();
         $kepala = Penduduk::where('no_kk', $no_kk)->where('hubungan_keluarga', 'Kepala Keluarga')->first();
         if (!$kepala) {
             return redirect()->route('keluarga.index')->with('error', 'Kepala keluarga tidak ditemukan.');
@@ -113,7 +113,8 @@ class PendudukController extends Controller
                 'tempat_lahir' => 'required',
                 'tgl_lahir' => 'required|date',
                 'pendidikan_sedang_ditempuh' => 'required',
-                'pekerjaan' => 'required', 
+                'pekerjaan' => 'required',
+                'status_dasar' => 'required'
             ]);
 
             if($request->file('image')){
@@ -192,7 +193,8 @@ class PendudukController extends Controller
             'tempat_lahir' => $request->tempat_lahir,
             'tgl_lahir' => $request->tgl_lahir,
             'pendidikan_sedang_ditempuh' => $request->pendidikan_sedang_ditempuh,
-            'pekerjaan' => $request->pekerjaan
+            'pekerjaan' => $request->pekerjaan,
+            'status_dasar' => $request->status_dasar
         ]);
         
         // Redirect berdasarkan tipe request
@@ -225,6 +227,8 @@ class PendudukController extends Controller
     $status = $request->status;
     $jenis_kelamin = $request->jenis_kelamin;
     $umur = $request->umur;
+    $status_dasar = $request->status_dasar;
+    // dd($status_dasar);
     if(Auth::user()->username == 'admin'){
         $banjar = $request->banjar;
     }else{
@@ -249,6 +253,8 @@ class PendudukController extends Controller
             return $query->where('banjar', $banjar);
         })->when($umur, function ($query) use ($umur) {
             return $query->where('umur', $umur);
+        })->when($status_dasar, function ($query) use ($status_dasar) {
+            return $query->where('status_dasar', $status_dasar);
         });
     
     $total = $penduduks->count();
@@ -267,6 +273,7 @@ class PendudukController extends Controller
     $status = $request->status;
     $jenis_kelamin = $request->jenis_kelamin;
     $umur = $request->umur;
+    $status_dasar = $request->status_dasar;
     if(Auth::user()->username == 'admin'){
         $banjar = $request->banjar;
     }else{
@@ -295,6 +302,9 @@ class PendudukController extends Controller
         })
         ->when($umur, function ($query) use ($umur) {
             return $query->where('umur', $umur);
+        })
+        ->when($status_dasar, function ($query) use ($status_dasar) {
+            return $query->where('status_dasar', $status_dasar);
         });
 
     $total = $penduduks->count();

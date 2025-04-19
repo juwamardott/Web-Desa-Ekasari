@@ -19,7 +19,7 @@
          <!--begin::Row-->
          <div class="row g-4">
            <!--begin::Col-->
-           <div class="col-md-6">
+           <div class="col-md-12">
              <!--begin::Quick Example-->
              <div class="card card-primary card-outline mb-4">
                <!--begin::Header-->
@@ -50,6 +50,16 @@
                          @endforeach
                          </select>
                     </div>
+                    <div class="mb-3">
+                      <label for="keterangan" class="form-label">Keterangan</label>
+                      <input
+                      type="keterangan"
+                      name="keterangan"
+                      class="form-control"
+                      id="keterangan"
+                      aria-describedby="keterangan"
+                      />
+                 </div>
                     <div class="mb-3">
                          <label for="penduduk_id" class="form-label">Cari Penduduk</label>
                          <select name="penduduk_id" id="penduduk_id" class="form-control" style="width: 100%;">
@@ -95,7 +105,7 @@
            </a>
            </div>
 
-           <div class="col-md-6">
+           {{-- <div class="col-md-6">
                <div class="card card-success card-outline">
                     <div class="card-header"><div class="card-title">Contoh Surat</div></div>
                    <div class="card-body " style="font-family: 'Times New Roman', Times, serif;">
@@ -154,17 +164,7 @@
            
                    </div>
                </div>
-           </div>
-
-
-
-           
-           
-
-          
-           
-           
-         </div>
+         </div> --}}
          <!--end::Row-->
        </div>
        <!--end::Container-->

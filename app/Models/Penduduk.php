@@ -31,7 +31,8 @@ class Penduduk extends Model
         'tgl_lahir',
         'pendidikan_sedang_ditempuh',
         'pekerjaan',  // Perhatikan ini duplikat, Anda mungkin ingin menghapusnya
-        'warga_negara'
+        'warga_negara',
+        'status_dasar'
     ];
 
     // public function banjar()

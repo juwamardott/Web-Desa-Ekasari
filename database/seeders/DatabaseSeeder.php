@@ -91,6 +91,7 @@ class DatabaseSeeder extends Seeder
                 'tgl_lahir' => $faker->date('Y-m-d'),
                 'pendidikan_sedang_ditempuh' => $faker->randomElement(['SD', 'SMP', 'SMA', 'D1', 'D2', 'D3', 'S1', 'S2', 'S3']),
                 'warga_negara' => 'Indonesia',
+                'status_dasar' => $faker->randomElement(['Hidup', 'Mati', 'Pindah', 'Hilang', 'Pergi'])
             ]);
         }
 
@@ -123,25 +124,25 @@ class DatabaseSeeder extends Seeder
         DB::table('jenis_surats')->insert([
             [
                 'jenis_surat' => 'Surat Keterangan Domisili',
-                'keterangan' => 'Digunakan untuk menerangkan alamat domisili penduduk',
+                'keterangan' => 'Orang tersebut diatas sepanjang pengetahuan saya memang benar berdomisili di Desa Ekasari',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'jenis_surat' => 'Surat Keterangan Usaha',
-                'keterangan' => 'Digunakan untuk mengurus perizinan usaha skala kecil',
+                'keterangan' => 'Orang tersebut diatas sepanjang pengetahuan saya memang benar memiliki usaha',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'jenis_surat' => 'Surat Keterangan Tidak Mampu',
-                'keterangan' => 'Digunakan untuk keperluan bantuan sosial atau pendidikan',
+                'keterangan' => 'Warga tersebut adalah benar penduduk Desa Ekasari dan menurut sepengetahuan kami benar yang bersangkutan adalah keluarga tidak mampu/miskin',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'jenis_surat' => 'Surat Pengantar SKCK',
-                'keterangan' => 'Digunakan sebagai pengantar untuk pembuatan SKCK di kepolisian',
+                'jenis_surat' => 'Surat Keterangan Penghasilan',
+                'keterangan' => 'Orang tersebut diatas sepanjang pengetahuan saya memang benar berpenghasilan',
                 'created_at' => now(),
                 'updated_at' => now()
             ],

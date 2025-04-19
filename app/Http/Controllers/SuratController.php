@@ -50,7 +50,8 @@ class SuratController extends Controller
             'tanggal_dibuat' => $request->tanggal_dibuat,
             'nomor_surat' => $request->nomor_surat,
             'jenis_surat' => $jenisSurat,
-            'logo_path' => $logoPath
+            'logo_path' => $logoPath,
+            'keterangan' => $request->keterangan
         ])->render();
 
         
