@@ -30,10 +30,11 @@ class LoginController extends Controller
         // Coba login menggunakan Auth::attempt()
         if (Auth::attempt($credentials)) {
             $user = Auth::user(); // Ambil user yang sedang login
+            // dd($user);
             // Jika user bukan admin, cek banjar
                 if ($user->username !== 'admin' && $banjar !== $user->banjar) {
                     Auth::logout(); // Logout user jika banjar tidak sesuai
-                    return redirect()->back()->with('error', "Akun tidak diizinkan login ke Banjar $banjar");
+                    return redirect()->back()->with('error', "Akun tidak diizinkan login");
                 }
 
             // Jika berhasil login dan banjar sesuai, arahkan ke dashboard

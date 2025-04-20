@@ -17,7 +17,7 @@
           </td>
           @if ($p->image)
             <td><img src="{{ asset('storage/'.$p->image) }}" alt="" width="50"></td>
-        @elseif ($p->image == null && $p->jenis_kelamin == "Laki-laki")
+        @elseif ($p->image == null && $p->jenis_kelamin_id == 1)
             <td><img src="{{ asset('lte/dist/assets/img/user1.png') }}" alt="" width="50"></td>
         @else
             <td><img src="{{ asset('lte/dist/assets/img/user2.png') }}" alt="" width="50"></td>
@@ -28,10 +28,10 @@
           <td>{{ $p->nama_ayah }}</td>
           <td>{{ $p->nama_ibu }}</td>
           <td>{{ $p->alamat }}</td>
-          <td>{{ $p->banjar }}</td>
-          <td>{{ $p->pendidikan }}</td>
+          <td>{{ $p->banjar->banjar }}</td>
+          <td>{{ $p->pendidikan->pendidikan }}</td>
           <td>{{ $p->umur }}</td>
-          <td>{{ $p->pekerjaan }}</td>
+          <td>{{ $p->pekerjaan->nama_pekerjaan }}</td>
           <td>{{ $p->kawin }}</td>
           <td>{{ $p->updated_at }}</td>
           <td>{{ $p->created_at }}</td>

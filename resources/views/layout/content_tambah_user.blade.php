@@ -57,7 +57,7 @@
                         <option value="Root">Root</option>
                         @foreach ($banjar as $b)
                             
-                            <option value="{{ $b->banjar }}">{{ $b->banjar }}</option>
+                            <option value="{{ $b->id }}">{{ $b->banjar }}</option>
                         @endforeach
                     </select>
                 </div>

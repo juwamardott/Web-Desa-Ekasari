@@ -2,8 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agama;
 use App\Models\Penduduk;
 use App\Models\Banjar;
+use App\Models\HubunganKeluarga;
+use App\Models\StatusPenduduk;
+use App\Models\StatusDasar;
+use App\Models\JenisKelamin;
+use App\Models\Kawin;
+use App\Models\Pekerjaan;
+use App\Models\Pendidikan;
+use App\Models\PendidikanSedang;
+use App\Models\WargaNegara;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\Auth;
@@ -18,43 +28,48 @@ class PendudukController extends Controller
     public function index()
     {
         $user = Auth::user();
-
         if ($user->username === 'admin') {
             $penduduk = Penduduk::paginate(5);
             $total = Penduduk::count();
         } else {
-            $penduduk = Penduduk::where('banjar', $user->banjar)->paginate(5);
-            $total = Penduduk::where('banjar', $user->banjar)->count();
+            $penduduk = Penduduk::where('banjar_id', $user->banjar)->paginate(5);
+            $total = Penduduk::where('banjar_id', $user->banjar)->count();
         }
 
         $banjar = Banjar::all();
+        $status_penduduk = StatusPenduduk::all();
+        $status_dasar = StatusDasar::all();
+        $jenis_kelamin = JenisKelamin::all();
 
-        return view('penduduk.penduduk', compact('penduduk', 'banjar', 'total'));
+        return view('penduduk.penduduk', compact('penduduk', 'banjar', 'total', 'status_penduduk', 'status_dasar', 'jenis_kelamin'));
     }
 
 
     public function keluarga(){
-        $keluargaa = Penduduk::where('hubungan_keluarga', 'Kepala Keluarga');
+        $keluargaa = Penduduk::where('hubungan_keluarga_id', 1);
         $user = Auth::user();
-
+        // dd($user);  
         if($user->username === 'admin'){
             $total = $keluargaa->count();
             $keluarga = $keluargaa->paginate(5);
         }else{
-            $keluarga = $keluargaa->where('banjar', $user->banjar)->paginate(5);
+            $keluarga = $keluargaa->where('banjar_id', $user->banjar)->paginate(5);
             $total = $keluarga->count();
         }
         
         $banjar = Banjar::all();
         $total = $keluargaa->count();
+        $status_penduduk = StatusPenduduk::all();
+        $status_dasar = StatusDasar::all();
+        $jenis_kelamin = JenisKelamin::all();
         // $keluarga = $keluargaa->paginate(5);
-        return view('keluarga.keluarga', compact('keluarga', 'banjar', 'total'));
+        return view('keluarga.keluarga', compact('keluarga', 'banjar', 'total', 'status_penduduk', 'status_dasar','jenis_kelamin'));
     }
 
 
     public function penduduk_list_keluarga($no_kk){
-        $penduduk = Penduduk::where('no_kk', $no_kk)->orderByRaw("FIELD(hubungan_keluarga, 'Kepala Keluarga', 'Istri', 'Anak','Menantu','Anak Angkat','Saudara','Family Lain')")->get();
-        $kepala = Penduduk::where('no_kk', $no_kk)->where('hubungan_keluarga', 'Kepala Keluarga')->first();
+        $penduduk = Penduduk::where('no_kk', $no_kk)->get();
+        $kepala = Penduduk::where('no_kk', $no_kk)->where('hubungan_keluarga_id', 1)->first();
         if (!$kepala) {
             return redirect()->route('penduduk.index')->with('error', 'Kepala keluarga tidak ditemukan.');
         }
@@ -62,8 +77,8 @@ class PendudukController extends Controller
     }
 
     public function keluarga_list_keluarga($no_kk){
-        $penduduk = Penduduk::where('no_kk', $no_kk)->orderByRaw("FIELD(hubungan_keluarga, 'Kepala Keluarga', 'Istri', 'Anak','Menantu','Anak Angkat','Saudara','Family Lain')")->get();
-        $kepala = Penduduk::where('no_kk', $no_kk)->where('hubungan_keluarga', 'Kepala Keluarga')->first();
+        $penduduk = Penduduk::where('no_kk', $no_kk)->get();
+        $kepala = Penduduk::where('no_kk', $no_kk)->where('hubungan_keluarga_id', 1)->first();
         if (!$kepala) {
             return redirect()->route('keluarga.index')->with('error', 'Kepala keluarga tidak ditemukan.');
         }
@@ -77,8 +92,19 @@ class PendudukController extends Controller
     {
         //
         $banjar = Banjar::all();
+        $status_penduduk = StatusPenduduk::all();
+        $status_dasar = StatusDasar::all();
+        $jenis_kelamin = JenisKelamin::all();
+        $kawin = Kawin::all();
+        $warga_negara = WargaNegara::all();
+        $agama = Agama::all();
+        $pendidikan = Pendidikan::all();
+        $hubungan_keluarga = HubunganKeluarga::all();
+        $pekerjaan = Pekerjaan::all();
+        $pendidikan_sedang = PendidikanSedang::all();
 
-        return view('penduduk.tambah_penduduk', compact('banjar'));
+        return view('penduduk.tambah_penduduk', compact('banjar', 'status_penduduk', 'status_dasar', 'jenis_kelamin', 'kawin', 'warga_negara', 'agama', 'pendidikan', 'hubungan_keluarga', 'pekerjaan', 'pendidikan_sedang'));
+        
     }
 
     /**
@@ -246,15 +272,15 @@ class PendudukController extends Controller
                     }
                 });
         })->when($status, function ($query) use ($status) {
-            return $query->where('status_penduduk', $status);
+            return $query->where('status_penduduk_id', $status);
         })->when($jenis_kelamin, function ($query) use ($jenis_kelamin) {
-            return $query->where('jenis_kelamin', $jenis_kelamin);
+            return $query->where('jenis_kelamin_id', $jenis_kelamin);
         })->when($banjar, function ($query) use ($banjar) {
-            return $query->where('banjar', $banjar);
+            return $query->where('banjar_id', $banjar);
         })->when($umur, function ($query) use ($umur) {
             return $query->where('umur', $umur);
         })->when($status_dasar, function ($query) use ($status_dasar) {
-            return $query->where('status_dasar', $status_dasar);
+            return $query->where('status_dasar_id', $status_dasar);
         });
     
     $total = $penduduks->count();
@@ -282,7 +308,7 @@ class PendudukController extends Controller
 
     $penduduks = Penduduk::query()
         ->where(function ($query) use ($search) {
-            $query->where('hubungan_keluarga', 'Kepala Keluarga')
+            $query->where('hubungan_keluarga_id', 1)
                   ->where(function ($q) use ($search) {
                       if ($search) {
                           $q->where('nama', 'LIKE', "%$search%")
@@ -292,19 +318,19 @@ class PendudukController extends Controller
                   });
         })
         ->when($status, function ($query) use ($status) {
-            return $query->where('status_penduduk', $status);
+            return $query->where('status_penduduk_id', $status);
         })
         ->when($jenis_kelamin, function ($query) use ($jenis_kelamin) {
-            return $query->where('jenis_kelamin', $jenis_kelamin);
+            return $query->where('jenis_kelamin_id', $jenis_kelamin);
         })
         ->when($banjar, function ($query) use ($banjar) {
-            return $query->where('banjar', $banjar);
+            return $query->where('banjar_id', $banjar);
         })
         ->when($umur, function ($query) use ($umur) {
             return $query->where('umur', $umur);
         })
         ->when($status_dasar, function ($query) use ($status_dasar) {
-            return $query->where('status_dasar', $status_dasar);
+            return $query->where('status_dasar_id', $status_dasar);
         });
 
     $total = $penduduks->count();

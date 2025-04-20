@@ -47,20 +47,23 @@
                     <div class="d-flex gap-2 my-2">
                         <select id="statusFilter" class="form-select">
                             <option value="">-- Pilih Status --</option>
-                            <option value="aktif">Aktif</option>
-                            <option value="tidak aktif">Tidak Aktif</option>
+                            @foreach ($status_penduduk as $sp)
+                                <option value="{{ $sp->id }}">{{ $sp->status_penduduk}}</option>
+                            @endforeach
+                            
                         </select>
                 
                         <select id="jenisKelaminFilter" class="form-select">
                             <option value="">-- Pilih Jenis Kelamin --</option>
-                            <option value="Laki-laki">Laki-laki</option>
-                            <option value="Perempuan">Perempuan</option>
+                            @foreach ($jenis_kelamin as $jk)                                
+                                <option value="{{ $jk->id }}">{{ $jk->jenis_kelamin }}</option>
+                            @endforeach
                         </select>
                         @if (Auth::user()->username == 'admin')
                         <select id="banjarFilter" class="form-select">
                             <option value="">-- Pilih Banjar --</option>
                             @foreach($banjar as $b)
-                                <option value="{{ $b->banjar }}">{{ $b->banjar }}</option>
+                                <option value="{{ $b->id }}">{{ $b->banjar }}</option>
                             @endforeach
                         </select>
                         @endif
@@ -72,11 +75,10 @@
                         </select>
                         <select id="statusDasarFilter" class="form-select">
                             <option value="">-- Pilih Status Dasar --</option>
-                            <option value="Hidup">Hidup</option>
-                            <option value="Mati">Mati</option>
-                            <option value="Pindah">Pindah</option>
-                            <option value="Hilang">Hilang</option>
-                            <option value="Pergi">Pergi</option>
+                            @foreach ($status_dasar as $sd)
+                                <option value="{{ $sd->id }}">{{ $sd->status_dasar }}</option>    
+                            @endforeach
+                            
                         </select>
                         
                         
@@ -154,7 +156,7 @@
 
                                         @if ($p->image)
                                         <td><img src="{{ asset('storage/'.$p->image) }}" alt="" width="50"></td>
-                                        @elseif ($p->image == null && $p->jenis_kelamin == "Laki-laki")
+                                        @elseif ($p->image == null && $p->jenis_kelamin_id == 1)
                                         <td><img src="{{ asset('lte/dist/assets/img/user1.png') }}" alt="" width="50"></td>
                                         @else
                                         <td><img src="{{ asset('lte/dist/assets/img/user2.png') }}" alt="" width="50"></td>
@@ -166,10 +168,10 @@
                                         <td>{{ $p->nama_ayah }}</td>
                                         <td>{{ $p->nama_ibu }}</td>
                                         <td>{{ $p->alamat }}</td>
-                                        <td>{{ $p->banjar }}</td>
-                                        <td>{{ $p->pendidikan }}</td>
+                                        <td>{{ $p->banjar->banjar }}</td>
+                                        <td>{{ $p->pendidikan->pendidikan }}</td>
                                         <td>{{ $p->umur }}</td>
-                                        <td>{{ $p->pekerjaan }}</td>
+                                        <td>{{ $p->pekerjaan->nama_pekerjaan }}</td>
                                         <td>{{ $p->kawin }}</td>
                                         <td>{{ $p->updated_at }}</td>
                                         <td>{{ $p->created_at }}</td>

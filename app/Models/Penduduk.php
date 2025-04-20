@@ -17,22 +17,32 @@ class Penduduk extends Model
         'nik_ayah',
         'nik_ibu',
         'alamat',
-        'banjar',
-        'pendidikan',
+        'banjar_id',
+        'pendidikan_id',
         'umur',
-        'pekerjaan',
-        'kawin',
-        'hubungan_keluarga',
+        'pekerjaan_id',
+        'kawin_id',
+        'hubungan_keluarga_id',
         'jenis_kelamin',
-        'agama',
+        'agama_id',
         'status_penduduk',
         'akta_kelahiran',
         'tempat_lahir',
         'tgl_lahir',
-        'pendidikan_sedang_ditempuh',
-        'pekerjaan',  // Perhatikan ini duplikat, Anda mungkin ingin menghapusnya
-        'warga_negara',
-        'status_dasar'
+        'pendidikan_sedang_id',
+        'pekerjaan_id', 
+        'warga_negara_id',
+        'negara_asal',
+        'status_dasar',
+        'anak_ke',
+        'no_telepon',
+        'email',
+        'akta_nikah',
+        'akta_perceraian',
+        'tgl_perkawinan',
+        'tgl_perceraian',
+        'golongan_darah',
+        
     ];
 
     public function banjar()
@@ -62,5 +72,18 @@ class Penduduk extends Model
 
     public function hubungan_keluarga(){
         return $this->belongsTo(HubunganKeluarga::class, 'hubungan_keluarga_id');
+    }
+
+    public function jenis_kelamin(){
+        return $this->belongsTo(JenisKelamin::class, 'jenis_kelamin_id');
+    }
+
+
+    public function status_penduduk(){
+        return $this->belongsTo(StatusPenduduk::class, 'status_penduduk_id');
+    }
+
+    public function status_dasar(){
+        return $this->belongsTo(StatusDasar::class, 'status_dasar_id');
     }
 }

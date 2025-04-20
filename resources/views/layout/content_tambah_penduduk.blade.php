@@ -109,23 +109,7 @@
                        </div>
                      </div>
                      <!--end::Col-->
-                     <!--begin::Col-->
-                     <div class="col-md-6">
-                         <label for="warga_negara" class="form-label">Kewarganegaraan</label>
-                         <div class="input-group has-validation">
-                           <span class="input-group-text" id=""><i class="bi bi-flag-fill"></i></span>
-                           <input
-                             type="text"
-                             class="form-control"
-                             id="warga_negara"
-                             name="warga_negara"
-                             value="{{ old('warga_negara') }}"
-                             aria-describedby=""
-                             required
-                           />
-                         </div>
-                       </div>
-                     <!--end::Col-->
+                     
                      <!--begin::Col-->
                      <div class="col-md-6">
                          <label for="nama_ayah" class="form-label">Nama Ayah</label>
@@ -203,6 +187,36 @@
                     <!--end::Col-->
                     <!--begin::Col-->
                     <div class="col-md-6">
+                      <label for="warga_negara" class="form-label">Kewarganegaraan</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text" id=""><i class="bi bi-flag-fill"></i></span>
+                        <select class="form-control" id="warga_negara" name="warga_negara" required>
+                         <option value="">Pilih Kewarganegaraan</option>
+                         @foreach($warga_negara as $w)
+                             <option value="{{ $w->id }}" {{ old('warga_negara') == $w->warga_negara ? 'selected' : '' }}>
+                                 {{ $w->warga_negara }}
+                             </option>
+                         @endforeach
+                       </select>
+                      </div>
+                    </div>
+                   <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-md-6">
+                        <label for="negara_asal" class="form-label">Negara Asal</label>
+                        <div class="input-group has-validation">
+                        <span class="input-group-text text-wrap"><i class="bi bi-geo-fill"></i></span>
+                        <textarea
+                            class="form-control"
+                            id="negara_asal"
+                            name="negara_asal"
+                            rows="2"
+                        >{{ old('negara_asal') }}</textarea>
+                        </div>
+                    </div>
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-md-6">
                          <label for="banjar" class="form-label">Banjar</label>
                          <div class="input-group has-validation">
                               <span class="input-group-text"><i class="bi bi-house-fill"></i></span>
@@ -222,15 +236,14 @@
                          <label for="pendidikan" class="form-label">Pendidikan</label>
                          <div class="input-group has-validation">
                            <span class="input-group-text" id=""><i class="bi bi-book-half"></i></span>
-                           <input
-                             type="text"
-                             class="form-control"
-                             id="pendidikan"
-                             name="pendidikan"
-                             value="{{ old('pendidikan') }}"
-                             aria-describedby=""
-                             required
-                           />
+                           <select class="form-control" id="pendidikan" name="pendidikan" required>
+                            <option value="">Pilih Pendidikan</option>
+                            @foreach($pendidikan as $b)
+                                <option value="{{ $b->id }}" {{ old('pendidikan') == $b->pendidikan ? 'selected' : '' }}>
+                                    {{ $b->pendidikan }}
+                                </option>
+                            @endforeach
+                          </select>
                          </div>
                        </div>
                      <!--end::Col-->
@@ -260,7 +273,7 @@
                            id="umur"
                            name="umur"
                            value="{{ old('umur') }}"
-                           required
+                           readonly
                          />
                        </div>
                      <!--end::Col-->
@@ -268,11 +281,10 @@
                      <div class="col-md-6">
                       <label for="kawin" class="form-label">Status Kawin</label>
                       <select class="form-control" id="kawin" name="kawin" required>
-                          <option value="">Pilih Status</option>
-                          <option value="Kawin" {{ old('kawin') == 'Kawin' ? 'selected' : '' }}>Kawin</option>
-                          <option value="Belum Kawin" {{ old('kawin') == 'Belum Kawin' ? 'selected' : '' }}>Belum Kawin</option>
-                          <option value="Cerai" {{ old('kawin') == 'Cerai' ? 'selected' : '' }}>Cerai</option>
-                          <option value="Cerai Mati" {{ old('kawin') == 'Cerai Mati' ? 'selected' : '' }}>Cerai Mati</option>
+                          <option value="">Pilih Status Perkawinan</option>
+                          @foreach ($kawin as $k)
+                            <option value="{{ $k->id }}" {{ old('kawin') == $k->kawin ? 'selected' : '' }}>{{ $k->kawin }}</option>
+                          @endforeach
                       </select>
                     </div>                  
                     <!--end::Col-->
@@ -281,11 +293,9 @@
                       <label for="status_dasar" class="form-label">Status Dasar</label>
                       <select class="form-control" id="status_dasar" name="status_dasar" required>
                           <option value="">Pilih Status Dasar</option>
-                          <option value="Hidup" {{ old('status_dasar') == 'Hidup' ? 'selected' : '' }}>Hidup</option>
-                          <option value="Pindah" {{ old('status_dasar') == 'Pindah' ? 'selected' : '' }}>Pindah</option>
-                          <option value="Pergi" {{ old('status_dasar') == 'Pergi' ? 'selected' : '' }}>Pergi</option>
-                          <option value="Mati" {{ old('status_dasar') == 'Mati' ? 'selected' : '' }}>Mati</option>
-                          <option value="Hilang" {{ old('status_dasar') == 'Hilang' ? 'selected' : '' }}>Hilang</option>
+                          @foreach ($status_dasar as $sd)
+                            <option value="{{ $sd->id }}" {{ old('status_dasar') == $sd->status_dasar ? 'selected' : '' }}>{{ $sd->status_dasar }}</option>
+                          @endforeach
                       </select>
                     </div>                  
                     <!--end::Col-->
@@ -294,39 +304,35 @@
                           <label for="hubungan_keluarga" class="form-label">Hubungan Keluarga</label>
                           <select class="form-control" id="hubungan_keluarga" name="hubungan_keluarga" required>
                               <option value="">Pilih Hubungan Keluarga</option>
-                              <option value="Kepala Keluarga" {{ old('hubungan_keluarga') == 'Kepala Keluarga' ? 'selected' : '' }}>Kepala Keluarga</option>
-                              <option value="Istri" {{ old('hubungan_keluarga') == 'Istri' ? 'selected' : '' }}>Istri</option>
-                              <option value="Anak" {{ old('hubungan_keluarga') == 'Anak' ? 'selected' : '' }}>Anak</option>
-                              <option value="Menantu" {{ old('hubungan_keluarga') == 'Menantu' ? 'selected' : '' }}>Menantu</option>
-                              <option value="Family Lain" {{ old('hubungan_keluarga') == 'Family Lain' ? 'selected' : '' }}>Family Lain</option>
-                              <option value="Anak Angkat" {{ old('hubungan_keluarga') == 'Anak Angkat' ? 'selected' : '' }}>Anak Angkat</option>
+                              @foreach ($hubungan_keluarga as $h)
+                              <option value="{{ $h->id }}" {{ old('hubungan_keluarga') == $h->hubungan_keluarga ? 'selected' : '' }}>{{ $h->hubungan_keluarga }}</option>
+                              @endforeach
                           </select>
                       </div>                      
                     <!--end::Col-->
                    <!--begin::Col-->
-                   <div class="col-md-6">
-                    <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
-                    <div class="input-group has-validation">
-                        <span class="input-group-text"><i class="bi bi-gender-ambiguous"></i></span>
-                        <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required onchange="updateProfileImage()">
-                            <option value="">Pilih Jenis Kelamin</option>
-                            <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                            <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
-                        </select>
-                    </div>
-                </div>                
+                          <div class="col-md-6">
+                            <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text"><i class="bi bi-gender-ambiguous"></i></span>
+                                <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required onchange="updateProfileImage()">
+                                    <option value="">Pilih Jenis Kelamin</option>
+                                    @foreach ($jenis_kelamin as $j)
+                                    <option value="{{ $j->id }}" {{ old('jenis_kelamin') == $j->jenis_kelamin ? 'selected' : '' }}>{{ $j->jenis_kelamin }}</option>                              
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>                
                     <!--end::Col-->
                      <!--begin::Col-->
                      <div class="col-md-6">
                          <label for="" class="form-label">Agama</label>
-                         <input
-                           type="text"
-                           class="form-control"
-                           id="agama"
-                           name="agama"
-                           value="{{ old('agama') }}"
-                           required
-                         />
+                         <select class="form-control" id="agama" name="agama" required>
+                          <option value="">Pilih Agama</option>
+                          @foreach ($agama as $h)
+                          <option value="{{ $h->id }}" {{ old('agama') == $h->agama ? 'selected' : '' }}>{{ $h->agama }}</option>
+                          @endforeach
+                      </select>
                        </div>
                      <!--end::Col-->
                      <!--begin::Col-->
@@ -334,8 +340,9 @@
                       <label for="status_penduduk" class="form-label">Status Penduduk</label>
                       <select class="form-control" id="status_penduduk" name="status_penduduk" required>
                           <option value="">Pilih Status</option>
-                          <option value="Aktif" {{ old('status_penduduk') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
-                          <option value="Tidak Aktif" {{ old('status_penduduk') == 'Tidak Aktif' ? 'selected' : '' }}>Tidak Aktif</option>
+                          @foreach ($status_penduduk as $sp)
+                          <option value="{{ $sp->id }}" {{ old('status_penduduk') == $sp->status_penduduk ? 'selected' : '' }}>{{ $sp->status_penduduk }}</option>
+                          @endforeach
                       </select>
                   </div>
                   
@@ -377,15 +384,12 @@
                          <label for="pendidikan_sedang_ditempuh" class="form-label">Pendidikan saat ini</label>
                          <div class="input-group has-validation">
                            <span class="input-group-text" id=""><i class="bi bi-book"></i></span>
-                           <input
-                             type="text"
-                             class="form-control"
-                             id="pendidikan_sedang_ditempuh"
-                             name="pendidikan_sedang_ditempuh"
-                             value="{{ old('pendidikan_sedang_ditempuh') }}"
-                             aria-describedby=""
-                             required
-                           />
+                           <select class="form-control" id="pendidikan_sedang_ditempuh" name="pendidikan_sedang_ditempuh" required>
+                            <option value="">Pilih Pendidikan Sedang</option>
+                            @foreach ($pendidikan_sedang as $sp)
+                            <option value="{{ $sp->id }}" {{ old('status_penduduk') == $sp->pendidikan_sedang ? 'selected' : '' }}>{{ $sp->pendidikan_sedang }}</option>
+                            @endforeach
+                        </select>
                          </div>
                        </div>
                      <!--end::Col-->
@@ -394,16 +398,14 @@
                          <label for="pekerjaan" class="form-label">Pekerjaan</label>
                          <div class="input-group has-validation">
                            <span class="input-group-text" id=""><i class="bi bi-briefcase"></i></span>
-                           <input
-                             type="text"
-                             class="form-control"
-                             id="pekerjaan"
-                             value="{{ old('pekerjaan') }}"
-                             name="pekerjaan"
-                             aria-describedby=""
-                             required
-                           />
+                            <select class="form-control" id="pekerjaan" name="pekerjaan" required>
+                              <option value="">Pilih Pekerjaan</option>
+                              @foreach ($pekerjaan as $sp)
+                              <option value="{{ $sp->id }}" {{ old('pekerjaan') == $sp->nama_pekerjaan ? 'selected' : '' }}>{{ $sp->nama_pekerjaan }}</option>
+                              @endforeach
+                          </select>
                          </div>
+
                        </div>
 
                        <div class="col-md-12">

@@ -2,15 +2,21 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use Carbon\Carbon;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use App\Models\Agama;
+use App\Models\Kawin;
 use App\Models\Banjar;
 use App\Models\Visitor;
 use App\Models\Penduduk;
 use App\Models\Pekerjaan;
 use App\Models\Pendidikan;
+use App\Models\StatusDasar;
+use App\Models\WargaNegara;
 use Faker\Factory as Faker;
+use App\Models\JenisKelamin;
+use App\Models\StatusPenduduk;
 use Illuminate\Database\Seeder;
 use App\Models\HubunganKeluarga;
 use App\Models\PendidikanSedang;
@@ -21,6 +27,25 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
+        JenisKelamin::create([
+            'jenis_kelamin'=> 'Laki-laki',
+        ]);
+        JenisKelamin::create([
+            'jenis_kelamin'=> 'Perempuan',
+        ]);
+
+        StatusPenduduk::create([
+            'status_penduduk' => 'Tetap',
+        ]);
+        StatusPenduduk::create([
+            'status_penduduk' => 'Tidak Tetap',
+        ]);
+
+        StatusDasar::create(['status_dasar' => 'Hidup']);
+        StatusDasar::create(['status_dasar' => 'Mati']);
+        StatusDasar::create(['status_dasar' => 'Pindah']);
+        StatusDasar::create(['status_dasar' => 'Hilang']);
+        StatusDasar::create(['status_dasar' => 'Pergi']);
         
         Agama::create(['agama' => 'Islam']);
         Agama::create(['agama' => 'Kristen']);
@@ -28,7 +53,14 @@ class DatabaseSeeder extends Seeder
         Agama::create(['agama' => 'Hindu']);
         Agama::create(['agama' => 'Buddha']);
         Agama::create(['agama' => 'Konghucu']);
-        
+
+        Kawin::create(['status' =>'KAWIN']);
+        Kawin::create(['status' =>'BELUM KAWIN']);
+        Kawin::create(['status' =>'CERAI HIDUP']);
+        Kawin::create(['status' =>'CERAI MATI']);
+
+        WargaNegara::create(['warga_negara' => 'WNI']);        
+        WargaNegara::create(['warga_negara' => 'WNA']);        
 
         Pekerjaan::create(['nama_pekerjaan' => 'BELUM/TIDAK BEKERJA']);  
         Pekerjaan::create(['nama_pekerjaan' => 'MENGURUS RUMAH TANGGA']);  
@@ -225,6 +257,200 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ],
         ]);
+
+
+        // Penduduk
+
+        $penduduks = [
+            [
+                'image' => null,
+                'no_kk' => 5103041234567890,
+                'nik' => 5103042501890001,
+                'nama' => 'Wayan Suardana',
+                'nama_ayah' => 'Made Suardika',
+                'nama_ibu' => 'Nyoman Suartini',
+                'nik_ayah' => 5103041005650002,
+                'nik_ibu' => 5103044511670003,
+                'alamat' => 'Jalan Raya Kuta No. 123',
+                'banjar_id' => 1,
+                'pendidikan_id' => 4,
+                'umur' => 34,
+                'kawin_id' => 1,
+                'hubungan_keluarga_id' => 1,
+                'jenis_kelamin_id' => 1,
+                'agama_id' => 1,
+                'status_penduduk_id' => 2,
+                'akta_kelahiran' => 6574839201,
+                'tempat_lahir' => 'Denpasar',
+                'tgl_lahir' => '1989-01-25',
+                'pendidikan_sedang_id' => 2,
+                'pekerjaan_id' => 5,
+                'warga_negara_id' => 1,
+                'negara_asal' => null,
+                'status_dasar_id' => 1,
+                'anak_ke' => 1,
+                'no_telepon' => '081234567890',
+                'email' => 'wayan.suardana@example.com',
+                'akta_nikah' => '123/NKH/2015',
+                'akta_perceraian' => null,
+                'tgl_perkawinan' => '2015-06-12',
+                'tgl_perceraian' => null,
+                'golongan_darah' => 'A',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'image' => null,
+                'no_kk' => 5103041234567890,
+                'nik' => 5103045506900002,
+                'nama' => 'Ni Kadek Sekarini',
+                'nama_ayah' => 'Ketut Wirawan',
+                'nama_ibu' => 'Komang Sulastri',
+                'nik_ayah' => 5103041708670004,
+                'nik_ibu' => 5103044209680005,
+                'alamat' => 'Jalan Raya Kuta No. 123',
+                'banjar_id' => 1,
+                'pendidikan_id' => 5,
+                'umur' => 33,
+                'kawin_id' => 1,
+                'hubungan_keluarga_id' => 2,
+                'jenis_kelamin_id' => 2,
+                'agama_id' => 1,
+                'status_penduduk_id' => 1,
+                'akta_kelahiran' => 9876543210,
+                'tempat_lahir' => 'Badung',
+                'tgl_lahir' => '1990-06-15',
+                'pendidikan_sedang_id' => 4,
+                'pekerjaan_id' => 7,
+                'warga_negara_id' => 1,
+                'negara_asal' => null,
+                'status_dasar_id' => 1,
+                'anak_ke' => 2,
+                'no_telepon' => '087654321098',
+                'email' => 'kadek.sekarini@example.com',
+                'akta_nikah' => '123/NKH/2015',
+                'akta_perceraian' => null,
+                'tgl_perkawinan' => '2015-06-12',
+                'tgl_perceraian' => null,
+                'golongan_darah' => 'O',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'image' => null,
+                'no_kk' => 5103041234567890,
+                'nik' => 5103042003880003,
+                'nama' => 'I Made Darma',
+                'nama_ayah' => 'I Nyoman Sudiasa',
+                'nama_ibu' => 'Ni Wayan Suastini',
+                'nik_ayah' => 5103041205600006,
+                'nik_ibu' => 5103044107630007,
+                'alamat' => 'Jalan Raya Legian No. 45',
+                'banjar_id' => 2,
+                'pendidikan_id' => 6,
+                'umur' => 37,
+                'kawin_id' => 1,
+                'hubungan_keluarga_id' => 3,
+                'jenis_kelamin_id' => 1,
+                'agama_id' => 1,
+                'status_penduduk_id' => 1,
+                'akta_kelahiran' => 3456789012,
+                'tempat_lahir' => 'Denpasar',
+                'tgl_lahir' => '1988-03-20',
+                'pendidikan_sedang_id' => 3,
+                'pekerjaan_id' => 9,
+                'warga_negara_id' => 1,
+                'negara_asal' => null,
+                'status_dasar_id' => 1,
+                'anak_ke' => 1,
+                'no_telepon' => '082345678901',
+                'email' => 'made.darma@example.com',
+                'akta_nikah' => '456/NKH/2012',
+                'akta_perceraian' => null,
+                'tgl_perkawinan' => '2012-09-25',
+                'tgl_perceraian' => null,
+                'golongan_darah' => 'B',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'image' => null,
+                'no_kk' => 5103041234567890,
+                'nik' => 5103044508920004,
+                'nama' => 'Ni Luh Putu Ayu',
+                'nama_ayah' => 'I Ketut Sudiana',
+                'nama_ibu' => 'Ni Made Suartini',
+                'nik_ayah' => 5103041508670008,
+                'nik_ibu' => 5103044411690009,
+                'alamat' => 'Jalan Pantai Kuta No. 78',
+                'banjar_id' => 3,
+                'pendidikan_id' => 6,
+                'umur' => 31,
+                'kawin_id' => 1,
+                'hubungan_keluarga_id' => 4,
+                'jenis_kelamin_id' => 2,
+                'agama_id' => 1,
+                'status_penduduk_id' => 1,
+                'akta_kelahiran' => 5678901234,
+                'tempat_lahir' => 'Tabanan',
+                'tgl_lahir' => '1992-08-05',
+                'pendidikan_sedang_id' => 1,
+                'pekerjaan_id' => 8,
+                'warga_negara_id' => 1,
+                'negara_asal' => null,
+                'status_dasar_id' => 1,
+                'anak_ke' => 2,
+                'no_telepon' => '089876543210',
+                'email' => 'putu.ayu@example.com',
+                'akta_nikah' => null,
+                'akta_perceraian' => null,
+                'tgl_perkawinan' => null,
+                'tgl_perceraian' => null,
+                'golongan_darah' => 'AB',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'image' => null,
+                'no_kk' => 5103041234567890,
+                'nik' => 5103041001960005,
+                'nama' => 'I Nyoman Jaya',
+                'nama_ayah' => 'I Wayan Sudira',
+                'nama_ibu' => 'Ni Nyoman Suastini',
+                'nik_ayah' => 5103041010700010,
+                'nik_ibu' => 5103044203720011,
+                'alamat' => 'Jalan Imam Bonjol No. 56',
+                'banjar_id' => 4,
+                'pendidikan_id' => 3,
+                'umur' => 25,
+                'kawin_id' => 1,
+                'hubungan_keluarga_id' => 5,
+                'jenis_kelamin_id' => 1,
+                'agama_id' => 1,
+                'status_penduduk_id' => 1,
+                'akta_kelahiran' => 7890123456,
+                'tempat_lahir' => 'Gianyar',
+                'tgl_lahir' => '1996-01-10',
+                'pendidikan_sedang_id' => 7,
+                'pekerjaan_id' => 2,
+                'warga_negara_id' => 1,
+                'negara_asal' => null,
+                'status_dasar_id' => 1,
+                'anak_ke' => 1,
+                'no_telepon' => '083456789012',
+                'email' => 'nyoman.jaya@example.com',
+                'akta_nikah' => null,
+                'akta_perceraian' => null,
+                'tgl_perkawinan' => null,
+                'tgl_perceraian' => null,
+                'golongan_darah' => 'A',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+        ];
+
+        DB::table('penduduks')->insert($penduduks);
+        
     }
 
     

@@ -27,7 +27,7 @@
                   <select class="form-control" id="banjar" name="banjar">
                       <option selected disabled>Pilih Banjar</option>
                       @foreach ($banjar as $b)
-                      <option value="{{ $b->banjar }}">{{ $b->banjar }}</option>
+                      <option value="{{ $b->id }}">{{ $b->banjar }}</option>
                       @endforeach
                       
                   </select>
