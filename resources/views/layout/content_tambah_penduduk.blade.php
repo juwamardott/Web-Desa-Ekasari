@@ -24,7 +24,7 @@
            <!--begin::Col-->
            <div class="col-md-3">
              <!--begin::Quick Example-->
-             <div class="card card-primary card-outline mb-4">
+             <div class="card card-info card-outline mb-4">
                <!--begin::Header-->
                <div class="card-header"><div class="card-title">Photo</div></div>
                <!--end::Header-->
@@ -67,35 +67,43 @@
                    <!--begin::Row-->
                    <div class="row g-3">
                      <!--begin::Col-->
+
                      <div class="col-md-6">
-                       <label for="no_kk" class="form-label">No KK</label>
-                       <input
-                         type="number"
-                         class="form-control"
-                         id="no_kk"
-                         value="{{ old('no_kk') }}"
-                         name="no_kk"
-                         required
-                       />
+                       <label for="no_kk" class="form-label small px-2 py-1 rounded-top">NO KK</label>
+                       <div class="input-group has-validation input-group-sm">
+                          <input
+                          type="number"
+                          class="form-control"
+                          id="no_kk"
+                          value="{{ old('no_kk') }}"
+                          name="no_kk"
+                          required
+                          placeholder="Input NO KK..."
+                        />
+                       </div>
                      </div>
                      <!--end::Col-->
                      <!--begin::Col-->
                      <div class="col-md-6">
-                       <label for="nik" class="form-label">NIK</label>
-                       <input
+                       <label for="nik" class="form-label small px-2 py-1 rounded-top">NIK</label>
+                       <div class="input-group has-validation input-group-sm">
+                        <input
                          type="number"
                          class="form-control"
                          id="nik"
                          name="nik"
                          value="{{ old('nik') }}"
                          required
+                         placeholder="Input NIK..."
                        />
+                       </div>
+                       
                      </div>
                      <!--end::Col-->
                      <!--begin::Col-->
                      <div class="col-md-6">
-                       <label for="nama" class="form-label">Nama lengkap</label>
-                       <div class="input-group has-validation">
+                       <label for="nama" class="form-label small px-2 py-1 rounded-top">Nama lengkap</label>
+                       <div class="input-group has-validation input-group-sm">
                          <span class="input-group-text" id=""><i class="bi bi-person-circle"></i></span>
                          <input
                            type="text"
@@ -105,15 +113,72 @@
                            name="nama"
                            aria-describedby=""
                            required
+                           placeholder="Input Nama Lengkap..."
                          />
                        </div>
                      </div>
                      <!--end::Col-->
-                     
                      <!--begin::Col-->
                      <div class="col-md-6">
-                         <label for="nama_ayah" class="form-label">Nama Ayah</label>
-                         <div class="input-group has-validation">
+                      <label for="anak_ke" class="form-label small px-2 py-1 rounded-top">Anak Ke</label>
+                      <div class="input-group has-validation input-group-sm">
+                        <span class="input-group-text" id=""><i class="bi bi-person-standing-dress"></i></span>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="anak_ke"
+                          name="anak_ke"
+                          value="{{ old('anak_ke') }}"
+                          aria-describedby=""
+                          required
+                          placeholder="Input Anak Ke..."
+                        />
+                      </div>
+                    </div>
+                  <!--end::Col-->
+                  <!--begin::Col-->
+                  <div class="col-md-6">
+                    <label for="no_telepon" class="form-label small px-2 py-1 rounded-top">NO Telepon</label>
+                    <div class="input-group has-validation input-group-sm">
+                      <span class="input-group-text" id="">
+                        <i class="bi bi-phone-vibrate me-2"></i>
+                      </span>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="no_telepon"
+                        name="no_telepon"
+                        value="{{ old('no_telepon') }}"
+                        aria-describedby=""
+                        required
+                        placeholder="Input No Telepon..."
+                      />
+                    </div>
+                  </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-md-6">
+                  <label for="email" class="form-label small px-2 py-1 rounded-top">Email</label>
+                  <div class="input-group has-validation input-group-sm">
+                    <span class="input-group-text" id=""><i class="bi bi-inbox"></i></span>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      name="email"
+                      value="{{ old('email') }}"
+                      aria-describedby=""
+                      required
+                      placeholder="Input Email..."
+                    />
+                  </div>
+                </div>
+              
+              <!--end::Col-->
+                     <!--begin::Col-->
+                     <div class="col-md-6">
+                         <label for="nama_ayah" class="form-label small px-2 py-1 rounded-top">Nama Ayah</label>
+                         <div class="input-group has-validation input-group-sm">
                            <span class="input-group-text" id=""><i class="bi bi-person-standing"></i></span>
                            <input
                              type="text"
@@ -123,14 +188,15 @@
                              value="{{ old('nama_ayah') }}"
                              aria-describedby=""
                              required
+                             placeholder="Input Nama Ayah Kandung..."
                            />
                          </div>
                        </div>
                      <!--end::Col-->
                      <!--begin::Col-->
                      <div class="col-md-6">
-                         <label for="nama_ibu" class="form-label">Nama Ibu</label>
-                         <div class="input-group has-validation">
+                         <label for="nama_ibu" class="form-label small px-2 py-1 rounded-top">Nama Ibu</label>
+                         <div class="input-group has-validation input-group-sm">
                            <span class="input-group-text" id=""><i class="bi bi-person-standing-dress"></i></span>
                            <input
                              type="text"
@@ -140,40 +206,50 @@
                              value="{{ old('nama_ibu') }}"
                              aria-describedby=""
                              required
+                             placeholder="Input Nama Ibu Kandung..."
                            />
                          </div>
                        </div>
                      <!--end::Col-->
+                     
                      <!--begin::Col-->
                      <div class="col-md-6">
-                         <label for="" class="form-label">NIK Ayah</label>
-                         <input
+                         <label for="" class="form-label small px-2 py-1 rounded-top">NIK Ayah</label>
+                         <div class="input-group has-validation input-group-sm">
+                          <input
                            type="number"
                            class="form-control"
                            id="nik_ayah"
                            name="nik_ayah"
                            value="{{ old('nik_ayah') }}"
                            required
+                           placeholder="Input NIK Ayah..."
                          />
+                         </div>
+                         
                        </div>
                      <!--end::Col-->
                       <!--begin::Col-->
                       <div class="col-md-6">
-                         <label for="" class="form-label">NIK Ibu</label>
-                         <input
+                         <label for="" class="form-label small px-2 py-1 rounded-top">NIK Ibu</label>
+                         <div class="input-group has-validation input-group-sm">
+                          <input
                            type="number"
                            class="form-control"
                            id="nik_ibu"
                            name="nik_ibu"
                            value="{{ old('nik_ibu') }}"
                            required
+                           placeholder="Input NIK Ibu..."
                          />
+                         </div>
+                         
                        </div>
                      <!--end::Col-->
                      <!--begin::Col-->
                     <div class="col-md-6">
-                         <label for="alamat" class="form-label">Alamat</label>
-                         <div class="input-group has-validation">
+                         <label for="alamat" class="form-label small px-2 py-1 rounded-top">Alamat</label>
+                         <div class="input-group has-validation input-group-sm">
                          <span class="input-group-text text-wrap"><i class="bi bi-geo-fill"></i></span>
                          <textarea
                               class="form-control"
@@ -181,14 +257,15 @@
                               name="alamat"
                               rows="2"
                               required
+                              placeholder="Input Alamat..."
                          >{{ old('alamat') }}</textarea>
                          </div>
                     </div>
                     <!--end::Col-->
                     <!--begin::Col-->
                     <div class="col-md-6">
-                      <label for="warga_negara" class="form-label">Kewarganegaraan</label>
-                      <div class="input-group has-validation">
+                      <label for="warga_negara" class="form-label small px-2 py-1 rounded-top">Kewarganegaraan</label>
+                      <div class="input-group has-validation input-group-sm">
                         <span class="input-group-text" id=""><i class="bi bi-flag-fill"></i></span>
                         <select class="form-control" id="warga_negara" name="warga_negara" required>
                          <option value="">Pilih Kewarganegaraan</option>
@@ -203,22 +280,25 @@
                    <!--end::Col-->
                     <!--begin::Col-->
                     <div class="col-md-6">
-                        <label for="negara_asal" class="form-label">Negara Asal</label>
-                        <div class="input-group has-validation">
+                        <label for="negara_asal" class="form-label small px-2 py-1 rounded-top">Negara Asal</label>
+                        <div class="input-group input-group-sm has-validation input-group-sm">
                         <span class="input-group-text text-wrap"><i class="bi bi-geo-fill"></i></span>
-                        <textarea
-                            class="form-control"
-                            id="negara_asal"
-                            name="negara_asal"
-                            rows="2"
-                        >{{ old('negara_asal') }}</textarea>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="negara_asal"
+                          name="negara_asal"
+                          value="{{ old('negara_asal') }}"
+                          aria-describedby=""
+                          required
+                        />
                         </div>
                     </div>
                     <!--end::Col-->
                     <!--begin::Col-->
                     <div class="col-md-6">
-                         <label for="banjar" class="form-label">Banjar</label>
-                         <div class="input-group has-validation">
+                         <label for="banjar" class="form-label small px-2 py-1 rounded-top">Banjar</label>
+                         <div class="input-group has-validation input-group-sm">
                               <span class="input-group-text"><i class="bi bi-house-fill"></i></span>
                               <select class="form-control" id="banjar" name="banjar" required>
                                 <option value="">Pilih Banjar</option>
@@ -233,8 +313,8 @@
                     <!--end::Col-->
                       <!--begin::Col-->
                       <div class="col-md-6">
-                         <label for="pendidikan" class="form-label">Pendidikan</label>
-                         <div class="input-group has-validation">
+                         <label for="pendidikan" class="form-label small px-2 py-1 rounded-top">Pendidikan</label>
+                         <div class="input-group has-validation input-group-sm">
                            <span class="input-group-text" id=""><i class="bi bi-book-half"></i></span>
                            <select class="form-control" id="pendidikan" name="pendidikan" required>
                             <option value="">Pilih Pendidikan</option>
@@ -249,8 +329,8 @@
                      <!--end::Col-->
                      <!--begin::Col-->
                      <div class="col-md-6">
-                      <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                      <div class="input-group has-validation">
+                      <label for="tgl_lahir" class="form-label small px-2 py-1 rounded-top">Tanggal Lahir</label>
+                      <div class="input-group has-validation input-group-sm">
                         <span class="input-group-text" id=""><i class="bi bi-calendar-event"></i></span>
                         <input
                           type="date"
@@ -266,8 +346,9 @@
                   <!--end::Col-->
                       <!--begin::Col-->
                       <div class="col-md-6">
-                         <label for="" class="form-label">Umur</label>
-                         <input
+                         <label for="" class="form-label small px-2 py-1 rounded-top">Umur</label>
+                         <div class="input-group has-validation input-group-sm">
+                          <input
                            type="number"
                            class="form-control"
                            id="umur"
@@ -275,45 +356,53 @@
                            value="{{ old('umur') }}"
                            readonly
                          />
+                         </div>
+                         
                        </div>
                      <!--end::Col-->
                      <!--begin::Col-->
                      <div class="col-md-6">
-                      <label for="kawin" class="form-label">Status Kawin</label>
-                      <select class="form-control" id="kawin" name="kawin" required>
+                      <label for="kawin" class="form-label small px-2 py-1 rounded-top">Status Kawin</label>
+                      <div class="input-group has-validation input-group-sm">
+                        <select class="form-control" id="kawin" name="kawin" required>
                           <option value="">Pilih Status Perkawinan</option>
                           @foreach ($kawin as $k)
-                            <option value="{{ $k->id }}" {{ old('kawin') == $k->kawin ? 'selected' : '' }}>{{ $k->kawin }}</option>
+                            <option value="{{ $k->id }}" {{ old('kawin') == $k->status ? 'selected' : '' }}>{{ $k->status }}</option>
                           @endforeach
                       </select>
+                      </div>
                     </div>                  
                     <!--end::Col-->
                     <!--begin::Col-->
                     <div class="col-md-6">
-                      <label for="status_dasar" class="form-label">Status Dasar</label>
-                      <select class="form-control" id="status_dasar" name="status_dasar" required>
+                      <label for="status_dasar" class="form-label small px-2 py-1 rounded-top">Status Dasar</label>
+                      <div class="input-group has-validation input-group-sm">
+                        <select class="form-control" id="status_dasar" name="status_dasar" required>
                           <option value="">Pilih Status Dasar</option>
                           @foreach ($status_dasar as $sd)
                             <option value="{{ $sd->id }}" {{ old('status_dasar') == $sd->status_dasar ? 'selected' : '' }}>{{ $sd->status_dasar }}</option>
                           @endforeach
                       </select>
+                      </div>
                     </div>                  
                     <!--end::Col-->
                          <!--begin::Col-->
                          <div class="col-md-6">
-                          <label for="hubungan_keluarga" class="form-label">Hubungan Keluarga</label>
-                          <select class="form-control" id="hubungan_keluarga" name="hubungan_keluarga" required>
+                          <label for="hubungan_keluarga" class="form-label small px-2 py-1 rounded-top">Hubungan Keluarga</label>
+                          <div class="input-group has-validation input-group-sm">
+                            <select class="form-control" id="hubungan_keluarga" name="hubungan_keluarga" required>
                               <option value="">Pilih Hubungan Keluarga</option>
                               @foreach ($hubungan_keluarga as $h)
                               <option value="{{ $h->id }}" {{ old('hubungan_keluarga') == $h->hubungan_keluarga ? 'selected' : '' }}>{{ $h->hubungan_keluarga }}</option>
                               @endforeach
                           </select>
+                          </div>
                       </div>                      
                     <!--end::Col-->
                    <!--begin::Col-->
                           <div class="col-md-6">
-                            <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
-                            <div class="input-group has-validation">
+                            <label for="jenis_kelamin" class="form-label small px-2 py-1 rounded-top">Jenis Kelamin</label>
+                            <div class="input-group has-validation input-group-sm">
                                 <span class="input-group-text"><i class="bi bi-gender-ambiguous"></i></span>
                                 <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required onchange="updateProfileImage()">
                                     <option value="">Pilih Jenis Kelamin</option>
@@ -326,32 +415,35 @@
                     <!--end::Col-->
                      <!--begin::Col-->
                      <div class="col-md-6">
-                         <label for="" class="form-label">Agama</label>
-                         <select class="form-control" id="agama" name="agama" required>
-                          <option value="">Pilih Agama</option>
-                          @foreach ($agama as $h)
-                          <option value="{{ $h->id }}" {{ old('agama') == $h->agama ? 'selected' : '' }}>{{ $h->agama }}</option>
-                          @endforeach
-                      </select>
+                         <label for="" class="form-label small px-2 py-1 rounded-top">Agama</label>
+                         <div class="input-group has-validation input-group-sm">
+                          <select class="form-control" id="agama" name="agama" required>
+                            <option value="">Pilih Agama</option>
+                            @foreach ($agama as $h)
+                            <option value="{{ $h->id }}" {{ old('agama') == $h->agama ? 'selected' : '' }}>{{ $h->agama }}</option>
+                            @endforeach
+                        </select>
+                         </div>
                        </div>
                      <!--end::Col-->
                      <!--begin::Col-->
                      <div class="col-md-6">
-                      <label for="status_penduduk" class="form-label">Status Penduduk</label>
-                      <select class="form-control" id="status_penduduk" name="status_penduduk" required>
+                      <label for="status_penduduk" class="form-label small px-2 py-1 rounded-top">Status Penduduk</label>
+                      <div class="input-group has-validation input-group-sm">
+                        <select class="form-control" id="status_penduduk" name="status_penduduk" required>
                           <option value="">Pilih Status</option>
                           @foreach ($status_penduduk as $sp)
                           <option value="{{ $sp->id }}" {{ old('status_penduduk') == $sp->status_penduduk ? 'selected' : '' }}>{{ $sp->status_penduduk }}</option>
                           @endforeach
                       </select>
+                      </div>
                   </div>
-                  
                     <!--end::Col-->
-                    
                        <!--begin::Col-->
                      <div class="col-md-6">
-                         <label for="" class="form-label">Akta kelahiran</label>
-                         <input
+                         <label for="" class="form-label small px-2 py-1 rounded-top">Akta kelahiran</label>
+                         <div class="input-group has-validation input-group-sm">
+                          <input
                            type="number"
                            class="form-control"
                            id="akta_kelahiran"
@@ -359,12 +451,14 @@
                            value="{{ old('akta_kelahiran') }}"
                            required
                          />
+                         </div>
+                         
                        </div>
                        <!--end::Col-->
                         <!--begin::Col-->
                      <div class="col-md-6">
-                         <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
-                         <div class="input-group has-validation">
+                         <label for="tempat_lahir" class="form-label small px-2 py-1 rounded-top">Tempat Lahir</label>
+                         <div class="input-group has-validation input-group-sm">
                            <span class="input-group-text" id=""><i class="bi bi-house-heart"></i></span>
                            <input
                              type="text"
@@ -381,8 +475,8 @@
                         
                       <!--begin::Col-->
                       <div class="col-md-6">
-                         <label for="pendidikan_sedang_ditempuh" class="form-label">Pendidikan saat ini</label>
-                         <div class="input-group has-validation">
+                         <label for="pendidikan_sedang_ditempuh" class="form-label small px-2 py-1 rounded-top">Pendidikan saat ini</label>
+                         <div class="input-group has-validation input-group-sm">
                            <span class="input-group-text" id=""><i class="bi bi-book"></i></span>
                            <select class="form-control" id="pendidikan_sedang_ditempuh" name="pendidikan_sedang_ditempuh" required>
                             <option value="">Pilih Pendidikan Sedang</option>
@@ -395,8 +489,8 @@
                      <!--end::Col-->
                      <!--begin::Col-->
                      <div class="col-md-6">
-                         <label for="pekerjaan" class="form-label">Pekerjaan</label>
-                         <div class="input-group has-validation">
+                         <label for="pekerjaan" class="form-label small px-2 py-1 rounded-top">Pekerjaan</label>
+                         <div class="input-group has-validation input-group-sm">
                            <span class="input-group-text" id=""><i class="bi bi-briefcase"></i></span>
                             <select class="form-control" id="pekerjaan" name="pekerjaan" required>
                               <option value="">Pilih Pekerjaan</option>
@@ -409,8 +503,11 @@
                        </div>
 
                        <div class="col-md-12">
-                        <label for="image" class="form-label">Upload Image</label>
-                        <input class="form-control" type="file" id="image" name="image">
+                        <label for="image" class="form-label small px-2 py-1 rounded-top">Upload Image</label>
+                        <div class="input-group has-validation input-group-sm">
+                          <input class="form-control" type="file" id="image" name="image">
+                        </div>
+                        
                       </div>
                      <!--end::Col-->
 

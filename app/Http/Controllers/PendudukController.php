@@ -56,7 +56,6 @@ class PendudukController extends Controller
             $keluarga = $keluargaa->where('banjar_id', $user->banjar)->paginate(5);
             $total = $keluarga->count();
         }
-        
         $banjar = Banjar::all();
         $total = $keluargaa->count();
         $status_penduduk = StatusPenduduk::all();
