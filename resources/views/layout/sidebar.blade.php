@@ -124,9 +124,25 @@
                          </ul>
                     </li>
                    @endif
-                   
-
-
+                   @if (Auth::user()->username == 'admin')
+                    <li class="nav-item {{ request()->is('master') ? 'menu-open' : '' }}">
+                         <a href="#" class="nav-link">
+                              <i class="bi bi-database-fill-gear"></i>
+                         <p>
+                              Data Master
+                              <i class="nav-arrow bi bi-chevron-right"></i>
+                         </p>
+                         </a>
+                         <ul class="nav nav-treeview" style="display: {{ request()->is('master') ? 'block' : 'none' }};">
+                         <li class="nav-item">
+                              <a href="/master" class="nav-link {{ request()->is('master') ? 'active' : '' }}">
+                                   <i class="nav-icon bi bi-circle"></i>
+                                   <p>Data Jenis Kelamin</p>
+                              </a>
+                         </li>
+                         </ul>
+                    </li>
+                   @endif
                    
                </ul>
                <!--end::Sidebar Menu-->

@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class PendudukController extends Controller
 {
@@ -67,7 +68,7 @@ class PendudukController extends Controller
 
 
     public function penduduk_list_keluarga($no_kk){
-        $penduduk = Penduduk::where('no_kk', $no_kk)->get();
+        $penduduk = Penduduk::where('no_kk', $no_kk)->orderBy('hubungan_keluarga_id', 'asc')->get();
         $kepala = Penduduk::where('no_kk', $no_kk)->where('hubungan_keluarga_id', 1)->first();
         if (!$kepala) {
             return redirect()->route('penduduk.index')->with('error', 'Kepala keluarga tidak ditemukan.');
@@ -120,46 +121,53 @@ class PendudukController extends Controller
                 'no_kk' => 'required',
                 'nik' => 'required',
                 'nama' => 'required',
-                'warga_negara' => 'required',
+                'anak_ke' => 'required',
+                'no_telepon' => 'required',
+                'email' => 'required|email',
+                'warga_negara_id' => 'required',
                 'nama_ayah' => 'required',
                 'nama_ibu' => 'required',
                 'nik_ayah' => 'required',
                 'nik_ibu' => 'required',
                 'alamat' => 'required',
-                'banjar' => 'required',
-                'pendidikan' => 'required',
-                'umur' => 'required',
-                'kawin' => 'required',
-                'hubungan_keluarga' => 'required',
-                'jenis_kelamin' => 'required',
-                'agama' => 'nullable',
-                'status_penduduk' => 'required',
+                'agama_id' => 'required',
+                'banjar_id' => 'required',
+                'pendidikan_id' => 'required',
+                'kawin_id' => 'required',
+                'hubungan_keluarga_id' => 'required',
+                'jenis_kelamin_id' => 'required',
+                'status_penduduk_id' => 'required',
                 'akta_kelahiran' => 'required',
                 'tempat_lahir' => 'required',
                 'tgl_lahir' => 'required|date',
-                'pendidikan_sedang_ditempuh' => 'required',
-                'pekerjaan' => 'required',
-                'status_dasar' => 'required'
+                'pendidikan_sedang_id' => 'required',
+                'pekerjaan_id' => 'required',
+                'status_dasar_id' => 'required',
+                'golongan_darah' => 'required',
+                'negara_asal' => 'nullable',
+                'akta_nikah' => 'nullable',
+                'akta_perceraian' => 'nullable',
+                'tgl_perkawinan' => 'nullable',
+                'tgl_perceraian' => 'nullable'
+                
             ]);
 
+            // Hitung umur dari tgl_lahir
+            $umur = Carbon::parse($request->tgl_lahir)->age;
             if($request->file('image')){
                 $validated['image'] = $request->file('image')->store('post-images');
             }
-            
-            
-    
-            // Jika validasi berhasil, lanjutkan menyimpan data
+            $validated['umur'] = $umur;
             Penduduk::create($validated);
     
-            // Jika berhasil, redirect ke halaman lain
             return redirect()->route('penduduk.index')->with('success', 'Data berhasil disimpan!');
             
         } catch (\Illuminate\Validation\ValidationException $e) {
-            // Tangani jika validasi gagal (opsional, Laravel sudah otomatis menangani pengalihan)
+            // dd($e->validator->errors());
             return redirect()->back()
-            ->with('error', 'Pastikan data terisi dengan benar.')  // Menggunakan with untuk menyertakan pesan error
-            ->withErrors($e->validator->errors())  // Menyertakan kesalahan validasi
-            ->withInput();  // Menyertakan input yang sudah dimasukkan pengguna
+            ->with('error', 'Pastikan data terisi dengan benar')
+            ->withErrors($e->validator->errors())
+            ->withInput();
         }
     }
 
@@ -186,7 +194,6 @@ class PendudukController extends Controller
     {
         
         $penduduk = Penduduk::find($id);
-
         if($request->file('image')){
             if($request->oldImage){
                 Storage::delete($request->oldImage);
@@ -195,6 +202,8 @@ class PendudukController extends Controller
         }else{
             $image = $penduduk->image;
         }
+
+        $umur = Carbon::parse($request->tgl_lahir)->age;
         
         $penduduk->update([
             'image' => $image,
@@ -206,20 +215,31 @@ class PendudukController extends Controller
             'nik_ayah' => $request->nik_ayah,
             'nik_ibu' => $request->nik_ibu,
             'alamat' => $request->alamat,
-            'banjar' => $request->banjar,
-            'pendidikan' => $request->pendidikan,
+            'banjar_id' => $request->banjar_id,
+            'pendidikan_id' => $request->pendidikan_id,
             'akta_kelahiran' => $request->akta_kelahiran,
-            'umur' => $request->umur,
-            'kawin' => $request->kawin,
-            'hubungan_keluarga' => $request->hubungan_keluarga,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'agama' => $request->agama,
-            'status_penduduk' => $request->status_penduduk,
+            'umur' => $umur,
+            'kawin_id' => $request->kawin_id,
+            'hubungan_keluarga_id' => $request->hubungan_keluarga_id,
+            'jenis_kelamin_id' => $request->jenis_kelamin_id,
+            'agama_id' => $request->agama_id,
+            'status_penduduk_id' => $request->status_penduduk_id,
             'tempat_lahir' => $request->tempat_lahir,
             'tgl_lahir' => $request->tgl_lahir,
-            'pendidikan_sedang_ditempuh' => $request->pendidikan_sedang_ditempuh,
-            'pekerjaan' => $request->pekerjaan,
-            'status_dasar' => $request->status_dasar
+            'pendidikan_sedang_id' => $request->pendidikan_sedang_id,
+            'pekerjaan_id' => $request->pekerjaan_id,
+            'warga_negara_id' => $request->warga_negara_id,
+            'negara_asal' => $request->negara_asal,
+            'status_dasar_id' => $request->status_dasar_id,
+            'anak_ke' => $request->anak_ke,
+            'no_telepon' => $request->no_telepon,
+            'email' => $request->email,
+            'akta_nikah' => $request->akta_nikah,
+            'akta_perceraian' => $request->akta_perceraian,
+            'tgl_perkawinan' => $request->tgl_perkawinan,
+            'tgl_perceraian' => $request->tgl_perceraian,
+            'golongan_darah' => $request->golongan_darah
+            
         ]);
         
         // Redirect berdasarkan tipe request
@@ -350,18 +370,38 @@ class PendudukController extends Controller
 
     public function detail_penduduk($id){
         $penduduk = Penduduk::find($id);
-        $banjar = Banjar::all();
         $type = 'penduduk';
+        $banjar = Banjar::all();
+        $status_penduduk = StatusPenduduk::all();
+        $status_dasar = StatusDasar::all();
+        $jenis_kelamin = JenisKelamin::all();
+        $kawin = Kawin::all();
+        $warga_negara = WargaNegara::all();
+        $agama = Agama::all();
+        $pendidikan = Pendidikan::all();
+        $hubungan_keluarga = HubunganKeluarga::all();
+        $pekerjaan = Pekerjaan::all();
+        $pendidikan_sedang = PendidikanSedang::all();
 
-        return view('penduduk.detail_penduduk', compact('penduduk', 'banjar','type'));
+        return view('penduduk.detail_penduduk', compact('penduduk', 'banjar','type', 'status_penduduk', 'status_dasar', 'jenis_kelamin', 'kawin', 'warga_negara', 'agama', 'pendidikan', 'hubungan_keluarga', 'pekerjaan', 'pendidikan_sedang'));
     }
 
     public function detail_keluarga($id){
         $penduduk = Penduduk::find($id);
         $banjar = Banjar::all();
         $type = 'keluarga';
+        $status_penduduk = StatusPenduduk::all();
+        $status_dasar = StatusDasar::all();
+        $jenis_kelamin = JenisKelamin::all();
+        $kawin = Kawin::all();
+        $warga_negara = WargaNegara::all();
+        $agama = Agama::all();
+        $pendidikan = Pendidikan::all();
+        $hubungan_keluarga = HubunganKeluarga::all();
+        $pekerjaan = Pekerjaan::all();
+        $pendidikan_sedang = PendidikanSedang::all();
 
-        return view('keluarga.detail_keluarga', compact('penduduk', 'banjar', 'type'));
+        return view('keluarga.detail_keluarga', compact('penduduk', 'banjar','type', 'status_penduduk', 'status_dasar', 'jenis_kelamin', 'kawin', 'warga_negara', 'agama', 'pendidikan', 'hubungan_keluarga', 'pekerjaan', 'pendidikan_sedang'));
     }
 
 

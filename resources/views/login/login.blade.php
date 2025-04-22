@@ -1,5 +1,9 @@
+@section('title')
+Login
+@endsection
 @include('layout.header')
 <body class="login-page" style="background: url('{{ asset('lte/dist/assets/img/bg.jpg') }}') no-repeat center center fixed; background-size: cover;">
+
      <!--begin::App Wrapper-->
      <div class="login-box">
           
@@ -15,22 +19,37 @@
               <form action="{{ route('post.login') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" name="username" placeholder="Username"  value="{{ old('username') }}"/>
+                  <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" placeholder="Username"  value="{{ old('username') }}"/>
                   <div class="input-group-text"><span class="bi bi-person"></span></div>
+                  @error('username')
+                              <div class="invalid-feedback">
+                                {{ $message }}
+                              </div>
+                  @enderror
                 </div>
                 <div class="input-group mb-3">
-                  <input type="password" class="form-control" name="password" placeholder="Password" id="password" />
+                  <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" id="password" />
                   <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
+                  @error('password')
+                              <div class="invalid-feedback">
+                                {{ $message }}
+                              </div>
+                  @enderror
                 </div>
                 <div class="input-group mb-3">
                   <span class="input-group-text"><i class="bi bi-caret-down-square-fill"></i></span>
-                  <select class="form-control" id="banjar" name="banjar">
+                  <select class="form-control @error('password') is-invalid @enderror" id="banjar" name="banjar">
                       <option selected disabled>Pilih Banjar</option>
                       @foreach ($banjar as $b)
                       <option value="{{ $b->id }}">{{ $b->banjar }}</option>
                       @endforeach
                       
                   </select>
+                  @error('banjar')
+                              <div class="invalid-feedback">
+                                {{ $message }}
+                              </div>
+                  @enderror
               </div>
               
                 <!--begin::Row-->

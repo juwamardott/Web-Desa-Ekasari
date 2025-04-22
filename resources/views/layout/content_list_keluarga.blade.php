@@ -20,7 +20,7 @@
          <div class="row">
            <div class="col-lg-4">
              <!-- /.card -->
-             <div class="card mb-4">
+             <div class="card mb-2">
                <div class="px-3 py-3 bg-info">
                     <div class="mb-2">
                       
@@ -37,13 +37,33 @@
                          <div class="card-body text-center d-flex flex-column align-items-center">
                              <h3 class="card-title text-primary fw-bold mb-2">{{ $kepala->nama }}</h3>
                              <span class="text-muted d-block">NIK: {{ $kepala->nik }}</span>
-                             <span class="text-muted d-block">{{ $kepala->hubungan_keluarga }}</span>
+                             <span class="text-muted d-block">{{ $kepala->hubungan_keluarga->hubungan_keluarga }}</span>
                          </div>
-                     </div>
+                     </div>`
+
+
                                        
                  
                </div>
+               
+              
              </div>
+             <div class="mt-3 mb-3">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="alert alert-secondary p-2 small mb-1">
+                    <i class="bi bi-calendar-plus me-2"></i>
+                    Terdaftar: <br><strong>{{ \Carbon\Carbon::parse($kepala->created_at)->translatedFormat('d F Y H:i') }}</strong>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="alert alert-secondary p-2 small mb-1">
+                    <i class="bi bi-clock-history me-2"></i>
+                    Terupdate : <br> <strong>{{ \Carbon\Carbon::parse($kepala->updated_at)->translatedFormat('d F Y H:i') }}</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
              
              <!-- /.card -->
            </div>
@@ -74,7 +94,7 @@
                                    alt="Product 1"
                                    class="rounded-circle img-size-32 me-2"
                                  />
-                                        @elseif ($p->image == null && $p->jenis_kelamin == "Laki-laki")
+                                        @elseif ($p->image == null && $p->jenis_kelamin_id == 1)
                                         <img
                                    src="{{ asset('lte/dist/assets/img/user1.png') }}"
                                    alt="Product 1"
@@ -96,7 +116,7 @@
                                 {{ $p->nik }}
                               </td>
                               <td>
-                                <span>{{ $p->hubungan_keluarga }}</span>
+                                <span>{{ $p->hubungan_keluarga->hubungan_keluarga }}</span>
                               </td>
                             </tr>
                          @endforeach

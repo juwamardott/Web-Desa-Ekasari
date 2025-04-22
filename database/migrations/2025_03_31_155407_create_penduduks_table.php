@@ -34,7 +34,7 @@ return new class extends Migration
             $table->foreignId('jenis_kelamin_id');
             $table->foreignId('agama_id');
             $table->foreignId('status_penduduk_id');
-            $table->bigInteger('akta_kelahiran');
+            $table->string('akta_kelahiran');
             $table->string('tempat_lahir');
             $table->date('tgl_lahir');
             $table->foreignId('pendidikan_sedang_id');
