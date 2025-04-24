@@ -36,7 +36,6 @@
                  <div class="d-flex mt-3 align-items-center border-top border-info border-4" id="filter">
                     <!-- Container Filter (Kiri) -->
                     <div class="d-flex gap-2 my-2">
-                        <input type="hidden" name="hubungan_keluarga" id="type" value="Kepala Keluarga">
                         <select id="statusFilter" class="form-select">
                             <option value="">-- Pilih Status --</option>
                             @foreach ($status_penduduk as $sp)
@@ -50,7 +49,6 @@
                                 <option value="{{ $jk->id }}">{{ $jk->jenis_kelamin }}</option>
                             @endforeach
                         </select>
-
                         @if (Auth::user()->username == 'admin')
                         <select id="banjarFilter" class="form-select">
                             <option value="">-- Pilih Banjar --</option>
@@ -155,7 +153,7 @@
                                         <td>{{ $p->pendidikan->pendidikan }}</td>
                                         <td>{{ $p->umur }}</td>
                                         <td>{{ $p->pekerjaan->nama_pekerjaan }}</td>
-                                        <td>{{ $p->kawin }}</td>
+                                        <td>{{ $p->kawin->status }}</td>
                                         <td>{{ $p->updated_at }}</td>
                                         <td>{{ $p->created_at }}</td>
                                    </tr>
@@ -474,30 +472,36 @@
         let jenis_kelamin = $('#jenisKelaminFilter').val();
         let banjar = $('#banjarFilter').val();
         let umur = $('#umurFilter').val();
+        let status_dasar = $('#statusDasarFilter').val();
 
         let query = $.param({
             search: search,
             status: status,
             jenis_kelamin: jenis_kelamin,
             banjar: banjar,
-            umur: umur
+            umur: umur,
+            status_dasar: status_dasar
         });
-
-        $('#export-button').data('href', "/export-keluarga?" + query); // Simpan link di data-href
+        
+        // Store the complete URL in the data attribute
+        $('#export-button').data('href', "/export-keluarga?" + query);
     }
 
-    $('#searchInput, #statusFilter, #jenisKelaminFilter, #banjarFilter, #umurFilter').on('change keyup', function () {
+    $('#searchInput, #statusFilter, #jenisKelaminFilter, #banjarFilter, #umurFilter, #statusDasarFilter').on('change keyup', function () {
         updateExportLink();
     });
 
-    updateExportLink();
+    // Initialize the export link when page loads
+    $(document).ready(function() {
+        updateExportLink();
+    });
 
-    // Tambahkan event handler untuk konfirmasi SweetAlert
+    // Add SweetAlert confirmation handler
     $('#export-button').on('click', function (e) {
-        e.preventDefault(); // Cegah link langsung jalan
+        e.preventDefault();
 
-        const exportUrl = $(this).data('href'); // Ambil URL dari data-href
-
+        const exportUrl = $(this).data('href');
+        
         Swal.fire({
             title: 'Yakin ingin export data?',
             text: "File akan diunduh dalam format Excel.",
@@ -509,7 +513,7 @@
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.open(exportUrl, '_blank'); // Buka link export di tab baru
+                window.location.href = exportUrl;
             }
         });
     });

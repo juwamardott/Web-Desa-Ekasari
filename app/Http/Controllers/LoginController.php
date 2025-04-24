@@ -17,23 +17,23 @@ class LoginController extends Controller
 
         public function login(Request $request)
     {
+        // dd($request->input());
         // Validasi input
         $request->validate([
             'username' => 'required',
             'password' => 'required',
-            'banjar'   => 'required',
+            'banjar'   => 'required|integer|exists:banjars,id',
         ]);
 
         $credentials = $request->only('username', 'password');
         $banjar = $request->input('banjar');
-
+        // dd($banjar);
         // Coba login menggunakan Auth::attempt()
         if (Auth::attempt($credentials)) {
             $user = Auth::user(); // Ambil user yang sedang login
-            // dd($user);
-            // Jika user bukan admin, cek banjar
-                if ($user->username !== 'admin' && $banjar !== $user->banjar) {
-                    Auth::logout(); // Logout user jika banjar tidak sesuai
+            // dd($user->banjar_id);
+                if ($user->username !== 'admin' && $banjar != $user->banjar_id) {
+                    Auth::logout();
                     return redirect()->back()->with('error', "Akun tidak diizinkan login");
                 }
 

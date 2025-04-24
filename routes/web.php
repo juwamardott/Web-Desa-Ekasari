@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitorController;
 use App\Exports\PendudukExport;
 use App\Exports\KeluargaExport;
+use App\Http\Controllers\DataMasterController;
 use App\Http\Controllers\SuratController;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Banjar;
@@ -58,16 +59,21 @@ Route::delete('/penduduk/delete/{id}', [PendudukController::class, 'destroy'])->
 
 Route::get('/visitors-data', [VisitorController::class, 'getVisitors'])->middleware('auth');
 
-
-
 Route::get('/export-penduduk', function (Illuminate\Http\Request $request) {
-     return Excel::download(new PendudukExport($request->all()), 'penduduk.xlsx');
- });
+    $today = now()->format('Y-m-d');
+    return Excel::download(
+        new PendudukExport($request->all()), 
+        "data-penduduk-{$today}.xlsx"
+    );
+});
 
- Route::get('/export-keluarga', function (Illuminate\Http\Request $request) {
-     return Excel::download(new KeluargaExport($request->all()), 'keluarga.xlsx');
- });
-
+Route::get('/export-keluarga', function (Illuminate\Http\Request $request) {
+    $today = now()->format('Y-m-d');
+    return Excel::download(
+        new KeluargaExport($request->all()), 
+        "data-keluarga-{$today}.xlsx"
+    );
+});
 
 
  Route::get('/surat',[SuratController::class, 'index'])->name('surat')->middleware('auth');
@@ -76,3 +82,18 @@ Route::get('/export-penduduk', function (Illuminate\Http\Request $request) {
  Route::get('/tes', function(){
     return view('surat.contoh');
  });
+
+Route::get('/master/jenis_kelamin', [DataMasterController::class, 'jenis_kelamin'])->name('jenis_kelamin.index');
+Route::get('/master/pendidikan', [DataMasterController::class, 'pendidikan'])->name('pendidikan.index');
+Route::get('/master/pendidikan_sedang', [DataMasterController::class, 'pendidikan_sedang'])->name('pendidikan_sedang.index');
+Route::get('/master/status_dasar', [DataMasterController::class, 'status_dasar'])->name('status_dasar.index');
+Route::get('/master/pekerjaan', [DataMasterController::class, 'pekerjaan'])->name('pekerjaan.index');
+Route::get('/master/jenis_surat', [DataMasterController::class, 'jenis_surat'])->name('jenis_surat.index');
+
+
+
+Route::get('/jenis_surat/tambah', [SuratController::class, 'create'])->name('jenis_surat.tambah');
+Route::post('/jenis_surat/tambah', [SuratController::class, 'store'])->name('surat.store');
+
+Route::get('/jenis_surat/detail/{id}', [SuratController::class, 'edit'])->name('jenis_surat.edit');
+Route::post('/jenis_surat/detail/{id}', [SuratController::class, 'update'])->name('jenis_surat.update');

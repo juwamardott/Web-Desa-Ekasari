@@ -44,12 +44,8 @@
       
                  <!--end::Body-->
                <!--end::Form-->
-               
+               </div>  
                </div>
-
-  
-               </div>
-
                <div class="mt-1 mb-3">
                 <div class="row">
                   <div class="col-md-6">

@@ -124,25 +124,51 @@
                          </ul>
                     </li>
                    @endif
-                   @if (Auth::user()->username == 'admin')
-                    <li class="nav-item {{ request()->is('master') ? 'menu-open' : '' }}">
-                         <a href="#" class="nav-link">
-                              <i class="bi bi-database-fill-gear"></i>
-                         <p>
-                              Data Master
-                              <i class="nav-arrow bi bi-chevron-right"></i>
-                         </p>
-                         </a>
-                         <ul class="nav nav-treeview" style="display: {{ request()->is('master') ? 'block' : 'none' }};">
-                         <li class="nav-item">
-                              <a href="/master" class="nav-link {{ request()->is('master') ? 'active' : '' }}">
-                                   <i class="nav-icon bi bi-circle"></i>
-                                   <p>Data Jenis Kelamin</p>
-                              </a>
-                         </li>
-                         </ul>
-                    </li>
-                   @endif
+                         @if (Auth::user()->username == 'admin')
+                              @php
+                                   $isMasterActive = 
+                                   request()->is('master/pendidikan') ||
+                                   request()->is('master/status_dasar') ||
+                                   request()->is('master/pekerjaan') ||
+                                   request()->is('master/jenis_surat') ||
+                                   request()->is('master/pendidikan_sedang');
+                                   
+                              @endphp
+                              <li class="nav-item {{ $isMasterActive ? 'menu-open' : '' }}">
+                                   <a href="#" class="nav-link {{ $isMasterActive ? 'active' : '' }}">
+                                        <i class="bi bi-database-fill-gear"></i>
+                                        <p>
+                                             Data Master
+                                             <i class="nav-arrow bi bi-chevron-right"></i>
+                                        </p>
+                                   </a>
+                                   <ul class="nav nav-treeview" style="display: {{ $isMasterActive ? 'block' : 'none' }};">
+                                        <li class="nav-item">
+                                             <a href="/master/pendidikan" class="nav-link {{ request()->is('master/pendidikan') ? 'active' : '' }}">
+                                                  <i class="nav-icon bi bi-circle"></i>
+                                                  <p>Data Pendidikan</p>
+                                             </a>
+                                             <a href="/master/pendidikan_sedang" class="nav-link {{ request()->is('master/pendidikan_sedang') ? 'active' : '' }}">
+                                                  <i class="nav-icon bi bi-circle"></i>
+                                                  <p>Data Pendidikan Sedang</p>
+                                             </a>
+                                             <a href="/master/status_dasar" class="nav-link {{ request()->is('master/status_dasar') ? 'active' : '' }}">
+                                                  <i class="nav-icon bi bi-circle"></i>
+                                                  <p>Data Status Dasar</p>
+                                             </a>
+                                             <a href="/master/pekerjaan" class="nav-link {{ request()->is('master/pekerjaan') ? 'active' : '' }}">
+                                                  <i class="nav-icon bi bi-circle"></i>
+                                                  <p>Data Pekerjaan</p>
+                                             </a>
+                                             <a href="/master/jenis_surat" class="nav-link {{ request()->is('master/jenis_surat') ? 'active' : '' }}">
+                                                  <i class="nav-icon bi bi-circle"></i>
+                                                  <p>Data Surat</p>
+                                             </a>
+                                        </li>
+                                   </ul>
+                              </li>
+                              @endif
+
                    
                </ul>
                <!--end::Sidebar Menu-->

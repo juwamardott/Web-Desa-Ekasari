@@ -78,12 +78,18 @@ class Penduduk extends Model
         return $this->belongsTo(JenisKelamin::class, 'jenis_kelamin_id');
     }
 
-
+    public function warga_negara(){
+        return $this->belongsTo(WargaNegara::class, 'warga_negara_id');
+    }
     public function status_penduduk(){
         return $this->belongsTo(StatusPenduduk::class, 'status_penduduk_id');
     }
 
     public function status_dasar(){
         return $this->belongsTo(StatusDasar::class, 'status_dasar_id');
+    }
+
+    public function kawin(){
+        return $this->belongsTo(Kawin::class, 'kawin_id');
     }
 }

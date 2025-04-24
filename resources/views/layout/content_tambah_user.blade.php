@@ -52,7 +52,7 @@
                   </div>
                   <div class="mb-3">
                     <label for="banjar" class="form-label">Banjar</label>
-                    <select name="banjar" id="banjar" class="form-control" aria-describedby="banjar">
+                    <select name="banjar_id" id="banjar_id" class="form-control" aria-describedby="banjar_id">
                         <option value="">-- Pilih Banjar --</option>
                         <option value="Root">Root</option>
                         @foreach ($banjar as $b)

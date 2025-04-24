@@ -90,7 +90,6 @@
                 <div class="d-flex justify-between align-items-center">
                     <div class="">
                         <a id="export-button" href="#" class="btn btn-danger" target="_blank">Export Excel</a>
-                        
                     </div>
                     <div class="ms-auto" style="width: 250px;">
                         <input type="text" id="searchInput" class="form-control" placeholder="Cari Penduduk...">
@@ -172,7 +171,7 @@
                                         <td>{{ $p->pendidikan->pendidikan }}</td>
                                         <td>{{ $p->umur }}</td>
                                         <td>{{ $p->pekerjaan->nama_pekerjaan }}</td>
-                                        <td>{{ $p->kawin }}</td>
+                                        <td>{{ $p->kawin->status }}</td>
                                         <td>{{ $p->updated_at }}</td>
                                         <td>{{ $p->created_at }}</td>
                                    </tr>
@@ -181,7 +180,7 @@
                          </table>
                          <div class="d-flex justify-content-center pagination-container">
                             {{ $penduduk->links('pagination::bootstrap-5') }}
-                        </div>                        
+                        </div>                      
                      </div>
                      <!-- End responsive table -->
                  </div>
@@ -190,6 +189,7 @@
      </div>
      <!--end::App Content-->
  </main>
+ 
 <style>
  @media (max-width: 767px) {
      .table th, .table td {
@@ -483,26 +483,27 @@
 </script>
 
 
-<script>
+{{-- <script>
     function updateExportLink() {
         let search = $('#searchInput').val();
         let status = $('#statusFilter').val();
         let jenis_kelamin = $('#jenisKelaminFilter').val();
         let banjar = $('#banjarFilter').val();
         let umur = $('#umurFilter').val();
+        let status_dasar = $('#statusDasarFilter').val();
 
         let query = $.param({
             search: search,
             status: status,
             jenis_kelamin: jenis_kelamin,
             banjar: banjar,
-            umur: umur
+            umur: umur,
+            status_dasar : status_dasar
         });
-
         $('#export-button').data('href', "/export-penduduk?" + query); // Simpan link di data-href
     }
 
-    $('#searchInput, #statusFilter, #jenisKelaminFilter, #banjarFilter, #umurFilter').on('change keyup', function () {
+    $('#searchInput, #statusFilter, #jenisKelaminFilter, #banjarFilter, #umurFilter, #statusDasarFilter').on('change keyup', function () {
         updateExportLink();
     });
 
@@ -513,7 +514,7 @@
         e.preventDefault(); // Cegah link langsung jalan
 
         const exportUrl = $(this).data('href'); // Ambil URL dari data-href
-
+        console.log(exportUrl);
         Swal.fire({
             title: 'Yakin ingin export data?',
             text: "File akan diunduh dalam format Excel.",
@@ -525,12 +526,66 @@
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.open(exportUrl, '_blank'); // Buka link export di tab baru
+                window.open(exportUrl, '_blank');
+            }
+        });
+    });
+</script> --}}
+
+
+<script>
+    function updateExportLink() {
+        let search = $('#searchInput').val();
+        let status = $('#statusFilter').val();
+        let jenis_kelamin = $('#jenisKelaminFilter').val();
+        let banjar = $('#banjarFilter').val();
+        let umur = $('#umurFilter').val();
+        let status_dasar = $('#statusDasarFilter').val();
+
+        let query = $.param({
+            search: search,
+            status: status,
+            jenis_kelamin: jenis_kelamin,
+            banjar: banjar,
+            umur: umur,
+            status_dasar: status_dasar
+        });
+        
+        // Store the complete URL in the data attribute
+        $('#export-button').data('href', "/export-penduduk?" + query);
+    }
+
+    $('#searchInput, #statusFilter, #jenisKelaminFilter, #banjarFilter, #umurFilter, #statusDasarFilter').on('change keyup', function () {
+        updateExportLink();
+    });
+
+    // Initialize the export link when page loads
+    $(document).ready(function() {
+        updateExportLink();
+    });
+
+    // Add SweetAlert confirmation handler
+    $('#export-button').on('click', function (e) {
+        e.preventDefault();
+
+        const exportUrl = $(this).data('href');
+        
+        Swal.fire({
+            title: 'Yakin ingin export data?',
+            text: "File akan diunduh dalam format Excel.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, export sekarang!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = exportUrl;
             }
         });
     });
 </script>
-
 
 
 

@@ -26,7 +26,7 @@
                <div class="card-header"><div class="card-title">Form Pembuatan Surat</div></div>
                <!--end::Header-->
                <!--begin::Form-->
-               <form action="{{ route('post.surat') }}" method="POST" target="_blank">
+               <form action="{{ route('post.surat') }}" method="POST" >
                     @csrf
                  <!--begin::Body-->
                  <div class="card-body">
@@ -35,20 +35,30 @@
                          <input
                          type="nomor_surat"
                          name="nomor_surat"
-                         class="form-control"
+                         class="form-control @error('nomor_surat') is-invalid @enderror"
                          id="nomor_surat"
                          aria-describedby="nomor_surat"
                          />
-                    </div>
+                         @error('nomor_surat')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                      </div>
                     <div class="mb-3">
                          <label for="jenis_surat" class="form-label">Jenis Surat</label>
-                         <select name="jenis_surat" id="jenis_surat" class="form-control" aria-describedby="banjar">
+                         <select name="jenis_surat" id="jenis_surat" class="form-control @error('jenis_surat') is-invalid @enderror" aria-describedby="banjar">
                          <option value="">-- Pilih Jenis Surat --</option>
                          @foreach ($jenis_surat as $s)
                               
                               <option value="{{ $s->id }}">{{ $s->jenis_surat }}</option>
                          @endforeach
                          </select>
+                         @error('jenis_surat')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                       <label for="keterangan" class="form-label">Keterangan</label>
@@ -62,32 +72,47 @@
                  </div>
                     <div class="mb-3">
                          <label for="penduduk_id" class="form-label">Cari Penduduk</label>
-                         <select name="penduduk_id" id="penduduk_id" class="form-control" style="width: 100%;">
+                         <select name="penduduk_id" id="penduduk_id" class="form-control @error('penduduk_id') is-invalid @enderror" style="width: 100%;">
                              <option value="">-- Cari berdasarkan Nama / NIK --</option>
                              @foreach ($penduduks as $p)
                                  <option value="{{ $p->id }}">{{ $p->nik }} - {{ $p->nama }}</option>
                              @endforeach
                          </select>
+                         @error('penduduk_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                      </div>                     
                     <div class="mb-3">
                          <label for="keperluan" class="form-label">Keperluan</label>
                          <input
                          type="keperluan"
                          name="keperluan"
-                         class="form-control"
+                         class="form-control @error('keperluan') is-invalid @enderror"
                          id="keperluan"
                          aria-describedby="keperluan"
                          />
+                         @error('keperluan')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                          <label for="tanggal_dibuat" class="form-label">Tanggal Dibuat</label>
                          <input
                              type="date"
                              name="tanggal_dibuat"
-                             class="form-control"
+                             class="form-control @error('tanggal_dibuat') is-invalid @enderror"
                              id="tanggal_dibuat"
                              aria-describedby="tanggal_dibuat"
                          />
+                         @error('tanggal_dibuat')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                      </div>
                  </div>
                  <!--end::Body-->

@@ -32,7 +32,7 @@
           <td>{{ $p->pendidikan->pendidikan }}</td>
           <td>{{ $p->umur }}</td>
           <td>{{ $p->pekerjaan->nama_pekerjaan }}</td>
-          <td>{{ $p->kawin }}</td>
+          <td>{{ $p->kawin->status }}</td>
           <td>{{ $p->updated_at }}</td>
           <td>{{ $p->created_at }}</td>
     </tr>

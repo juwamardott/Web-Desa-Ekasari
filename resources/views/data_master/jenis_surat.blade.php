@@ -1,5 +1,5 @@
 @section('title')
-Data Penduduk
+Data Master
 @endsection
 @include('layout.header')
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -12,7 +12,7 @@ Data Penduduk
           @include('layout.sidebar')
           <!--end::Sidebar-->
           <!--begin::App Main-->
-          @include('layout.content_penduduk')
+          @include('layout.jenis_surat')
           <!--end::App Main-->
           @include('layout.copyright')
           <!--end::Footer-->
@@ -23,7 +23,7 @@ Data Penduduk
 @include('layout.lib')
 @include('layout.footer')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     
     <!-- Panggil Toast jika session 'success' ada -->
     <script>

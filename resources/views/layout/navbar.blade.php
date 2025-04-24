@@ -35,7 +35,7 @@
                               <img src="{{ asset('lte/dist/assets/img/user1.png') }}" class="rounded-circle shadow"
                                    alt="User Image" />
                               <p>
-                                   {{ ucfirst(Auth::user()->username) }} | {{ ucfirst(Auth::user()->banjar) }}
+                                   {{ ucfirst(Auth::user()->username) }} | {{ ucfirst(Auth::user()->banjar->banjar) }}
                                    <small>Member since Nov. 2023</small>
                               </p>
                          </li>

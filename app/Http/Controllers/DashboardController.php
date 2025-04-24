@@ -10,9 +10,9 @@ class DashboardController extends Controller
     //
     public function index(){
         $penduduk =  Penduduk::where('status_penduduk_id',1)->count();
-        $keluarga = Penduduk::where('hubungan_keluarga_id', 1)->count();
-        $laki = Penduduk::where('jenis_kelamin_id', 1)->count();
-        $perempuan = Penduduk::where('jenis_kelamin_id', 2)->count();
+        $keluarga = Penduduk::where('hubungan_keluarga_id', 1)->where('status_penduduk_id', 1)->count();
+        $laki = Penduduk::where('jenis_kelamin_id', 1)->where('status_penduduk_id', 1)->count();
+        $perempuan = Penduduk::where('jenis_kelamin_id', 2)->where('status_penduduk_id', 1)->count();
         return view('dashboard.dashboard', compact('penduduk', 'keluarga', 'laki', 'perempuan'));
     }
 }

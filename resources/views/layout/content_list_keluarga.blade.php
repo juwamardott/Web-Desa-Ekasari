@@ -26,7 +26,7 @@
                       
                          @if ($kepala->image)
                          <img src="{{ asset('storage/'.$kepala->image) }}" class="rounded mx-auto d-block" alt="..." width="100">
-                        @elseif ($kepala->image == null && $kepala->jenis_kelamin == "Laki-laki")
+                        @elseif ($kepala->image == null && $kepala->jenis_kelamin_id == 1)
                         <img src="{{ asset('lte/dist/assets/img/user1.png') }}" class="rounded mx-auto d-block" alt="..." width="100">
                         @else
                         <img src="{{ asset('lte/dist/assets/img/user2.png') }}" class="rounded mx-auto d-block" alt="..." width="100">

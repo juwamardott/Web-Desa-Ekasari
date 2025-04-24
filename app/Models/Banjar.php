@@ -13,4 +13,8 @@ class Banjar extends Model
     public function penduduk(){
         return $this->hasMany(Penduduk::class, 'banjar_id');
     }
+
+    public function user(){
+        return $this->hasOne(User::class, 'banjar_id');
+    }
 }

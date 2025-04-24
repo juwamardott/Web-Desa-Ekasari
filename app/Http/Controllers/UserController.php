@@ -9,12 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    //
-     //
+    
      public function index(){
         $users = User::all();
         $total_user = $users->count();
-        $user = User::paginate(5);
+        $user = User::with('banjar')->paginate(5);
 
         return view('user.user', compact('user','total_user'));
     }
@@ -46,30 +45,21 @@ class UserController extends Controller
     }
 
     public function store(Request $request){
-        // dd($request->input());
         try {
-            // Validasi data request
             $validated = $request->validate([
                 'username' => 'required', 
-                'banjar' => 'required',
+                'banjar_id' => 'required',
                 'password' => 'required'
             ]);
-
-             // Hash password sebelum disimpan
             $validated['password'] = Hash::make($validated['password']);
-    
-            // Jika validasi berhasil, lanjutkan menyimpan data
             User::create($validated);
-    
-            // Jika berhasil, redirect ke halaman lain
             return redirect()->route('user.index')->with('success', 'Data berhasil disimpan!');
             
         } catch (\Illuminate\Validation\ValidationException $e) {
-            // Tangani jika validasi gagal (opsional, Laravel sudah otomatis menangani pengalihan)
             return redirect()->back()
-            ->with('error', 'Pastikan data terisi dengan benar.')  // Menggunakan with untuk menyertakan pesan error
-            ->withErrors($e->validator->errors())  // Menyertakan kesalahan validasi
-            ->withInput();  // Menyertakan input yang sudah dimasukkan pengguna
+            ->with('error', 'Pastikan data terisi dengan benar.') 
+            ->withErrors($e->validator->errors())
+            ->withInput(); 
         }
     }
 

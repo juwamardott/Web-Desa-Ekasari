@@ -29,12 +29,13 @@ class PendudukController extends Controller
     public function index()
     {
         $user = Auth::user();
+        // dd($user);
         if ($user->username === 'admin') {
             $penduduk = Penduduk::paginate(5);
             $total = Penduduk::count();
         } else {
-            $penduduk = Penduduk::where('banjar_id', $user->banjar)->paginate(5);
-            $total = Penduduk::where('banjar_id', $user->banjar)->count();
+            $penduduk = Penduduk::where('banjar_id', $user->banjar_id)->paginate(5);
+            $total = Penduduk::where('banjar_id', $user->banjar_id)->count();
         }
 
         $banjar = Banjar::all();
@@ -54,7 +55,7 @@ class PendudukController extends Controller
             $total = $keluargaa->count();
             $keluarga = $keluargaa->paginate(5);
         }else{
-            $keluarga = $keluargaa->where('banjar_id', $user->banjar)->paginate(5);
+            $keluarga = $keluargaa->where('banjar_id', $user->banjar_id)->paginate(5);
             $total = $keluarga->count();
         }
         $banjar = Banjar::all();
@@ -277,7 +278,7 @@ class PendudukController extends Controller
     if(Auth::user()->username == 'admin'){
         $banjar = $request->banjar;
     }else{
-        $banjar = Auth::user()->banjar;
+        $banjar = Auth::user()->banjar_id;
     }
 
     $penduduks = Penduduk::query()
@@ -322,7 +323,7 @@ class PendudukController extends Controller
     if(Auth::user()->username == 'admin'){
         $banjar = $request->banjar;
     }else{
-        $banjar = Auth::user()->banjar;
+        $banjar = Auth::user()->banjar_id;
     }
 
     $penduduks = Penduduk::query()

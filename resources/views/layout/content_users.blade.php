@@ -91,7 +91,7 @@
                                          </td>
                                          <td>{{ $u->id }}</td>
                                          <td>{{ $u->username }}</td>
-                                         <td>{{ $u->banjar }}</td>
+                                         <td>{{ $u->banjar->banjar }}</td>
                                          <td>{{ $u->password }}</td>
                                          <td>{{ $u->updated_at }}</td>
                                          <td>{{ $u->created_at }}</td>

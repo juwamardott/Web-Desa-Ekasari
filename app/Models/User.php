@@ -20,7 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'username',
         'password',
-        'banjar'
+        'banjar_id'
     ];
 
     /**
@@ -44,5 +44,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function banjar(){
+        return $this->belongsTo(Banjar::class, 'banjar_id');
     }
 }
