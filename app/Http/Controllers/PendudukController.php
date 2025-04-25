@@ -78,7 +78,7 @@ class PendudukController extends Controller
     }
 
     public function keluarga_list_keluarga($no_kk){
-        $penduduk = Penduduk::where('no_kk', $no_kk)->get();
+        $penduduk = Penduduk::where('no_kk', $no_kk)->orderBy('hubungan_keluarga_id', 'asc')->get();
         $kepala = Penduduk::where('no_kk', $no_kk)->where('hubungan_keluarga_id', 1)->first();
         if (!$kepala) {
             return redirect()->route('keluarga.index')->with('error', 'Kepala keluarga tidak ditemukan.');
@@ -86,9 +86,6 @@ class PendudukController extends Controller
         return view('keluarga.list_keluarga', compact('penduduk', 'kepala'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
@@ -108,13 +105,8 @@ class PendudukController extends Controller
         
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        // return $request->file('image')->store('post-images');
-        // dd($request->input());
         try {
             // Validasi data request
             $validated = $request->validate([
@@ -405,8 +397,4 @@ class PendudukController extends Controller
         return view('keluarga.detail_keluarga', compact('penduduk', 'banjar','type', 'status_penduduk', 'status_dasar', 'jenis_kelamin', 'kawin', 'warga_negara', 'agama', 'pendidikan', 'hubungan_keluarga', 'pekerjaan', 'pendidikan_sedang'));
     }
 
-
-
-
-    
 }

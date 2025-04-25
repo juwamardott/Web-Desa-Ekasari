@@ -150,7 +150,7 @@
       </table>
 
       <div class="income">  
-        <p>{{ $jenis_surat->keterangan }}  {{ $keterangan }}</p>
+        <p>{{ $jenis_surat->keterangan }} {{ 'Rp' . number_format($keterangan, 0, ',', '.') }}</p>
       </div>
 
       <div class="closing">

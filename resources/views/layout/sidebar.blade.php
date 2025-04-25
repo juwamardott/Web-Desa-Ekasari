@@ -20,15 +20,19 @@
                <!--begin::Sidebar Menu-->
                <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
                    <!-- Dashboard -->
-                   <li class="nav-item {{ request()->is('dashboard') ? 'menu-open' : '' }}">
-                       <a href="#" class="nav-link">
+                   @php
+                         $isMasterActive = 
+                         request()->is('dashboard');
+                    @endphp
+                   <li class="nav-item {{ $isMasterActive ? 'menu-open' : '' }}">
+                       <a href="#" class="nav-link {{ $isMasterActive ? 'active' : '' }}">
                            <i class="bi bi-pie-chart-fill"></i>
                            <p>
                                Dashboard
                                <i class="nav-arrow bi bi-chevron-right"></i>
                            </p>
                        </a>
-                       <ul class="nav nav-treeview" style="display: {{ request()->is('dashboard') ? 'block' : 'none' }};">
+                       <ul class="nav nav-treeview" style="display: {{ $isMasterActive ? 'block' : 'none' }};">
                            <li class="nav-item">
                                <a href="/dashboard" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
                                    <i class="nav-icon bi bi-circle"></i>
@@ -39,15 +43,20 @@
                    </li>
            
                    <!-- Penduduk -->
-                   <li class="nav-item {{ request()->is('penduduk') || request()->is('keluarga') ? 'menu-open' : '' }}">
-                       <a href="#" class="nav-link">
+                   @php
+                         $isMasterActive = 
+                         request()->is('penduduk') ||
+                         request()->is('keluarga');
+                    @endphp
+                   <li class="nav-item {{ $isMasterActive ? 'menu-open' : '' }}">
+                       <a href="#" class="nav-link {{ $isMasterActive ? 'active' : '' }}">
                          <i class="bi bi-person-circle"></i>     
                            <p>
                                Penduduk
                                <i class="nav-arrow bi bi-chevron-right"></i>
                            </p>
                        </a>
-                       <ul class="nav nav-treeview" style="display: {{ request()->is('penduduk') || request()->is('keluarga') ? 'block' : 'none' }};">
+                       <ul class="nav nav-treeview" style="display: {{ $isMasterActive ? 'block' : 'none' }};">
                            <li class="nav-item">
                                <a href="/penduduk" class="nav-link {{ request()->is('penduduk') ? 'active' : '' }}">
                                    <i class="nav-icon bi bi-circle"></i>
@@ -65,15 +74,20 @@
            
                    <!-- Banjar -->
                    @if (Auth::user()->username == 'admin')
-                    <li class="nav-item {{ request()->is('banjar') ? 'menu-open' : '' }}">
-                         <a href="#" class="nav-link">
+                              @php
+                                   $isMasterActive = 
+                                   request()->is('banjar');
+                                   
+                              @endphp
+                    <li class="nav-item {{ $isMasterActive ? 'menu-open' : '' }}">
+                         <a href="#" class="nav-link {{ $isMasterActive ? 'active' : '' }}">
                          <i class="bi bi-house-add-fill"></i>
                          <p>
                               Banjar
                               <i class="nav-arrow bi bi-chevron-right"></i>
                          </p>
                          </a>
-                         <ul class="nav nav-treeview" style="display: {{ request()->is('banjar') ? 'block' : 'none' }};">
+                         <ul class="nav nav-treeview" style="display: {{ $isMasterActive ? 'block' : 'none' }};">
                          <li class="nav-item">
                               <a href="/banjar" class="nav-link {{ request()->is('banjar') ? 'active' : '' }}">
                                    <i class="nav-icon bi bi-circle"></i>
@@ -86,15 +100,20 @@
                    
                    <!-- User -->
                    @if (Auth::user()->username == 'admin')
-                    <li class="nav-item {{ request()->is('user') ? 'menu-open' : '' }}">
-                         <a href="#" class="nav-link">
+                              @php
+                                   $isMasterActive = 
+                                   request()->is('user');
+                                   
+                              @endphp
+                    <li class="nav-item {{ $isMasterActive ? 'menu-open' : '' }}">
+                         <a href="#" class="nav-link {{ $isMasterActive ? 'active' : '' }}">
                               <i class="bi bi-people-fill"></i>
                          <p>
                               User
                               <i class="nav-arrow bi bi-chevron-right"></i>
                          </p>
                          </a>
-                         <ul class="nav nav-treeview" style="display: {{ request()->is('user') ? 'block' : 'none' }};">
+                         <ul class="nav nav-treeview" style="display: {{ $isMasterActive ? 'block' : 'none' }};">
                          <li class="nav-item">
                               <a href="/user" class="nav-link {{ request()->is('user') ? 'active' : '' }}">
                                    <i class="nav-icon bi bi-circle"></i>
@@ -106,15 +125,20 @@
                    @endif
 
                    @if (Auth::user()->username == 'admin')
-                    <li class="nav-item {{ request()->is('surat') ? 'menu-open' : '' }}">
-                         <a href="#" class="nav-link">
+                              @php
+                                   $isMasterActive = 
+                                   request()->is('surat');
+                                   
+                              @endphp
+                    <li class="nav-item {{ $isMasterActive ? 'menu-open' : '' }}">
+                         <a href="#" class="nav-link {{ $isMasterActive ? 'active' : '' }}">
                             <i class="bi bi-envelope-fill"></i>
                          <p>
                               Surat
                               <i class="nav-arrow bi bi-chevron-right"></i>
                          </p>
                          </a>
-                         <ul class="nav nav-treeview" style="display: {{ request()->is('surat') ? 'block' : 'none' }};">
+                         <ul class="nav nav-treeview" style="display: {{ $isMasterActive ? 'block' : 'none' }};">
                          <li class="nav-item">
                               <a href="/surat" class="nav-link {{ request()->is('surat') ? 'active' : '' }}">
                                    <i class="nav-icon bi bi-circle"></i>

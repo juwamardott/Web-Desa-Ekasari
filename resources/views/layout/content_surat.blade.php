@@ -47,7 +47,7 @@
                       </div>
                     <div class="mb-3">
                          <label for="jenis_surat" class="form-label">Jenis Surat</label>
-                         <select name="jenis_surat" id="jenis_surat" class="form-control @error('jenis_surat') is-invalid @enderror" aria-describedby="banjar">
+                         <select name="jenis_surat" id="jenis_surat" class="form-control @error('jenis_surat') is-invalid @enderror" aria-describedby="banjar" onchange="showNominal()">
                          <option value="">-- Pilih Jenis Surat --</option>
                          @foreach ($jenis_surat as $s)
                               
@@ -60,16 +60,37 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="mb-3">
+                    {{-- <div class="mb-3" id="div_keterangan" style="display: none">
                       <label for="keterangan" class="form-label">Keterangan</label>
                       <input
-                      type="keterangan"
+                      type="number"
                       name="keterangan"
                       class="form-control"
                       id="keterangan"
                       aria-describedby="keterangan"
                       />
-                 </div>
+                 </div> --}}
+                 <div class="mb-3" id="div_keterangan" style="display: none">
+                    <label for="keterangan_display" class="form-label">Keterangan</label>
+                
+                    <!-- Display input dengan format Rupiah -->
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="keterangan_display"
+                        aria-describedby="keterangan"
+                        placeholder="Rp0"
+                    />
+                
+                    <!-- Hidden input untuk kirim ke server -->
+                    <input
+                        type="number"
+                        name="keterangan"
+                        id="keterangan"
+                        style="display: none;"
+                    />
+                </div>
+                
                     <div class="mb-3">
                          <label for="penduduk_id" class="form-label">Cari Penduduk</label>
                          <select name="penduduk_id" id="penduduk_id" class="form-control @error('penduduk_id') is-invalid @enderror" style="width: 100%;">
@@ -196,5 +217,46 @@
      </div>
      <!--end::App Content-->
    </main>
+
+   <script>
+    function showNominal() {
+        const jenisSurat = document.getElementById('jenis_surat').value;
+        const divKeterangan = document.getElementById('div_keterangan');
+
+        if (jenisSurat == 4) {
+            divKeterangan.style.display = 'block';
+        } else {
+            divKeterangan.style.display = 'none';
+        }
+    }
+</script>
+
+<script>
+    function formatRupiah(angka, prefix = 'Rp') {
+        let number_string = angka.replace(/[^,\d]/g, '').toString();
+        let split = number_string.split(',');
+        let sisa = split[0].length % 3;
+        let rupiah = split[0].substr(0, sisa);
+        let ribuan = split[0].substr(sisa).match(/\d{3}/g);
+
+        if (ribuan) {
+            let separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix + rupiah;
+    }
+
+    document.getElementById('keterangan_display').addEventListener('keyup', function(e) {
+        let input = this.value.replace(/[^,\d]/g, '').toString(); // hanya angka
+        this.value = formatRupiah(input, 'Rp');
+
+        // Set nilai asli (tanpa titik) ke input hidden
+        document.getElementById('keterangan').value = input;
+    });
+</script>
+
+
 
    

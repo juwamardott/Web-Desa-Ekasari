@@ -2,7 +2,7 @@
 Login
 @endsection
 @include('layout.header')
-<body class="login-page" style="background: url('{{ asset('lte/dist/assets/img/bg.jpg') }}') no-repeat center center fixed; background-size: cover;">
+<body class="login-page" style="background: url('{{ asset('lte/dist/assets/img/bg1.jpg') }}') no-repeat center center fixed; background-size: cover;">
 
      <!--begin::App Wrapper-->
      <div class="login-box">
@@ -12,10 +12,10 @@ Login
             
             <div class="card-body login-card-body ">
               <div class="login-logo">
-                <img src="{{ asset('lte/dist/assets/img/logo.png') }}" alt="">
+                <img src="{{ asset('lte/dist/assets/img/Picture1.png') }}" alt="" width="100">
                 <a href="" class="d-block text-uppercase"><b>Desa</b> Ekasari</a>
               </div>
-              <p class="login-box-msg">Sign in to start your session</p>
+              <p class="login-box-msg">Masuk ke akun Anda</p>
               <form action="{{ route('post.login') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
