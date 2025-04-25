@@ -118,7 +118,7 @@
                          <li class="nav-item">
                               <a href="/surat" class="nav-link {{ request()->is('surat') ? 'active' : '' }}">
                                    <i class="nav-icon bi bi-circle"></i>
-                                   <p>Surat</p>
+                                   <p>Buat Surat</p>
                               </a>
                          </li>
                          </ul>
@@ -144,7 +144,7 @@
                                    </a>
                                    <ul class="nav nav-treeview" style="display: {{ $isMasterActive ? 'block' : 'none' }};">
                                         <li class="nav-item">
-                                             <a href="/master/pendidikan" class="nav-link {{ request()->is('master/pendidikan') ? 'active' : '' }}">
+                                             {{-- <a href="/master/pendidikan" class="nav-link {{ request()->is('master/pendidikan') ? 'active' : '' }}">
                                                   <i class="nav-icon bi bi-circle"></i>
                                                   <p>Data Pendidikan</p>
                                              </a>
@@ -159,7 +159,7 @@
                                              <a href="/master/pekerjaan" class="nav-link {{ request()->is('master/pekerjaan') ? 'active' : '' }}">
                                                   <i class="nav-icon bi bi-circle"></i>
                                                   <p>Data Pekerjaan</p>
-                                             </a>
+                                             </a> --}}
                                              <a href="/master/jenis_surat" class="nav-link {{ request()->is('master/jenis_surat') ? 'active' : '' }}">
                                                   <i class="nav-icon bi bi-circle"></i>
                                                   <p>Data Surat</p>
