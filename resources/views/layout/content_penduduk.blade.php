@@ -78,23 +78,19 @@
                             @foreach ($status_dasar as $sd)
                                 <option value="{{ $sd->id }}">{{ $sd->status_dasar }}</option>    
                             @endforeach
-                            
-                        </select>
-                        
-                        
+                        </select>        
                     </div>
-                    
-                    
                 </div>
                 <!-- Input Search (Kanan) -->
                 <div class="d-flex justify-between align-items-center">
-                    <div class="">
-                        <a id="export-button" href="#" class="btn btn-danger" target="_blank">Export Excel</a>
-                    </div>
-                    <div class="ms-auto" style="width: 250px;">
-                        <input type="text" id="searchInput" class="form-control" placeholder="Cari Penduduk...">
-                    </div>
-                    
+                    @if (Auth::user()->username == 'admin')
+                        <div class="">
+                            <a id="export-button" href="#" class="btn btn-danger" target="_blank">Export Excel</a>
+                        </div>
+                    @endif
+                        <div class="ms-auto" style="width: 250px;">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Cari Penduduk...">
+                        </div>
                 </div>
                 
 
@@ -117,9 +113,9 @@
                                  <tr class="table-light">
                                      <th>ACTION</th>
                                      <th>PHOTO</th>
-                                     <th>NO KK</th>
-                                     <th>NAMA</th>
                                      <th>NIK</th>
+                                     <th>NAMA</th>
+                                     <th>NO KK</th>
                                      <th>NAMA AYAH</th>
                                      <th>NAMA IBU</th>
                                      <th>ALAMAT</th>
@@ -161,9 +157,16 @@
                                         <td><img src="{{ asset('lte/dist/assets/img/user2.png') }}" alt="" width="50"></td>
                                         @endif
                                        
-                                        <td class="text-info">{{ $p->no_kk }}</td>
+                                        <td >
+                                            <a href="/penduduk/detail/{{ $p->id }}" class="text-info" style="text-decoration: none;">{{ $p->nik }}</a>
+                                        </td>  
+                                        
                                         <td>{{ $p->nama }}</td>
-                                        <td class="text-info">{{ $p->nik }}</td>
+                                          
+                                          
+                                        <td >
+                                            <a href="/penduduk/kartu-keluarga/{{ $p->no_kk }}" class="text-info" style="text-decoration: none;">{{ $p->no_kk }}</a>
+                                        </td>
                                         <td>{{ $p->nama_ayah }}</td>
                                         <td>{{ $p->nama_ibu }}</td>
                                         <td>{{ $p->alamat }}</td>

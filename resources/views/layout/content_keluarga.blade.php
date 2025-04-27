@@ -77,10 +77,12 @@
                 </div>
 
                 <div class="d-flex justify-between align-items-center">
+                    @if (Auth::user()->username == 'admin')
                     <div class="">
                         <a id="export-button" href="#" class="btn btn-danger" target="_blank">Export Excel</a>
-                        
                     </div>
+                    @endif
+                    
                     <div class="ms-auto" style="width: 250px;">
                         <input type="text" id="searchInput" class="form-control" placeholder="Cari Penduduk...">
                     </div>

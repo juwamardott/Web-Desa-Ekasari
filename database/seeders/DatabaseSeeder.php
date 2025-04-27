@@ -28,33 +28,34 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         JenisKelamin::create([
-            'jenis_kelamin'=> 'Laki-laki',
+            'jenis_kelamin'=> 'LAKI-LAKI',
         ]);
         JenisKelamin::create([
-            'jenis_kelamin'=> 'Perempuan',
+            'jenis_kelamin'=> 'PEREMPUAN',
         ]);
 
         StatusPenduduk::create([
-            'status_penduduk' => 'Tetap',
+            'status_penduduk' => 'TETAP',
         ]);
         StatusPenduduk::create([
-            'status_penduduk' => 'Tidak Tetap',
+            'status_penduduk' => 'TIDAK TETAP',
         ]);
 
-        StatusDasar::create(['status_dasar' => 'Hidup']);
-        StatusDasar::create(['status_dasar' => 'Mati']);
-        StatusDasar::create(['status_dasar' => 'Pindah']);
-        StatusDasar::create(['status_dasar' => 'Hilang']);
-        StatusDasar::create(['status_dasar' => 'Pergi']);
+        StatusDasar::create(['status_dasar' => 'HIDUP']);
+        StatusDasar::create(['status_dasar' => 'MATI']);
+        StatusDasar::create(['status_dasar' => 'PINDAH']);
+        StatusDasar::create(['status_dasar' => 'HILANG']);
+        StatusDasar::create(['status_dasar' => 'PERGI']);
         
-        Agama::create(['agama' => 'Islam']);
-        Agama::create(['agama' => 'Kristen']);
-        Agama::create(['agama' => 'Katolik']);
-        Agama::create(['agama' => 'Hindu']);
-        Agama::create(['agama' => 'Buddha']);
-        Agama::create(['agama' => 'Konghucu']);
+        Agama::create(['agama' => 'ISLAM']);
+        Agama::create(['agama' => 'KRISTEN']);
+        Agama::create(['agama' => 'KATOLIK']);
+        Agama::create(['agama' => 'HINDU']);
+        Agama::create(['agama' => 'BUDDHA']);
+        Agama::create(['agama' => 'KONGHUCU']);
 
-        Kawin::create(['status' =>'KAWIN']);
+        Kawin::create(['status' =>'KAWIN TERCATAT']);
+        Kawin::create(['status' =>'KAWIN BELUM TERCATAT']);
         Kawin::create(['status' =>'BELUM KAWIN']);
         Kawin::create(['status' =>'CERAI HIDUP']);
         Kawin::create(['status' =>'CERAI MATI']);

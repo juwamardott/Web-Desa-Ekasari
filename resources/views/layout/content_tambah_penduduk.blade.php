@@ -356,23 +356,29 @@
                     <div class="col-md-6">
                       <label for="golongan_darah" class="form-label small px-2 py-1 rounded-top">Golongan Darah</label>
                       <div class="input-group has-validation input-group-sm">
-                       <input
-                        type="text"
-                        class="form-control @error('golongan_darah') is-invalid @enderror"
-                        id="golongan_darah"
-                        name="golongan_darah"
-                        value="{{ old('golongan_darah') }}"
-                        
-                        placeholder="Input Golongan Darah..."
-                      />
-                        @error('golongan_darah')
+                          <span class="input-group-text"><i class="bi bi-droplet-fill"></i></span>
+                          <select class="form-control @error('golongan_darah') is-invalid @enderror" id="golongan_darah" name="golongan_darah" required>
+                              <option value="">Pilih Golongan Darah</option>
+                              <option value="A+" {{ old('golongan_darah') == 'A+' ? 'selected' : '' }}>A+</option>
+                              <option value="A-" {{ old('golongan_darah') == 'A-' ? 'selected' : '' }}>A-</option>
+                              <option value="B+" {{ old('golongan_darah') == 'B+' ? 'selected' : '' }}>B+</option>
+                              <option value="B-" {{ old('golongan_darah') == 'B-' ? 'selected' : '' }}>B-</option>
+                              <option value="AB+" {{ old('golongan_darah') == 'AB+' ? 'selected' : '' }}>AB+</option>
+                              <option value="AB-" {{ old('golongan_darah') == 'AB-' ? 'selected' : '' }}>AB-</option>
+                              <option value="O+" {{ old('golongan_darah') == 'O+' ? 'selected' : '' }}>O+</option>
+                              <option value="O-" {{ old('golongan_darah') == 'O-' ? 'selected' : '' }}>O-</option>
+                              <option value="TIDAK TAHU" {{ old('golongan_darah') == 'TIDAK TAHU' ? 'selected' : '' }}>TIDAK TAHU</option>
+                          </select>
+                          @error('golongan_darah')
                               <div class="invalid-feedback">
-                                {{ $message }}
+                                  {{ $message }}
                               </div>
                           @enderror
                       </div>
-                    </div>
+                  </div>
+                  
                     <!--end::Col-->
+
                     <!--begin::Col-->
                     <div class="col-md-6">
                       <label for="warga_negara_id" class="form-label small px-2 py-1 rounded-top">Kewarganegaraan</label>
