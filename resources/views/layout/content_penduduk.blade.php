@@ -165,7 +165,7 @@
                                           
                                           
                                         <td >
-                                            <a href="/penduduk/kartu-keluarga/{{ $p->no_kk }}" class="text-info" style="text-decoration: none;">{{ $p->no_kk }}</a>
+                                            <a href="/penduduk/kartu-keluarga/{{ $p->no_kk }}" class="text-info" style="text-decoration: none;" target="_blank">{{ $p->no_kk }}</a>
                                         </td>
                                         <td>{{ $p->nama_ayah }}</td>
                                         <td>{{ $p->nama_ibu }}</td>
@@ -316,15 +316,13 @@
                     console.log(xhr.responseText);
                 },
                 complete: function () {
-                    // ✅ Sembunyikan loading spinner setelah data selesai dimuat
                     setTimeout(function() {
                         $('#loading').hide();
                     }, 500);
                 }
-            }); // ✅ Pastikan ada kurung tutup di sini
+            });
         }
     
-        // ✅ Event saat user mengetik di search input
         $('#searchInput').on('keyup', function () {
             let search = $(this).val();
             let status = $('#statusFilter').val();
@@ -335,7 +333,6 @@
             loadData(search, status, jenis_kelamin, banjar,umur, status_dasar, 1);
         });
     
-        // ✅ Saat salah satu filter berubah, reload data
         $('#statusFilter, #jenisKelaminFilter, #banjarFilter, #umurFilter, #statusDasarFilter').on('change', function () {
             let search = $('#searchInput').val();
             let status = $('#statusFilter').val();
@@ -346,7 +343,6 @@
             loadData(search, status, jenis_kelamin, banjar, umur,status_dasar ,  1);
         });
     
-        // ✅ AJAX Pagination
         $(document).on('click', '.pagination a', function (e) {
             e.preventDefault();
             let page = $(this).attr('href').split('page=')[1];

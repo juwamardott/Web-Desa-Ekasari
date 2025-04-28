@@ -26,7 +26,7 @@
                <div class="card-header"><div class="card-title">Form Pembuatan Surat</div></div>
                <!--end::Header-->
                <!--begin::Form-->
-               <form action="{{ route('post.surat') }}" method="POST" >
+               <form action="{{ route('post.surat') }}" method="POST" target="_blank">
                     @csrf
                  <!--begin::Body-->
                  <div class="card-body">
@@ -70,7 +70,7 @@
                       aria-describedby="keterangan"
                       />
                  </div> --}}
-                 <div class="mb-3" id="div_keterangan" style="display: none">
+                 <div class="mb-3" id="div_keterangan">
                     <label for="keterangan_display" class="form-label">Keterangan</label>
                 
                     <!-- Display input dengan format Rupiah -->
@@ -104,7 +104,7 @@
                                 {{ $message }}
                             </div>
                         @enderror
-                     </div>                     
+                     </div>                    
                     <div class="mb-3">
                          <label for="keperluan" class="form-label">Keperluan</label>
                          <input
@@ -135,6 +135,21 @@
                             </div>
                         @enderror
                      </div>
+
+                     <div class="mb-3">
+                        <label for="author" class="form-label">Paraf</label>
+                        <select name="author" id="author" class="form-control @error('author') is-invalid @enderror" style="width: 100%;">
+                            <option value="">-- Pilih --</option>
+                            @foreach ($author as $p)
+                                <option value="{{ $p->id }}">{{ $p->author }}</option>
+                            @endforeach
+                        </select>
+                        @error('author')
+                           <div class="invalid-feedback">
+                               {{ $message }}
+                           </div>
+                       @enderror
+                    </div>  
                  </div>
                  <!--end::Body-->
                  <!--begin::Footer-->
@@ -218,18 +233,6 @@
      <!--end::App Content-->
    </main>
 
-   <script>
-    function showNominal() {
-        const jenisSurat = document.getElementById('jenis_surat').value;
-        const divKeterangan = document.getElementById('div_keterangan');
-
-        if (jenisSurat == 4) {
-            divKeterangan.style.display = 'block';
-        } else {
-            divKeterangan.style.display = 'none';
-        }
-    }
-</script>
 
 <script>
     function formatRupiah(angka, prefix = 'Rp') {
@@ -251,7 +254,6 @@
     document.getElementById('keterangan_display').addEventListener('keyup', function(e) {
         let input = this.value.replace(/[^,\d]/g, '').toString(); // hanya angka
         this.value = formatRupiah(input, 'Rp');
-
         // Set nilai asli (tanpa titik) ke input hidden
         document.getElementById('keterangan').value = input;
     });

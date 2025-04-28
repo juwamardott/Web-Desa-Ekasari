@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('nama_ibu');
             $table->bigInteger('nik_ayah');
             $table->bigInteger('nik_ibu');
-            $table->string('alamat');
+            $table->string('alamat')->nullable();
             $table->foreignId('banjar_id');
             $table->foreignId('pendidikan_id');
             $table->bigInteger('umur');
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->foreignId('jenis_kelamin_id');
             $table->foreignId('agama_id');
             $table->foreignId('status_penduduk_id');
-            $table->string('akta_kelahiran');
+            $table->string('akta_kelahiran')->nullable();
             $table->string('tempat_lahir');
             $table->date('tgl_lahir');
             $table->foreignId('pendidikan_sedang_id');
@@ -42,9 +42,9 @@ return new class extends Migration
             $table->foreignId('warga_negara_id');
             $table->string('negara_asal')->nullable();
             $table->foreignId('status_dasar_id');
-            $table->integer('anak_ke');
-            $table->string('no_telepon');
-            $table->string('email');
+            $table->integer('anak_ke')->nullable();
+            $table->string('no_telepon')->nullable();
+            $table->string('email')->nullable();
             $table->string('akta_nikah')->nullable();
             $table->string('akta_perceraian')->nullable();
             $table->date('tgl_perkawinan')->nullable();

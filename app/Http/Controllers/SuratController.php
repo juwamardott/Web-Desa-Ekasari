@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AuthorSurat;
 use App\Models\JenisSurat;
 use App\Models\Penduduk;
 use App\Models\Surat;
@@ -15,61 +16,61 @@ class SuratController extends Controller
     public function index(){
         $jenis_surat = JenisSurat::all();
         $penduduks = Penduduk::orderBy('nama')->get();
-        return view('surat.surat', compact('jenis_surat', 'penduduks'));
+        $author = AuthorSurat::all();
+        return view('surat.surat', compact('jenis_surat', 'penduduks', 'author'));
     }
 
     public function post(Request $request)
-{
-    // Validasi input
-    $request->validate([
-        'nomor_surat' => 'required',
-        'jenis_surat' => 'required',
-        'penduduk_id' => 'required',
-        'keperluan' => 'required',
-        'tanggal_dibuat' => 'required|date',
-    ]);
+    {
+        // Validasi input
+        $request->validate([
+            'nomor_surat' => 'required',
+            'jenis_surat' => 'required',
+            'penduduk_id' => 'required',
+            'keperluan' => 'required',
+            'tanggal_dibuat' => 'required|date',
+        ]);
 
-    // Ambil data penduduk
-    $penduduk = Penduduk::findOrFail($request->penduduk_id);
-    $logoPath = public_path('lte/dist/assets/img/Picture1.png'); // Ganti backslash ke slash agar cross-platform
+        // Ambil data penduduk
+        $penduduk = Penduduk::findOrFail($request->penduduk_id);
+        $logoPath = public_path('lte/dist/assets/img/Picture1.png'); // Ganti backslash ke slash agar cross-platform
 
-    // Ambil jenis surat
-    $jenisSurat = JenisSurat::findOrFail($request->jenis_surat);
+        // Ambil jenis surat
+        $jenisSurat = JenisSurat::findOrFail($request->jenis_surat);
 
-    // Simpan data ke database
-    Surat::create([
-        'nomor_surat' => $request->nomor_surat,
-        'jenis_surat_id' => $request->jenis_surat,
-        'penduduk_id' => $request->penduduk_id,
-        'keperluan' => $request->keperluan,
-        'tanggal_dibuat' => $request->tanggal_dibuat
-    ]);
+        // Simpan data ke database
+        Surat::create([
+            'nomor_surat' => $request->nomor_surat,
+            'jenis_surat_id' => $request->jenis_surat,
+            'penduduk_id' => $request->penduduk_id,
+            'keperluan' => $request->keperluan,
+            'tanggal_dibuat' => $request->tanggal_dibuat
+        ]);
 
-    // Buat HTML untuk PDF dari Blade
-    $html = view('surat.template', [
-        'data' => $penduduk,
-        'keperluan' => $request->keperluan,
-        'tanggal_dibuat' => $request->tanggal_dibuat,
-        'nomor_surat' => $request->nomor_surat,
-        'jenis_surat' => $jenisSurat,
-        'logo_path' => $logoPath,
-        'keterangan' => $request->keterangan
-    ])->render();
+        // Buat HTML untuk PDF dari Blade
+        $html = view('surat.template', [
+            'data' => $penduduk,
+            'keperluan' => $request->keperluan,
+            'tanggal_dibuat' => $request->tanggal_dibuat,
+            'nomor_surat' => $request->nomor_surat,
+            'jenis_surat' => $jenisSurat,
+            'logo_path' => $logoPath,
+            'keterangan' => $request->keterangan
+        ])->render();
 
-    // Buat PDF
-    $mpdf = new Mpdf(['format' => 'A4']);
-    $mpdf->WriteHTML($html);
+        // Buat PDF
+        $mpdf = new Mpdf(['format' => 'A4']);
+        $mpdf->WriteHTML($html);
 
-    // Output sebagai file yang bisa di-download
-    $pdfOutput = $mpdf->Output('', 'S'); // S = return as string
+        // Output sebagai file yang bisa di-download
+        $pdfOutput = $mpdf->Output('', 'S'); // S = return as string
 
-    // Kembalikan sebagai response file untuk download
-    return response($pdfOutput)
+            return response($pdfOutput)
         ->header('Content-Type', 'application/pdf')
-        ->header('Content-Disposition', 'attachment; filename="surat.pdf"')
+        ->header('Content-Disposition', 'inline; filename="surat.pdf"') // <-- inline, bukan attachment
         ->header('Content-Transfer-Encoding', 'binary')
         ->header('Accept-Ranges', 'bytes');
-}
+    }
 
 
 

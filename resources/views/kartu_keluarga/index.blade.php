@@ -9,17 +9,17 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            /* background-color: #f0f0f0; */
         }
         
         .container {
-            width: 1000px;
+            width: 100%;
             height: 650px;
-            margin: 20px auto;
-            background-color: white;
-            padding: 15px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            box-sizing: border-box;
+            /* margin: 20px auto; */
+            /* background-color: white; */
+            /* padding: 15px; */
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+            /* box-sizing: border-box; */
         }
         
         .header {
@@ -60,7 +60,7 @@
             font-weight: bold;
             background-color: #e0e0e0;
             padding: 5px;
-            font-size: 14px;
+            font-size: 10px;
         }
         
         table {
@@ -81,7 +81,7 @@
         }
         
         .footer {
-            display: flex;
+            display: inline;
             justify-content: space-between;
             margin-top: 15px;
             font-size: 11px;
@@ -126,40 +126,41 @@
                 <div class="header-text">
                     <h1 class="title">KARTU KELUARGA</h1>
                     <p class="subtitle">REPUBLIK INDONESIA</p>
+                    <p class="subtitle">NO KK : {{ $kepala->no_kk }}</p>
                 </div>
             </div>
         </div>
         
-        <div class="kk-number">
+        {{-- <div class="kk-number">
             <div>No. KK: <strong>1234567890123456</strong></div>
             <div>Dikeluarkan Tanggal: <strong>01-01-2023</strong></div>
-        </div>
+        </div> --}}
         
         <div class="section">
             <div class="section-title">DATA ALAMAT</div>
             <table>
                 <tr>
                     <td width="15%">Alamat</td>
-                    <td width="35%">Jl. Contoh No. 123</td>
+                    <td width="35%">{{ $kepala->alamat }}</td>
                     <td width="10%">Kode Pos</td>
-                    <td width="10%">12345</td>
+                    <td width="10%">82245</td>
                     <td width="15%">Provinsi</td>
-                    <td width="15%">Provinsi Contoh</td>
+                    <td width="15%">Bali</td>
                 </tr>
                 <tr>
                     <td>RT/RW</td>
-                    <td>001/002</td>
+                    <td>-</td>
                     <td>Telepon</td>
-                    <td>021-1234567</td>
+                    <td>{{ $kepala->no_telepon }}</td>
                     <td>Kabupaten/Kota</td>
-                    <td>Kota Contoh</td>
+                    <td>Jembrana</td>
                 </tr>
                 <tr>
                     <td>Desa/Kelurahan</td>
-                    <td>Contoh Kelurahan</td>
+                    <td>DESA EKASARI</td>
                     <td colspan="2"></td>
                     <td>Kecamatan</td>
-                    <td>Contoh Kecamatan</td>
+                    <td>Melaya</td>
                 </tr>
             </table>
         </div>
@@ -181,50 +182,20 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($data as $d)
                     <tr>
                         <td>1</td>
-                        <td>BUDI SANTOSO</td>
-                        <td>1234567890123456</td>
-                        <td>L</td>
-                        <td>JAKARTA</td>
-                        <td>01-01-1980</td>
-                        <td>ISLAM</td>
-                        <td>S1</td>
-                        <td>PNS</td>
+                        <td>{{ $d->nama }}</td>
+                        <td>{{ $d->nik }}</td>
+                        <td>{{ $d->jenis_kelamin->jenis_kelamin }}</td>
+                        <td>{{ $d->tempat_lahir }}</td>
+                        <td>{{ $d->tgl_lahir }}</td>
+                        <td>{{ $d->agama->agama }}</td>
+                        <td>{{ $d->pendidikan->pendidikan }}</td>
+                        <td>{{ $d->pekerjaan->nama_pekerjaan }}</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>SITI RAHAYU</td>
-                        <td>2345678901234567</td>
-                        <td>P</td>
-                        <td>BANDUNG</td>
-                        <td>02-02-1985</td>
-                        <td>ISLAM</td>
-                        <td>S1</td>
-                        <td>SWASTA</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>DENI SANTOSO</td>
-                        <td>3456789012345678</td>
-                        <td>L</td>
-                        <td>JAKARTA</td>
-                        <td>03-03-2010</td>
-                        <td>ISLAM</td>
-                        <td>SMP</td>
-                        <td>PELAJAR</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>DINA SANTOSO</td>
-                        <td>4567890123456789</td>
-                        <td>P</td>
-                        <td>JAKARTA</td>
-                        <td>04-04-2012</td>
-                        <td>ISLAM</td>
-                        <td>SD</td>
-                        <td>PELAJAR</td>
-                    </tr>
+                    @endforeach
+                    
                 </tbody>
             </table>
         </div>
@@ -245,46 +216,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($data as $p)
                     <tr>
                         <td>1</td>
-                        <td>KAWIN</td>
-                        <td>KN-123456789</td>
-                        <td>01-06-2008</td>
-                        <td>KEPALA KELUARGA</td>
-                        <td>WNI</td>
+                        <td>{{ $p->kawin->status }}</td>
+                        <td>{{ $p->akta_nikah }}</td>
+                        <td>{{ $p->tgl_perkawinan }}</td>
+                        <td>{{ $p->hubungan_keluarga->hubungan_keluarga }}</td>
+                        <td>{{ $p->warga_negara->warga_negara }}</td>
                         <td>-</td>
                         <td>-</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>KAWIN</td>
-                        <td>KN-123456789</td>
-                        <td>01-06-2008</td>
-                        <td>ISTRI</td>
-                        <td>WNI</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>BELUM KAWIN</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>ANAK</td>
-                        <td>WNI</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>BELUM KAWIN</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>ANAK</td>
-                        <td>WNI</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -302,45 +245,21 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($data as $o)
                     <tr>
                         <td>1</td>
-                        <td>5678901234567890</td>
-                        <td>AHMAD SANTOSO</td>
-                        <td>6789012345678901</td>
-                        <td>MARYAM</td>
+                        <td>{{ $o->nik_ayah }}</td>
+                        <td>{{ $o->nama_ayah }}</td>
+                        <td>{{ $o->nik_ibu }}</td>
+                        <td>{{ $o->nama_ibu }}</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>7890123456789012</td>
-                        <td>HADI RAHAYU</td>
-                        <td>8901234567890123</td>
-                        <td>DEWI</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>1234567890123456</td>
-                        <td>BUDI SANTOSO</td>
-                        <td>2345678901234567</td>
-                        <td>SITI RAHAYU</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>1234567890123456</td>
-                        <td>BUDI SANTOSO</td>
-                        <td>2345678901234567</td>
-                        <td>SITI RAHAYU</td>
-                    </tr>
+                    @endforeach
+                    
                 </tbody>
             </table>
         </div>
         
         <div class="footer">
-            <div class="signature-box">
-                <p>Diketahui oleh:</p>
-                <p>Camat/Lurah</p>
-                <div class="signature-line"></div>
-                <p>NIP: ........................</p>
-            </div>
             <div class="signature-box">
                 <p>Kota Contoh, 01-01-2023</p>
                 <p>Kepala Keluarga</p>

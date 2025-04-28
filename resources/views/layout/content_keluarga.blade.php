@@ -106,9 +106,9 @@
                                  <tr>
                                      <th>ACTION</th>
                                      <th>PHOTO</th>
-                                     <th>NO KK</th>
-                                     <th>NAMA</th>
                                      <th>NIK</th>
+                                     <th>NAMA</th>
+                                     <th>NO KK</th>
                                      <th>NAMA AYAH</th>
                                      <th>NAMA IBU</th>
                                      <th>ALAMAT</th>
@@ -145,9 +145,13 @@
                                         @else
                                         <td><img src="{{ asset('lte/dist/assets/img/user2.png') }}" alt="" width="50"></td>
                                         @endif
-                                        <td class="text-info">{{ $p->no_kk }}</td>
+                                        <td >
+                                            <a href="/keluarga/detail/{{ $p->id }}" class="text-info" style="text-decoration: none;">{{ $p->nik }}</a>
+                                        </td>
                                         <td>{{ $p->nama }}</td>
-                                        <td class="text-info">{{ $p->nik }}</td>
+                                        <td>
+                                            <a href="/keluarga/kartu-keluarga/{{ $p->no_kk }}" class="text-info" style="text-decoration: none;" target="_blank">{{ $p->no_kk }}</a>
+                                        </td>
                                         <td>{{ $p->nama_ayah }}</td>
                                         <td>{{ $p->nama_ibu }}</td>
                                         <td>{{ $p->alamat }}</td>

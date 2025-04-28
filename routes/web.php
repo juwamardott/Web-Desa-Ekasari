@@ -83,17 +83,23 @@ Route::get('/export-keluarga', function (Illuminate\Http\Request $request) {
     return view('surat.contoh');
  });
 
-Route::get('/master/jenis_kelamin', [DataMasterController::class, 'jenis_kelamin'])->name('jenis_kelamin.index');
-Route::get('/master/pendidikan', [DataMasterController::class, 'pendidikan'])->name('pendidikan.index');
-Route::get('/master/pendidikan_sedang', [DataMasterController::class, 'pendidikan_sedang'])->name('pendidikan_sedang.index');
-Route::get('/master/status_dasar', [DataMasterController::class, 'status_dasar'])->name('status_dasar.index');
-Route::get('/master/pekerjaan', [DataMasterController::class, 'pekerjaan'])->name('pekerjaan.index');
-Route::get('/master/jenis_surat', [DataMasterController::class, 'jenis_surat'])->name('jenis_surat.index');
+Route::get('/master/jenis_kelamin', [DataMasterController::class, 'jenis_kelamin'])->name('jenis_kelamin.index')->middleware('auth');
+Route::get('/master/pendidikan', [DataMasterController::class, 'pendidikan'])->name('pendidikan.index')->middleware('auth');
+Route::get('/master/pendidikan_sedang', [DataMasterController::class, 'pendidikan_sedang'])->name('pendidikan_sedang.index')->middleware('auth');
+Route::get('/master/status_dasar', [DataMasterController::class, 'status_dasar'])->name('status_dasar.index')->middleware('auth');
+Route::get('/master/pekerjaan', [DataMasterController::class, 'pekerjaan'])->name('pekerjaan.index')->middleware('auth');
+Route::get('/master/jenis_surat', [DataMasterController::class, 'jenis_surat'])->name('jenis_surat.index')->middleware('auth');
 
 
 
-Route::get('/jenis_surat/tambah', [SuratController::class, 'create'])->name('jenis_surat.tambah');
-Route::post('/jenis_surat/tambah', [SuratController::class, 'store'])->name('surat.store');
+Route::get('/jenis_surat/tambah', [SuratController::class, 'create'])->name('jenis_surat.tambah')->middleware('auth');
+Route::post('/jenis_surat/tambah', [SuratController::class, 'store'])->name('surat.store')->middleware('auth');
 
-Route::get('/jenis_surat/detail/{id}', [SuratController::class, 'edit'])->name('jenis_surat.edit');
-Route::post('/jenis_surat/detail/{id}', [SuratController::class, 'update'])->name('jenis_surat.update');
+Route::get('/jenis_surat/detail/{id}', [SuratController::class, 'edit'])->name('jenis_surat.edit')->middleware('auth');
+Route::post('/jenis_surat/detail/{id}', [SuratController::class, 'update'])->name('jenis_surat.update')->middleware('auth');
+
+
+
+
+Route::get('/penduduk/kartu-keluarga/{no_kk}', [PendudukController::class, 'kartu_keluarga'])->middleware('auth');
+Route::get('/keluarga/kartu-keluarga/{no_kk}', [PendudukController::class, 'kartu_keluarga'])->middleware('auth');

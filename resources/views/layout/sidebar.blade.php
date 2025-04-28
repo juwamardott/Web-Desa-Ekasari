@@ -73,7 +73,7 @@
                    </li>
            
                    <!-- Banjar -->
-                   @if (Auth::user()->username == 'admin')
+                   {{-- @if (Auth::user()->username == 'admin')
                               @php
                                    $isMasterActive = 
                                    request()->is('banjar');
@@ -96,7 +96,7 @@
                          </li>
                          </ul>
                     </li>
-                   @endif
+                   @endif --}}
                    
                    <!-- User -->
                    @if (Auth::user()->username == 'admin')
@@ -155,6 +155,7 @@
                                    request()->is('master/status_dasar') ||
                                    request()->is('master/pekerjaan') ||
                                    request()->is('master/jenis_surat') ||
+                                   request()->is('banjar') ||
                                    request()->is('master/pendidikan_sedang');
                                    
                               @endphp
@@ -187,6 +188,11 @@
                                              <a href="/master/jenis_surat" class="nav-link {{ request()->is('master/jenis_surat') ? 'active' : '' }}">
                                                   <i class="nav-icon bi bi-circle"></i>
                                                   <p>Data Surat</p>
+                                             </a>
+
+                                             <a href="/banjar" class="nav-link {{ request()->is('banjar') ? 'active' : '' }}">
+                                                  <i class="nav-icon bi bi-circle"></i>
+                                                  <p>Data Banjar</p>
                                              </a>
                                         </li>
                                    </ul>

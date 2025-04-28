@@ -6,6 +6,7 @@ use Carbon\Carbon;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use App\Models\Agama;
+use App\Models\AuthorSurat;
 use App\Models\Kawin;
 use App\Models\Banjar;
 use App\Models\Visitor;
@@ -27,6 +28,13 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
+        AuthorSurat::create([
+            'author' => 'Kepala Desa'
+        ]);
+        AuthorSurat::create([
+            'author' => 'Sekretaris Desa'
+        ]);
+        
         JenisKelamin::create([
             'jenis_kelamin'=> 'LAKI-LAKI',
         ]);
@@ -263,162 +271,119 @@ class DatabaseSeeder extends Seeder
         // Penduduk
 
         $faker = Faker::create('id_ID');
-        
-        // Prepare arrays for relational fields
+
         $banjarIds = range(1, 10);
         $pendidikanIds = range(1, 7);
-        $kawinIds = range(1, 4); // 1: Kawin, 2: Belum Kawin, 3: Cerai Hidup, 4: Cerai Mati
-        $hubunganKeluargaIds = range(1, 5); // 1: Kepala Keluarga, 2: Istri, 3: Anak, 4: Menantu, 5: Lainnya
-        $jenisKelaminIds = [1, 2]; // 1: Laki-laki, 2: Perempuan
-        $agamaIds = range(1, 6); // 1: Hindu, 2: Islam, 3: Kristen, 4: Katolik, 5: Buddha, 6: Konghucu
-        $statusPendudukIds = range(1, 3); // 1: Tetap, 2: Tidak Tetap, 3: Pindah
+        $kawinIds = range(1, 4);
+        $hubunganKeluargaIds = range(1, 5);
+        $jenisKelaminIds = [1, 2];
+        $agamaIds = range(1, 6);
+        $statusPendudukIds = range(1, 3);
         $pendidikanSedangIds = range(1, 7);
         $pekerjaanIds = range(1, 15);
-        $wargaNegaraIds = [1, 2]; // 1: WNI, 2: WNA
-        $statusDasarIds = range(1, 4); // 1: Hidup, 2: Mati, 3: Pindah, 4: Hilang
+        $wargaNegaraIds = [1, 2];
+        $statusDasarIds = range(1, 4);
         $golonganDarah = ['A', 'B', 'AB', 'O', '-'];
-        
-        // Prepare 1000 KK numbers
+
         $noKKs = [];
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $noKKs[] = '51030' . $faker->unique()->numerify('##########');
         }
-        
-        $penduduks = [];
-        
-        // Generate 5000 penduduk records
-        for ($i = 0; $i < 5000; $i++) {
+
+        for ($i = 0; $i < 100; $i++) {
+
             $jenisKelaminId = $faker->randomElement($jenisKelaminIds);
             $tglLahir = $faker->dateTimeBetween('-80 years', '-1 day')->format('Y-m-d');
             $umur = Carbon::parse($tglLahir)->age;
             $kawinId = $umur < 15 ? 2 : $faker->randomElement($kawinIds);
-            
-            // Determine realistic relationship based on age and marital status
-            $hubunganKeluargaId = 5; // Default to 'Lainnya'
+
+            $hubunganKeluargaId = 5;
             if ($umur >= 18 && $kawinId != 2) {
-                $hubunganKeluargaId = $jenisKelaminId == 1 ? 1 : 2; // Kepala Keluarga or Istri
+                $hubunganKeluargaId = $jenisKelaminId == 1 ? 1 : 2;
             } elseif ($umur < 18) {
-                $hubunganKeluargaId = 3; // Anak
+                $hubunganKeluargaId = 3;
             } elseif ($umur >= 18 && $umur <= 40) {
-                $hubunganKeluargaId = $faker->randomElement([3, 4]); // Anak or Menantu
+                $hubunganKeluargaId = $faker->randomElement([3, 4]);
             }
-            
-            // Marriage-related fields
+
             $aktaNikah = null;
             $tglPerkawinan = null;
             $aktaPerceraian = null;
             $tglPerceraian = null;
-            
-            if ($kawinId == 1 && $umur >= 17) { // Married
-                // Calculate max years to subtract for marriage date (can't be married before age 17)
+
+            if ($kawinId == 1 && $umur >= 17) {
                 $maxYearsAgo = max(1, $umur - 17);
                 $tglPerkawinan = $faker->dateTimeBetween("-{$maxYearsAgo} years", 'now')->format('Y-m-d');
                 $aktaNikah = $faker->numerify('###/NKH/') . Carbon::parse($tglPerkawinan)->format('Y');
-            } elseif ($kawinId == 3 && $umur >= 18) { // Divorced
-                // Calculate max years to subtract for marriage date (can't be married before age 17)
+            } elseif ($kawinId == 3 && $umur >= 18) {
                 $maxYearsAgo = max(1, $umur - 17);
                 $tglPerkawinan = $faker->dateTimeBetween("-{$maxYearsAgo} years", '-1 year')->format('Y-m-d');
                 $tglPerceraian = $faker->dateTimeBetween($tglPerkawinan, 'now')->format('Y-m-d');
                 $aktaNikah = $faker->numerify('###/NKH/') . Carbon::parse($tglPerkawinan)->format('Y');
                 $aktaPerceraian = $faker->numerify('###/PRC/') . Carbon::parse($tglPerceraian)->format('Y');
             }
-            
-            // Choose education level based on age
-            $pendidikanId = 1; // Default to lowest
+
+            $pendidikanId = 1;
+            $pendidikanSedangId = 1;
             if ($umur >= 7 && $umur < 13) {
-                $pendidikanId = $faker->randomElement([1, 2]); // SD or less
-                $pendidikanSedangId = 2; // SD
+                $pendidikanId = $faker->randomElement([1, 2]);
+                $pendidikanSedangId = 2;
             } elseif ($umur >= 13 && $umur < 16) {
-                $pendidikanId = $faker->randomElement([1, 2, 3]); // Up to SMP
-                $pendidikanSedangId = 3; // SMP
+                $pendidikanId = $faker->randomElement([1, 2, 3]);
+                $pendidikanSedangId = 3;
             } elseif ($umur >= 16 && $umur < 19) {
-                $pendidikanId = $faker->randomElement([1, 2, 3, 4]); // Up to SMA
-                $pendidikanSedangId = 4; // SMA
+                $pendidikanId = $faker->randomElement([1, 2, 3, 4]);
+                $pendidikanSedangId = 4;
             } elseif ($umur >= 19 && $umur < 23) {
-                $pendidikanId = $faker->randomElement([1, 2, 3, 4, 5]); // Up to S1
-                $pendidikanSedangId = 5; // S1
+                $pendidikanId = $faker->randomElement([1, 2, 3, 4, 5]);
+                $pendidikanSedangId = 5;
             } elseif ($umur >= 23) {
-                $pendidikanId = $faker->randomElement($pendidikanIds); // Any education level
-                $pendidikanSedangId = $faker->randomElement([1, 5, 6, 7]); // Not in school or higher education
-            } else {
-                $pendidikanSedangId = 1; // Not in school yet
+                $pendidikanId = $faker->randomElement($pendidikanIds);
+                $pendidikanSedangId = $faker->randomElement([1, 5, 6, 7]);
             }
-            
-            // Generate Balinese names based on gender
-            $firstName = '';
-            $middleName = '';
-            $lastName = '';
-            
-            if ($jenisKelaminId == 1) { // Male
+
+            if ($jenisKelaminId == 1) {
                 $firstName = $faker->randomElement(['I ', '']) . $faker->randomElement(['Wayan', 'Made', 'Nyoman', 'Ketut', 'Kadek', 'Komang', 'Gede', 'Putu']);
                 $middleName = $faker->randomElement(['', ' ' . $faker->randomElement(['Agus', 'Putra', 'Adi', 'Darma', 'Dwi', 'Eka', 'Budi', 'Yoga', 'Aditya', 'Surya'])]);
                 $lastName = $faker->randomElement(['', ' ' . $faker->randomElement(['Suardika', 'Wirawan', 'Sudarsana', 'Artha', 'Dharma', 'Wijaya', 'Purnama', 'Sudiarta', 'Yasa', 'Darmawan'])]);
-            } else { // Female
+            } else {
                 $firstName = $faker->randomElement(['Ni ', '']) . $faker->randomElement(['Wayan', 'Made', 'Nyoman', 'Ketut', 'Kadek', 'Komang', 'Luh', 'Putu']);
                 $middleName = $faker->randomElement(['', ' ' . $faker->randomElement(['Ayu', 'Dewi', 'Sri', 'Putri', 'Eka', 'Ratih', 'Diah', 'Ari', 'Suartini', 'Lestari'])]);
                 $lastName = $faker->randomElement(['', ' ' . $faker->randomElement(['Suandewi', 'Sekarini', 'Maharani', 'Sari', 'Yanti', 'Puspita', 'Saraswati', 'Putri', 'Astuti', 'Widiastuti'])]);
             }
-            
+
             $nama = trim($firstName . $middleName . $lastName);
-            
-            // For parents, generate similar names with appropriate prefix
-            $namaAyah = 'I ' . $faker->randomElement(['Wayan', 'Made', 'Nyoman', 'Ketut']) . ' ' . $faker->randomElement(['Suardika', 'Wirawan', 'Sudarsana', 'Artha', 'Dharma', 'Wijaya', 'Purnama', 'Sudiarta', 'Yasa', 'Darmawan']);
-            $namaIbu = 'Ni ' . $faker->randomElement(['Wayan', 'Made', 'Nyoman', 'Ketut']) . ' ' . $faker->randomElement(['Suandewi', 'Sekarini', 'Maharani', 'Sari', 'Yanti', 'Puspita', 'Saraswati', 'Putri', 'Astuti', 'Widiastuti']);
-            
-            // Select job based on age
-            $pekerjaanId = 1; // Default to not working
-            if ($umur >= 15) {
-                $pekerjaanId = $faker->randomElement($pekerjaanIds);
-            }
-            
-            $baliRegencies = ['Denpasar', 'Badung', 'Gianyar', 'Tabanan', 'Klungkung', 'Bangli', 'Karangasem', 'Buleleng', 'Jembrana'];
-            
-            // Generate random NIK, ensuring it doesn't match others
-            $nik = '5103' . $faker->unique()->numerify('##########');
-            
-            $penduduks[] = [
+
+            Penduduk::create([
                 'image' => null,
                 'no_kk' => $faker->randomElement($noKKs),
-                'nik' => $nik,
+                'nik' => '5103' . $faker->unique()->numerify('##########'),
                 'nama' => $nama,
-                'nama_ayah' => $namaAyah,
-                'nama_ibu' => $namaIbu,
+                'nama_ayah' => 'I ' . $faker->randomElement(['Wayan', 'Made', 'Nyoman', 'Ketut']) . ' ' . $faker->lastName,
+                'nama_ibu' => 'Ni ' . $faker->randomElement(['Wayan', 'Made', 'Nyoman', 'Ketut']) . ' ' . $faker->lastName,
                 'nik_ayah' => '5103' . $faker->numerify('##########'),
                 'nik_ibu' => '5103' . $faker->numerify('##########'),
-                'alamat' => $faker->randomElement(['Jalan', 'Jl.', 'Gang', 'Gg.']) . ' ' . $faker->streetName() . ' No. ' . $faker->buildingNumber(),
+                'alamat' => $faker->streetAddress,
                 'banjar_id' => $faker->randomElement($banjarIds),
                 'pendidikan_id' => $pendidikanId,
+                'pendidikan_sedang_id' => $pendidikanSedangId,
                 'umur' => $umur,
                 'kawin_id' => $kawinId,
                 'hubungan_keluarga_id' => $hubunganKeluargaId,
                 'jenis_kelamin_id' => $jenisKelaminId,
                 'agama_id' => $faker->randomElement($agamaIds),
                 'status_penduduk_id' => $faker->randomElement($statusPendudukIds),
-                'akta_kelahiran' => $faker->numerify('##########'),
-                'tempat_lahir' => $faker->randomElement($baliRegencies),
-                'tgl_lahir' => $tglLahir,
-                'pendidikan_sedang_id' => $pendidikanSedangId,
-                'pekerjaan_id' => $pekerjaanId,
-                'warga_negara_id' => $faker->randomElement($wargaNegaraIds, [1 => 95, 2 => 5]),
-                'negara_asal' => $faker->randomElement([null, 'Malaysia', 'Singapura', 'Australia', 'Amerika Serikat', 'Jepang', 'China', 'Belanda', 'Inggris', 'Jerman']),
-                'status_dasar_id' => $faker->randomElement($statusDasarIds, [1 => 95, 2 => 2, 3 => 2, 4 => 1]),
-                'anak_ke' => $faker->numberBetween(1, 5),
-                'no_telepon' => '08' . $faker->numerify('##########'),
-                'email' => strtolower(str_replace(' ', '.', $nama)) . '@' . $faker->randomElement(['example.com', 'gmail.com', 'yahoo.com', 'hotmail.com']),
-                'akta_nikah' => $aktaNikah,
-                'akta_perceraian' => $aktaPerceraian,
-                'tgl_perkawinan' => $tglPerkawinan,
-                'tgl_perceraian' => $tglPerceraian,
+                'pekerjaan_id' => $umur >= 15 ? $faker->randomElement($pekerjaanIds) : 1,
+                'warga_negara_id' => $faker->randomElement($wargaNegaraIds),
+                'status_dasar_id' => $faker->randomElement($statusDasarIds),
                 'golongan_darah' => $faker->randomElement($golonganDarah),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ];
-            
-            // Insert in batches of 500 to avoid memory issues
-            if (($i + 1) % 500 == 0 || $i == 4999) {
-                DB::table('penduduks')->insert($penduduks);
-                $penduduks = [];
-            }
+                'tempat_lahir' => $faker->city,
+                'tgl_lahir' => $tglLahir,
+                'akta_nikah' => $aktaNikah,
+                'tgl_perkawinan' => $tglPerkawinan,
+                'akta_perceraian' => $aktaPerceraian,
+                'tgl_perceraian' => $tglPerceraian,
+            ]);
         }
         
     }

@@ -19,6 +19,7 @@ use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Mpdf\Mpdf;
 
 class PendudukController extends Controller
 {
@@ -33,7 +34,7 @@ class PendudukController extends Controller
         if ($user->username === 'admin') {
             $penduduk = Penduduk::paginate(5);
             $total = Penduduk::count();
-        } else {
+        }else {
             $penduduk = Penduduk::where('banjar_id', $user->banjar_id)->paginate(5);
             $total = Penduduk::where('banjar_id', $user->banjar_id)->count();
         }
@@ -45,8 +46,6 @@ class PendudukController extends Controller
 
         return view('penduduk.penduduk', compact('penduduk', 'banjar', 'total', 'status_penduduk', 'status_dasar', 'jenis_kelamin'));
     }
-
-
     public function keluarga(){
         $keluargaa = Penduduk::where('hubungan_keluarga_id', 1);
         $user = Auth::user();
@@ -344,7 +343,6 @@ class PendudukController extends Controller
         ->when($status_dasar, function ($query) use ($status_dasar) {
             return $query->where('status_dasar_id', $status_dasar);
         });
-
     $total = $penduduks->count();
     $penduduk = $penduduks->paginate(5);
 
@@ -393,8 +391,34 @@ class PendudukController extends Controller
         $hubungan_keluarga = HubunganKeluarga::all();
         $pekerjaan = Pekerjaan::all();
         $pendidikan_sedang = PendidikanSedang::all();
-
         return view('keluarga.detail_keluarga', compact('penduduk', 'banjar','type', 'status_penduduk', 'status_dasar', 'jenis_kelamin', 'kawin', 'warga_negara', 'agama', 'pendidikan', 'hubungan_keluarga', 'pekerjaan', 'pendidikan_sedang'));
     }
+
+
+    public function kartu_keluarga($no_kk){
+        $keluargaa = Penduduk::where('no_kk', $no_kk)->with('agama', 'pekerjaan', 'pendidikan','jenis_kelamin', 'kawin', 'hubungan_keluarga', 'warga_negara')->orderBy('hubungan_keluarga_id', 'asc');
+        
+        $keluarga = $keluargaa->get();
+        $kepala = $keluargaa->first();
+        // Buat HTML untuk PDF dari Blade
+        $html = view('kartu_keluarga.index', [
+            'data' => $keluarga,
+            'kepala' => $kepala
+        ])->render();
+    
+        // Buat PDF dengan orientasi landscape
+        $mpdf = new \Mpdf\Mpdf(['format' => 'A4', 'orientation' => 'L']); // 'L' untuk Landscape
+        $mpdf->WriteHTML($html);
+    
+        // Output sebagai file yang bisa di-download
+        $pdfOutput = $mpdf->Output('', 'S'); // S = return as string
+    
+        return response($pdfOutput)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="kartu_keluarga.pdf"') // <-- inline, bukan attachment
+            ->header('Content-Transfer-Encoding', 'binary')
+            ->header('Accept-Ranges', 'bytes');
+    }
+    
 
 }

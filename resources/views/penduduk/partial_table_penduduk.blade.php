@@ -27,7 +27,7 @@
           </td> 
           <td>{{ $p->nama }}</td>
           <td >
-            <a href="/{{ request()->segment(1) }}/kartu-keluarga/{{ $p->no_kk }}" class="text-info" style="text-decoration: none;">{{ $p->no_kk }}</a>
+            <a href="/{{ request()->segment(1) }}/kartu-keluarga/{{ $p->no_kk }}" class="text-info" style="text-decoration: none;" target="_blank">{{ $p->no_kk }}</a>
           </td>
           <td>{{ $p->nama_ayah }}</td>
           <td>{{ $p->nama_ibu }}</td>
