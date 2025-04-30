@@ -261,23 +261,6 @@
               <!--end::Col-->
                      <!--begin::Col-->
                      <div class="col-md-6">
-                         <label for="nama_ayah" class="form-label">Nama Ayah</label>
-                         <div class="input-group has-validation">
-                           <span class="input-group-text" id=""><i class="bi bi-person-standing"></i></span>
-                           <input
-                             type="text"
-                             class="form-control"
-                             id="nama_ayah"
-                             name="nama_ayah"
-                             value="{{ $penduduk->nama_ayah }}"
-                             aria-describedby=""
-                             required
-                           />
-                         </div>
-                       </div>
-                     <!--end::Col-->
-                     <!--begin::Col-->
-                     <div class="col-md-6">
                       <label for="nama_ibu" class="form-label small px-2 py-1 rounded-top">Nama Ibu</label>
                       <div class="input-group has-validation input-group-sm">
                         <span class="input-group-text" id=""><i class="bi bi-person-standing-dress"></i></span>
@@ -776,7 +759,6 @@
           font-size: 12px;
      }
 </style>
-
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const kawinSelect = document.getElementById("kawin_id");
@@ -789,10 +771,10 @@
     function togglePerceraianField() {
       const selectedValue = kawinSelect.value;
       if (selectedValue === "3") {
-        perceraianDiv.style.display = "block";
-        tglPerkawinanDiv.style.display = "block";
-        aktaPernikahan.style.display = "block";
-        aktaPerceraian.style.display = "block";
+        perceraianDiv.style.display = "none";
+        tglPerkawinanDiv.style.display = "none";
+        aktaPernikahan.style.display = "none";
+        aktaPerceraian.style.display = "none";
         perceraianInput.required = true;
       }else if(selectedValue === "4"){
         perceraianDiv.style.display = "block";
@@ -801,11 +783,18 @@
         aktaPerceraian.style.display = "block";
         perceraianInput.required = true;
       }else if(selectedValue === "2"){
-        tglPerkawinanDiv.style.display = "none";
-        perceraianDiv.style.display = "none";
+        tglPerkawinanDiv.style.display = "block";
         aktaPernikahan.style.display = "none";
+        perceraianDiv.style.display = "none";
         aktaPerceraian.style.display = "none";
-      }else if(selectedValue === "1"){
+      }else if(selectedValue === "5"){
+        perceraianDiv.style.display = "block";
+        tglPerkawinanDiv.style.display = "block";
+        aktaPernikahan.style.display = "block";
+        aktaPerceraian.style.display = "block";
+      }
+      else if(selectedValue === "1"){
+        // Kawin Tercata
         tglPerkawinanDiv.style.display = "block";
         aktaPernikahan.style.display = "block";
         perceraianDiv.style.display = "none";

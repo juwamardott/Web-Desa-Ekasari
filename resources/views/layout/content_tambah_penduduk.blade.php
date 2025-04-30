@@ -359,14 +359,10 @@
                           <span class="input-group-text"><i class="bi bi-droplet-fill"></i></span>
                           <select class="form-control @error('golongan_darah') is-invalid @enderror" id="golongan_darah" name="golongan_darah" required>
                               <option value="">Pilih Golongan Darah</option>
-                              <option value="A+" {{ old('golongan_darah') == 'A+' ? 'selected' : '' }}>A+</option>
-                              <option value="A-" {{ old('golongan_darah') == 'A-' ? 'selected' : '' }}>A-</option>
-                              <option value="B+" {{ old('golongan_darah') == 'B+' ? 'selected' : '' }}>B+</option>
-                              <option value="B-" {{ old('golongan_darah') == 'B-' ? 'selected' : '' }}>B-</option>
-                              <option value="AB+" {{ old('golongan_darah') == 'AB+' ? 'selected' : '' }}>AB+</option>
-                              <option value="AB-" {{ old('golongan_darah') == 'AB-' ? 'selected' : '' }}>AB-</option>
-                              <option value="O+" {{ old('golongan_darah') == 'O+' ? 'selected' : '' }}>O+</option>
-                              <option value="O-" {{ old('golongan_darah') == 'O-' ? 'selected' : '' }}>O-</option>
+                              <option value="A" {{ old('golongan_darah') == 'A' ? 'selected' : '' }}>A</option>
+                              <option value="B" {{ old('golongan_darah') == 'B' ? 'selected' : '' }}>B</option>
+                              <option value="AB" {{ old('golongan_darah') == 'AB' ? 'selected' : '' }}>AB</option>
+                              <option value="O" {{ old('golongan_darah') == 'O' ? 'selected' : '' }}>O</option>
                               <option value="TIDAK TAHU" {{ old('golongan_darah') == 'TIDAK TAHU' ? 'selected' : '' }}>TIDAK TAHU</option>
                           </select>
                           @error('golongan_darah')
@@ -788,10 +784,10 @@
     function togglePerceraianField() {
       const selectedValue = kawinSelect.value;
       if (selectedValue === "3") {
-        perceraianDiv.style.display = "block";
-        tglPerkawinanDiv.style.display = "block";
-        aktaPernikahan.style.display = "block";
-        aktaPerceraian.style.display = "block";
+        perceraianDiv.style.display = "none";
+        tglPerkawinanDiv.style.display = "none";
+        aktaPernikahan.style.display = "none";
+        aktaPerceraian.style.display = "none";
         perceraianInput.required = true;
       }else if(selectedValue === "4"){
         perceraianDiv.style.display = "block";
@@ -800,11 +796,18 @@
         aktaPerceraian.style.display = "block";
         perceraianInput.required = true;
       }else if(selectedValue === "2"){
-        tglPerkawinanDiv.style.display = "none";
-        perceraianDiv.style.display = "none";
+        tglPerkawinanDiv.style.display = "block";
         aktaPernikahan.style.display = "none";
+        perceraianDiv.style.display = "none";
         aktaPerceraian.style.display = "none";
-      }else if(selectedValue === "1"){
+      }else if(selectedValue === "5"){
+        perceraianDiv.style.display = "block";
+        tglPerkawinanDiv.style.display = "block";
+        aktaPernikahan.style.display = "block";
+        aktaPerceraian.style.display = "block";
+      }
+      else if(selectedValue === "1"){
+        // Kawin Tercata
         tglPerkawinanDiv.style.display = "block";
         aktaPernikahan.style.display = "block";
         perceraianDiv.style.display = "none";

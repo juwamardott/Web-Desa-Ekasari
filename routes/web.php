@@ -37,6 +37,9 @@ Route::get('/keluarga/list/{no_kk}', [PendudukController::class, 'keluarga_list_
 Route::get('/penduduk/tambah', [PendudukController::class, 'create'])->name('penduduk.show.tambah')->middleware('auth');
 Route::post('/penduduk/tambah', [PendudukController::class, 'store'])->name('penduduk.store')->middleware('auth');
 
+Route::post('/penduduk/list/{no_kk}', [PendudukController::class, 'ubah_kk_penduduk']);
+Route::post('/keluarga/list/{no_kk}', [PendudukController::class, 'ubah_kk_keluarga']);
+
 Route::get('/banjar', [BanjarController::class, 'index'])->name('banjar.index')->middleware('auth');
 Route::get('/banjar/filter', [BanjarController::class, 'filterBanjar'])->name('banjar.filter')->middleware('auth');
 Route::get('/banjar/tambah', [BanjarController::class, 'create'])->name('banjar.tambah')->middleware('auth');

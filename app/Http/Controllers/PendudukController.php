@@ -30,7 +30,6 @@ class PendudukController extends Controller
     public function index()
     {
         $user = Auth::user();
-        // dd($user);
         if ($user->username === 'admin') {
             $penduduk = Penduduk::paginate(5);
             $total = Penduduk::count();
@@ -46,6 +45,13 @@ class PendudukController extends Controller
 
         return view('penduduk.penduduk', compact('penduduk', 'banjar', 'total', 'status_penduduk', 'status_dasar', 'jenis_kelamin'));
     }
+
+
+
+
+
+
+    
     public function keluarga(){
         $keluargaa = Penduduk::where('hubungan_keluarga_id', 1);
         $user = Auth::user();
@@ -114,8 +120,8 @@ class PendudukController extends Controller
                 'nik' => 'required',
                 'nama' => 'required',
                 'anak_ke' => 'required',
-                'no_telepon' => 'required',
-                'email' => 'required|email',
+                'no_telepon' => 'nullable',
+                'email' => 'nullable|email',
                 'warga_negara_id' => 'required',
                 'nama_ayah' => 'required',
                 'nama_ibu' => 'required',
@@ -418,6 +424,23 @@ class PendudukController extends Controller
             ->header('Content-Disposition', 'inline; filename="kartu_keluarga.pdf"') // <-- inline, bukan attachment
             ->header('Content-Transfer-Encoding', 'binary')
             ->header('Accept-Ranges', 'bytes');
+    }
+
+
+    public function ubah_kk_penduduk(Request $request, $no_kk){
+        
+        // dd($request->input());
+        $penduduk = Penduduk::where('no_kk', $no_kk);
+
+        $penduduk->update([
+           'no_kk' =>  $request->input('no_kk_baru')
+        ]);
+
+        return redirect()->route('penduduk.list.keluarga', $request->input('no_kk_baru'))->with('success', 'Berhasil merubah Nomor Kartu Keluarga!');
+    }
+
+    public function ubah_kk_keluarga($no_kk){
+        dd($no_kk);
     }
     
 

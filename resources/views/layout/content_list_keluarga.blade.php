@@ -32,6 +32,7 @@
                         <img src="{{ asset('lte/dist/assets/img/user2.png') }}" class="rounded mx-auto d-block" alt="..." width="100">
                         @endif
                          
+
                       </div>
                     <div class="card shadow-sm rounded px-2">
                          <div class="card-body text-center d-flex flex-column align-items-center">
@@ -39,11 +40,7 @@
                              <span class="text-muted d-block">NIK: {{ $kepala->nik }}</span>
                              <span class="text-muted d-block">{{ $kepala->hubungan_keluarga->hubungan_keluarga }}</span>
                          </div>
-                     </div>`
-
-
-                                       
-                 
+                     </div>
                </div>
                
               
@@ -67,12 +64,26 @@
              
              <!-- /.card -->
            </div>
+           {{-- Ubah NO KK --}}
+           <div class="col-md-12">
+            <form action="/{{ request()->segment(1) }}/list/{{ $kepala->no_kk }}" method="POST">
+              @csrf
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">NO KK BARU</span>
+                <input type="text" name="no_kk_baru" class="form-control" placeholder="Input No KK baru..." aria-label="Username" aria-describedby="basic-addon1">
+                <button class="btn btn-success" type="submit" id="inputGroupFileAddon04">Button</button>
+              </div>
+            </form>
+          </div>
+          {{-- End --}}
            <div class="col-lg-12">
                <!-- /.card -->
                <div class="card mb-4">
                  <div class="card-header border-0">
                    <h3 class="card-title">List Keluarga</h3>
                  </div>
+             
+                  
                  <div class="card-body table-responsive p-0">
                    <table class="table table-striped align-middle">
                      <thead>
@@ -130,10 +141,11 @@
              
          </div>
          <!--end::Row-->
-         <!-- Tombol Kembali -->
-         <a href="{{ url()->previous() }}" class="btn btn-warning btn-sm">
+
+        <!-- Tombol Kembali -->
+        <a href="/{{ request()->segment(1) }}" class="btn btn-warning btn-sm">
           <i class="bi bi-arrow-left"></i> Kembali
-      </a>
+        </a>
        </div>
        <!--end::Container-->
      </div>

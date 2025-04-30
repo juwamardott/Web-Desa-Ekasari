@@ -26,7 +26,7 @@
             text-align: center;
             border-bottom: 3px solid #000;
             padding-bottom: 5px;
-            margin-bottom: 10px;
+            margin-bottom: 5px; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -39,7 +39,7 @@
         }
         
         .subtitle {
-            margin: 5px 0;
+            margin: 2px 0;
             font-size: 16px;
         }
         
@@ -83,13 +83,15 @@
         .footer {
             display: inline;
             justify-content: space-between;
-            margin-top: 15px;
+            margin-top: 2px;
             font-size: 11px;
+            padding: 0;
         }
         
         .signature-box {
-            width: 45%;
+            width: 20%;
             text-align: center;
+            padding: 0px;
         }
         
         .signature-line {
@@ -116,6 +118,13 @@
         .compact-table th, .compact-table td {
             padding: 3px;
             font-size: 10px;
+        }
+        .desa{
+            margin-top:-8px;
+            margin-bottom: 0;
+        }
+        .nama{
+            margin-top:-2px;
         }
     </style>
 </head>
@@ -145,7 +154,7 @@
                     <td width="10%">Kode Pos</td>
                     <td width="10%">82245</td>
                     <td width="15%">Provinsi</td>
-                    <td width="15%">Bali</td>
+                    <td width="15%">BALI</td>
                 </tr>
                 <tr>
                     <td>RT/RW</td>
@@ -153,14 +162,14 @@
                     <td>Telepon</td>
                     <td>{{ $kepala->no_telepon }}</td>
                     <td>Kabupaten/Kota</td>
-                    <td>Jembrana</td>
+                    <td>JEMBRANA</td>
                 </tr>
                 <tr>
                     <td>Desa/Kelurahan</td>
                     <td>DESA EKASARI</td>
                     <td colspan="2"></td>
                     <td>Kecamatan</td>
-                    <td>Melaya</td>
+                    <td>MELAYA</td>
                 </tr>
             </table>
         </div>
@@ -261,10 +270,10 @@
         
         <div class="footer">
             <div class="signature-box">
-                <p>Kota Contoh, 01-01-2023</p>
-                <p>Kepala Keluarga</p>
+                <p class="desa">Desa Ekasari, 01-01-2023</p>
+                <p class="nama">Kepala Desa</p>
                 <div class="signature-line"></div>
-                <p>BUDI SANTOSO</p>
+                <p>I Gede Puja</p>
             </div>
         </div>
     </div>

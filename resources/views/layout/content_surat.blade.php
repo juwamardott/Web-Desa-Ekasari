@@ -19,9 +19,9 @@
          <!--begin::Row-->
          <div class="row g-4">
            <!--begin::Col-->
-           <div class="col-md-12">
+           <div class="col-md-6">
              <!--begin::Quick Example-->
-             <div class="card card-primary card-outline mb-4">
+             <div class="card card-info card-outline mb-4">
                <!--begin::Header-->
                <div class="card-header"><div class="card-title">Form Pembuatan Surat</div></div>
                <!--end::Header-->
@@ -79,7 +79,7 @@
                         class="form-control"
                         id="keterangan_display"
                         aria-describedby="keterangan"
-                        placeholder="Rp0"
+                        placeholder=""
                     />
                 
                     <!-- Hidden input untuk kirim ke server -->
@@ -166,7 +166,7 @@
            </a>
            </div>
 
-           {{-- <div class="col-md-6">
+           <div class="col-md-6">
                <div class="card card-success card-outline">
                     <div class="card-header"><div class="card-title">Contoh Surat</div></div>
                    <div class="card-body " style="font-family: 'Times New Roman', Times, serif;">
@@ -225,7 +225,7 @@
            
                    </div>
                </div>
-         </div> --}}
+         </div>
          <!--end::Row-->
        </div>
        <!--end::Container-->
@@ -234,30 +234,6 @@
    </main>
 
 
-<script>
-    function formatRupiah(angka, prefix = 'Rp') {
-        let number_string = angka.replace(/[^,\d]/g, '').toString();
-        let split = number_string.split(',');
-        let sisa = split[0].length % 3;
-        let rupiah = split[0].substr(0, sisa);
-        let ribuan = split[0].substr(sisa).match(/\d{3}/g);
-
-        if (ribuan) {
-            let separator = sisa ? '.' : '';
-            rupiah += separator + ribuan.join('.');
-        }
-
-        rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
-        return prefix + rupiah;
-    }
-
-    document.getElementById('keterangan_display').addEventListener('keyup', function(e) {
-        let input = this.value.replace(/[^,\d]/g, '').toString(); // hanya angka
-        this.value = formatRupiah(input, 'Rp');
-        // Set nilai asli (tanpa titik) ke input hidden
-        document.getElementById('keterangan').value = input;
-    });
-</script>
 
 
 

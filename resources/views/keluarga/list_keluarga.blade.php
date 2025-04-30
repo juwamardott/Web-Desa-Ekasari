@@ -23,17 +23,27 @@ List Data Keluarga
 @include('layout.lib')
 @include('layout.footer')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     
     <!-- Panggil Toast jika session 'success' ada -->
     <script>
-        @if(session('error'))
+        @if(session('success'))
             toastr.options = {
                 "closeButton": true,
                 "progressBar": true,
                 "positionClass": "toast-top-right",
-                "timeOut": "5000"
+                "timeOut": "2000",
+                "toastClass": "toast-success"
             }
-            toastr.success("{{ session('error') }}");
+            toastr.success("{{ session('success') }}");
+        @elseif (session('error'))
+             toastr.options = {
+                  "closeButton": true,
+                  "progressBar": true,
+                  "positionClass": "toast-top-right",
+                  "timeOut": "2000",
+                  "toastClass": "toast-error"
+             }
+             toastr.error("{{ session('error') }}");
         @endif
-</script>
+    </script>
