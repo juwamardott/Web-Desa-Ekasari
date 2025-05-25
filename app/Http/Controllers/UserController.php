@@ -14,14 +14,17 @@ class UserController extends Controller
         $users = User::all();
         $total_user = $users->count();
         $user = User::with('banjar')->paginate(5);
-
         return view('user.user', compact('user','total_user'));
     }
+
+
+
+    
     public function filterUser(Request $request)
     {
         $search = $request->search;
 
-        $users = User::query()
+        $users = User::with('banjar')
         ->when($search, function ($query) use ($search) {
             return $query->where('id', 'LIKE', "%$search%")
                         ->orWhere('username', 'LIKE', "%$search%")

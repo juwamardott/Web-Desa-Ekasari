@@ -118,8 +118,8 @@
                         <div class="card-body"><div id="revenue-chart"></div></div>
                       </div>
                     </div>
-                  </div>
-          </div>
+                  
+               </div>
           <!--end::Container-->
      </div>
      <!--end::App Content-->

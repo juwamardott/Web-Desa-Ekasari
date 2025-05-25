@@ -269,7 +269,45 @@ class DatabaseSeeder extends Seeder
 
 
         // Penduduk
+        $faker = Faker::create('id_ID');
 
+        for ($i = 0; $i < 5000; $i++) {
+            Penduduk::create([
+                'image' => null,
+                'no_kk' => $faker->unique()->numerify('################'),
+                'nik' => $faker->unique()->numerify('################'),
+                'nama' => $faker->name(),
+                'nama_ayah' => $faker->name('male'),
+                'nama_ibu' => $faker->name('female'),
+                'nik_ayah' => $faker->unique()->numerify('################'),
+                'nik_ibu' => $faker->unique()->numerify('################'),
+                'alamat' => $faker->address(),
+                'banjar_id' => rand(1, 10),
+                'pendidikan_id' => rand(1, 10),
+                'umur' => rand(1, 90),
+                'kawin_id' => rand(1, 5),
+                'hubungan_keluarga_id' => rand(1, 5),
+                'jenis_kelamin_id' => rand(1, 2),
+                'agama_id' => rand(1, 6),
+                'status_penduduk_id' => rand(1, 5),
+                'akta_kelahiran' => $faker->optional()->bothify('AK-#######'),
+                'tempat_lahir' => $faker->city(),
+                'tgl_lahir' => $faker->date(),
+                'pendidikan_sedang_id' => rand(1, 5),
+                'pekerjaan_id' => rand(1, 10),
+                'warga_negara_id' => rand(1, 2),
+                'negara_asal' => $faker->optional()->country(),
+                'status_dasar_id' => rand(1, 3),
+                'anak_ke' => $faker->optional()->numberBetween(1, 5),
+                'no_telepon' => $faker->optional()->phoneNumber(),
+                'email' => $faker->optional()->safeEmail(),
+                'akta_nikah' => $faker->optional()->bothify('AN-#######'),
+                'akta_perceraian' => $faker->optional()->bothify('AP-#######'),
+                'tgl_perkawinan' => $faker->optional()->date(),
+                'tgl_perceraian' => $faker->optional()->date(),
+                'golongan_darah' => $faker->randomElement(['A', 'B', 'AB', 'O']),
+            ]);
+        }
         
         
     }

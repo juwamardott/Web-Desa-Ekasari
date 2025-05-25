@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Banjar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Cache;
 
 class BanjarController extends Controller
 {
@@ -59,7 +60,7 @@ class BanjarController extends Controller
             ]);
         }
 
-
+        Cache::forget('data_banjar');
         
 
         return redirect()->route('banjar.index')->with('success', 'Data berhasil disimpan!');
@@ -101,6 +102,8 @@ class BanjarController extends Controller
         $banjar->update([
             'banjar' => $validated['banjar'],
         ]);
+
+        Cache::forget('data_banjar');
 
         // Redirect dengan pesan sukses
         return redirect()->route('banjar.index')->with('success', 'Data berhasil diperbarui.');

@@ -154,7 +154,7 @@
                  <!--end::Body-->
                  <!--begin::Footer-->
                  <div class="card-footer">
-                   <button type="submit" class="btn btn-success btn-sm">Submit & Donwload</button>
+                   <button type="submit" class="btn btn-success btn-sm">Submit & Download</button>
                  </div>
                  <!--end::Footer-->
                </form>

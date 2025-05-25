@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use Mpdf\Mpdf;
 
@@ -27,33 +28,78 @@ class PendudukController extends Controller
      * Display a listing of the resource.
      */
 
+
     public function index()
     {
+        $relasi = [
+            'banjar',
+            'pendidikan',
+            'pendidikan_sedang',
+            'pekerjaan',
+            'agama',
+            'hubungan_keluarga',
+            'jenis_kelamin',
+            'warga_negara',
+            'status_penduduk',
+            'status_dasar',
+            'kawin'
+        ];
         $user = Auth::user();
+        
         if ($user->username === 'admin') {
-            $penduduk = Penduduk::paginate(5);
+            $penduduk = Penduduk::with($relasi)->paginate(5);
             $total = Penduduk::count();
-        }else {
-            $penduduk = Penduduk::where('banjar_id', $user->banjar_id)->paginate(5);
+        } else {
+            $penduduk = Penduduk::with($relasi)
+                ->where('banjar_id', $user->banjar_id)
+                ->paginate(5);
             $total = Penduduk::where('banjar_id', $user->banjar_id)->count();
         }
 
-        $banjar = Banjar::all();
-        $status_penduduk = StatusPenduduk::all();
-        $status_dasar = StatusDasar::all();
-        $jenis_kelamin = JenisKelamin::all();
+        // Cache data terkait
+        $banjar = Cache::remember('data_banjar', 3600, function () {
+            return Banjar::all();
+        });
 
-        return view('penduduk.penduduk', compact('penduduk', 'banjar', 'total', 'status_penduduk', 'status_dasar', 'jenis_kelamin'));
+        $status_penduduk = Cache::remember('data_status_penduduk', 3600, function () {
+            return StatusPenduduk::all();
+        });
+
+        $status_dasar = Cache::remember('data_status_dasar', 3600, function () {
+            return StatusDasar::all();
+        });
+
+        $jenis_kelamin = Cache::remember('data_jenis_kelamin', 3600, function () {
+            return JenisKelamin::all();
+        });
+
+        return view('penduduk.penduduk', compact(
+            'penduduk',
+            'banjar',
+            'total',
+            'status_penduduk',
+            'status_dasar',
+            'jenis_kelamin'
+        ));
     }
 
 
 
-
-
-
-    
     public function keluarga(){
-        $keluargaa = Penduduk::where('hubungan_keluarga_id', 1);
+        $relasi= [
+            'banjar',
+            'pendidikan',
+            'pendidikan_sedang',
+            'pekerjaan',
+            'agama',
+            'hubungan_keluarga',
+            'jenis_kelamin',
+            'warga_negara',
+            'status_penduduk',
+            'status_dasar',
+            'kawin'
+          ];
+        $keluargaa = Penduduk::with($relasi)->where('hubungan_keluarga_id', 1);
         $user = Auth::user();
         // dd($user);  
         if($user->username === 'admin'){
@@ -63,15 +109,25 @@ class PendudukController extends Controller
             $keluarga = $keluargaa->where('banjar_id', $user->banjar_id)->paginate(5);
             $total = $keluarga->count();
         }
-        $banjar = Banjar::all();
         $total = $keluargaa->count();
-        $status_penduduk = StatusPenduduk::all();
-        $status_dasar = StatusDasar::all();
-        $jenis_kelamin = JenisKelamin::all();
+        $banjar = Cache::remember('data_banjar', 3600, function () {
+            return Banjar::all();
+        });
+
+        $status_penduduk = Cache::remember('data_status_penduduk', 3600, function () {
+            return StatusPenduduk::all();
+        });
+
+        $status_dasar = Cache::remember('data_status_dasar', 3600, function () {
+            return StatusDasar::all();
+        });
+
+        $jenis_kelamin = Cache::remember('data_jenis_kelamin', 3600, function () {
+            return JenisKelamin::all();
+        });
         // $keluarga = $keluargaa->paginate(5);
         return view('keluarga.keluarga', compact('keluarga', 'banjar', 'total', 'status_penduduk', 'status_dasar','jenis_kelamin'));
     }
-
 
     public function penduduk_list_keluarga($no_kk){
         $penduduk = Penduduk::where('no_kk', $no_kk)->orderBy('hubungan_keluarga_id', 'asc')->get();
@@ -93,21 +149,63 @@ class PendudukController extends Controller
 
     public function create()
     {
-        //
-        $banjar = Banjar::all();
-        $status_penduduk = StatusPenduduk::all();
-        $status_dasar = StatusDasar::all();
-        $jenis_kelamin = JenisKelamin::all();
-        $kawin = Kawin::all();
-        $warga_negara = WargaNegara::all();
-        $agama = Agama::all();
-        $pendidikan = Pendidikan::all();
-        $hubungan_keluarga = HubunganKeluarga::all();
-        $pekerjaan = Pekerjaan::all();
-        $pendidikan_sedang = PendidikanSedang::all();
-
-        return view('penduduk.tambah_penduduk', compact('banjar', 'status_penduduk', 'status_dasar', 'jenis_kelamin', 'kawin', 'warga_negara', 'agama', 'pendidikan', 'hubungan_keluarga', 'pekerjaan', 'pendidikan_sedang'));
-        
+        $banjar = Cache::remember('data_banjar', 3600, function () {
+            return Banjar::all();
+        });
+    
+        $status_penduduk = Cache::remember('data_status_penduduk', 3600, function () {
+            return StatusPenduduk::all();
+        });
+    
+        $status_dasar = Cache::remember('data_status_dasar', 3600, function () {
+            return StatusDasar::all();
+        });
+    
+        $jenis_kelamin = Cache::remember('data_jenis_kelamin', 3600, function () {
+            return JenisKelamin::all();
+        });
+    
+        $kawin = Cache::remember('data_kawin', 3600, function () {
+            return Kawin::all();
+        });
+    
+        $warga_negara = Cache::remember('data_warga_negara', 3600, function () {
+            return WargaNegara::all();
+        });
+    
+        $agama = Cache::remember('data_agama', 3600, function () {
+            return Agama::all();
+        });
+    
+        $pendidikan = Cache::remember('data_pendidikan', 3600, function () {
+            return Pendidikan::all();
+        });
+    
+        $hubungan_keluarga = Cache::remember('data_hubungan_keluarga', 3600, function () {
+            return HubunganKeluarga::all();
+        });
+    
+        $pekerjaan = Cache::remember('data_pekerjaan', 3600, function () {
+            return Pekerjaan::all();
+        });
+    
+        $pendidikan_sedang = Cache::remember('data_pendidikan_sedang', 3600, function () {
+            return PendidikanSedang::all();
+        });
+    
+        return view('penduduk.tambah_penduduk', compact(
+            'banjar',
+            'status_penduduk',
+            'status_dasar',
+            'jenis_kelamin',
+            'kawin',
+            'warga_negara',
+            'agama',
+            'pendidikan',
+            'hubungan_keluarga',
+            'pekerjaan',
+            'pendidikan_sedang'
+        ));
     }
 
     public function store(Request $request)
@@ -265,99 +363,126 @@ class PendudukController extends Controller
     }
 
     public function filterPenduduk(Request $request)
-{
-    $search = $request->search;
-    $status = $request->status;
-    $jenis_kelamin = $request->jenis_kelamin;
-    $umur = $request->umur;
-    $status_dasar = $request->status_dasar;
-    // dd($status_dasar);
-    if(Auth::user()->username == 'admin'){
-        $banjar = $request->banjar;
-    }else{
-        $banjar = Auth::user()->banjar_id;
+    {
+        $relasi= [
+            'banjar',
+            'pendidikan',
+            'pendidikan_sedang',
+            'pekerjaan',
+            'agama',
+            'hubungan_keluarga',
+            'jenis_kelamin',
+            'warga_negara',
+            'status_penduduk',
+            'status_dasar',
+            'kawin'
+          ];
+        $search = $request->search;
+        $status = $request->status;
+        $jenis_kelamin = $request->jenis_kelamin;
+        $umur = $request->umur;
+        $status_dasar = $request->status_dasar;
+        // dd($status_dasar);
+        if(Auth::user()->username == 'admin'){
+            $banjar = $request->banjar;
+        }else{
+            $banjar = Auth::user()->banjar_id;
+        }
+
+        $penduduks = Penduduk::with($relasi)
+            ->where(function ($query) use ($search) {
+                $query
+                    ->where(function ($q) use ($search) {
+                        if ($search) {
+                            $q->where('nama', 'LIKE', "%$search%")
+                                ->orWhere('no_kk', 'LIKE', "%$search%")
+                                ->orWhere('nik', 'LIKE', "%$search%");
+                        }
+                    });
+            })->when($status, function ($query) use ($status) {
+                return $query->where('status_penduduk_id', $status);
+            })->when($jenis_kelamin, function ($query) use ($jenis_kelamin) {
+                return $query->where('jenis_kelamin_id', $jenis_kelamin);
+            })->when($banjar, function ($query) use ($banjar) {
+                return $query->where('banjar_id', $banjar);
+            })->when($umur, function ($query) use ($umur) {
+                return $query->where('umur', $umur);
+            })->when($status_dasar, function ($query) use ($status_dasar) {
+                return $query->where('status_dasar_id', $status_dasar);
+            });
+        
+        $total = $penduduks->count();
+        $penduduk = $penduduks->paginate(5);
+
+        return response()->json([
+            'table' => view('penduduk.partial_table_penduduk', compact('penduduk'))->render(),
+            'pagination' => view('penduduk.paginate', compact('penduduk'))->render(),
+            'total_penduduk' => $total
+        ]);
     }
-
-    $penduduks = Penduduk::query()
-        ->where(function ($query) use ($search) {
-            $query
-                ->where(function ($q) use ($search) {
-                    if ($search) {
-                        $q->where('nama', 'LIKE', "%$search%")
-                            ->orWhere('no_kk', 'LIKE', "%$search%")
-                            ->orWhere('nik', 'LIKE', "%$search%");
-                    }
-                });
-        })->when($status, function ($query) use ($status) {
-            return $query->where('status_penduduk_id', $status);
-        })->when($jenis_kelamin, function ($query) use ($jenis_kelamin) {
-            return $query->where('jenis_kelamin_id', $jenis_kelamin);
-        })->when($banjar, function ($query) use ($banjar) {
-            return $query->where('banjar_id', $banjar);
-        })->when($umur, function ($query) use ($umur) {
-            return $query->where('umur', $umur);
-        })->when($status_dasar, function ($query) use ($status_dasar) {
-            return $query->where('status_dasar_id', $status_dasar);
-        });
-    
-    $total = $penduduks->count();
-    $penduduk = $penduduks->paginate(5);
-
-    return response()->json([
-        'table' => view('penduduk.partial_table_penduduk', compact('penduduk'))->render(),
-        'pagination' => view('penduduk.paginate', compact('penduduk'))->render(),
-        'total_penduduk' => $total
-    ]);
-}
 
     public function filterKeluarga(Request $request)
-{
-    $search = $request->search;
-    $status = $request->status;
-    $jenis_kelamin = $request->jenis_kelamin;
-    $umur = $request->umur;
-    $status_dasar = $request->status_dasar;
-    if(Auth::user()->username == 'admin'){
-        $banjar = $request->banjar;
-    }else{
-        $banjar = Auth::user()->banjar_id;
+    {
+        $relasi= [
+            'banjar',
+            'pendidikan',
+            'pendidikan_sedang',
+            'pekerjaan',
+            'agama',
+            'hubungan_keluarga',
+            'jenis_kelamin',
+            'warga_negara',
+            'status_penduduk',
+            'status_dasar',
+            'kawin'
+          ];
+          
+        $search = $request->search;
+        $status = $request->status;
+        $jenis_kelamin = $request->jenis_kelamin;
+        $umur = $request->umur;
+        $status_dasar = $request->status_dasar;
+        if(Auth::user()->username == 'admin'){
+            $banjar = $request->banjar;
+        }else{
+            $banjar = Auth::user()->banjar_id;
+        }
+
+        $penduduks = Penduduk::with($relasi)
+            ->where(function ($query) use ($search) {
+                $query->where('hubungan_keluarga_id', 1)
+                    ->where(function ($q) use ($search) {
+                        if ($search) {
+                            $q->where('nama', 'LIKE', "%$search%")
+                                ->orWhere('no_kk', 'LIKE', "%$search%")
+                                ->orWhere('nik', 'LIKE', "%$search%");
+                        }
+                    });
+            })
+            ->when($status, function ($query) use ($status) {
+                return $query->where('status_penduduk_id', $status);
+            })
+            ->when($jenis_kelamin, function ($query) use ($jenis_kelamin) {
+                return $query->where('jenis_kelamin_id', $jenis_kelamin);
+            })
+            ->when($banjar, function ($query) use ($banjar) {
+                return $query->where('banjar_id', $banjar);
+            })
+            ->when($umur, function ($query) use ($umur) {
+                return $query->where('umur', $umur);
+            })
+            ->when($status_dasar, function ($query) use ($status_dasar) {
+                return $query->where('status_dasar_id', $status_dasar);
+            });
+        $total = $penduduks->count();
+        $penduduk = $penduduks->paginate(5);
+
+        return response()->json([
+            'table' => view('penduduk.partial_table_penduduk', compact('penduduk'))->render(),
+            'pagination' => view('penduduk.paginate', compact('penduduk'))->render(),
+            'total_keluarga' => $total
+        ]);
     }
-
-    $penduduks = Penduduk::query()
-        ->where(function ($query) use ($search) {
-            $query->where('hubungan_keluarga_id', 1)
-                  ->where(function ($q) use ($search) {
-                      if ($search) {
-                          $q->where('nama', 'LIKE', "%$search%")
-                            ->orWhere('no_kk', 'LIKE', "%$search%")
-                            ->orWhere('nik', 'LIKE', "%$search%");
-                      }
-                  });
-        })
-        ->when($status, function ($query) use ($status) {
-            return $query->where('status_penduduk_id', $status);
-        })
-        ->when($jenis_kelamin, function ($query) use ($jenis_kelamin) {
-            return $query->where('jenis_kelamin_id', $jenis_kelamin);
-        })
-        ->when($banjar, function ($query) use ($banjar) {
-            return $query->where('banjar_id', $banjar);
-        })
-        ->when($umur, function ($query) use ($umur) {
-            return $query->where('umur', $umur);
-        })
-        ->when($status_dasar, function ($query) use ($status_dasar) {
-            return $query->where('status_dasar_id', $status_dasar);
-        });
-    $total = $penduduks->count();
-    $penduduk = $penduduks->paginate(5);
-
-    return response()->json([
-        'table' => view('penduduk.partial_table_penduduk', compact('penduduk'))->render(),
-        'pagination' => view('penduduk.paginate', compact('penduduk'))->render(),
-        'total_keluarga' => $total
-    ]);
-}
 
 
 
@@ -365,40 +490,137 @@ class PendudukController extends Controller
 
 
 
-    public function detail_penduduk($id){
+        public function detail_penduduk($id)
+    {
         $penduduk = Penduduk::find($id);
         $type = 'penduduk';
-        $banjar = Banjar::all();
-        $status_penduduk = StatusPenduduk::all();
-        $status_dasar = StatusDasar::all();
-        $jenis_kelamin = JenisKelamin::all();
-        $kawin = Kawin::all();
-        $warga_negara = WargaNegara::all();
-        $agama = Agama::all();
-        $pendidikan = Pendidikan::all();
-        $hubungan_keluarga = HubunganKeluarga::all();
-        $pekerjaan = Pekerjaan::all();
-        $pendidikan_sedang = PendidikanSedang::all();
 
-        return view('penduduk.detail_penduduk', compact('penduduk', 'banjar','type', 'status_penduduk', 'status_dasar', 'jenis_kelamin', 'kawin', 'warga_negara', 'agama', 'pendidikan', 'hubungan_keluarga', 'pekerjaan', 'pendidikan_sedang'));
+        $banjar = Cache::remember('data_banjar', 3600, function () {
+            return Banjar::all();
+        });
+
+        $status_penduduk = Cache::remember('data_status_penduduk', 3600, function () {
+            return StatusPenduduk::all();
+        });
+
+        $status_dasar = Cache::remember('data_status_dasar', 3600, function () {
+            return StatusDasar::all();
+        });
+
+        $jenis_kelamin = Cache::remember('data_jenis_kelamin', 3600, function () {
+            return JenisKelamin::all();
+        });
+
+        $kawin = Cache::remember('data_kawin', 3600, function () {
+            return Kawin::all();
+        });
+
+        $warga_negara = Cache::remember('data_warga_negara', 3600, function () {
+            return WargaNegara::all();
+        });
+
+        $agama = Cache::remember('data_agama', 3600, function () {
+            return Agama::all();
+        });
+
+        $pendidikan = Cache::remember('data_pendidikan', 3600, function () {
+            return Pendidikan::all();
+        });
+
+        $hubungan_keluarga = Cache::remember('data_hubungan_keluarga', 3600, function () {
+            return HubunganKeluarga::all();
+        });
+
+        $pekerjaan = Cache::remember('data_pekerjaan', 3600, function () {
+            return Pekerjaan::all();
+        });
+
+        $pendidikan_sedang = Cache::remember('data_pendidikan_sedang', 3600, function () {
+            return PendidikanSedang::all();
+        });
+
+        return view('penduduk.detail_penduduk', compact(
+            'penduduk',
+            'banjar',
+            'type',
+            'status_penduduk',
+            'status_dasar',
+            'jenis_kelamin',
+            'kawin',
+            'warga_negara',
+            'agama',
+            'pendidikan',
+            'hubungan_keluarga',
+            'pekerjaan',
+            'pendidikan_sedang'
+        ));
     }
 
-    public function detail_keluarga($id){
-        $penduduk = Penduduk::find($id);
-        $banjar = Banjar::all();
-        $type = 'keluarga';
-        $status_penduduk = StatusPenduduk::all();
-        $status_dasar = StatusDasar::all();
-        $jenis_kelamin = JenisKelamin::all();
-        $kawin = Kawin::all();
-        $warga_negara = WargaNegara::all();
-        $agama = Agama::all();
-        $pendidikan = Pendidikan::all();
-        $hubungan_keluarga = HubunganKeluarga::all();
-        $pekerjaan = Pekerjaan::all();
-        $pendidikan_sedang = PendidikanSedang::all();
-        return view('keluarga.detail_keluarga', compact('penduduk', 'banjar','type', 'status_penduduk', 'status_dasar', 'jenis_kelamin', 'kawin', 'warga_negara', 'agama', 'pendidikan', 'hubungan_keluarga', 'pekerjaan', 'pendidikan_sedang'));
-    }
+    public function detail_keluarga($id)
+{
+    $penduduk = Penduduk::find($id);
+    $type = 'keluarga';
+
+    $banjar = Cache::remember('data_banjar', 3600, function () {
+        return Banjar::all();
+    });
+
+    $status_penduduk = Cache::remember('data_status_penduduk', 3600, function () {
+        return StatusPenduduk::all();
+    });
+
+    $status_dasar = Cache::remember('data_status_dasar', 3600, function () {
+        return StatusDasar::all();
+    });
+
+    $jenis_kelamin = Cache::remember('data_jenis_kelamin', 3600, function () {
+        return JenisKelamin::all();
+    });
+
+    $kawin = Cache::remember('data_kawin', 3600, function () {
+        return Kawin::all();
+    });
+
+    $warga_negara = Cache::remember('data_warga_negara', 3600, function () {
+        return WargaNegara::all();
+    });
+
+    $agama = Cache::remember('data_agama', 3600, function () {
+        return Agama::all();
+    });
+
+    $pendidikan = Cache::remember('data_pendidikan', 3600, function () {
+        return Pendidikan::all();
+    });
+
+    $hubungan_keluarga = Cache::remember('data_hubungan_keluarga', 3600, function () {
+        return HubunganKeluarga::all();
+    });
+
+    $pekerjaan = Cache::remember('data_pekerjaan', 3600, function () {
+        return Pekerjaan::all();
+    });
+
+    $pendidikan_sedang = Cache::remember('data_pendidikan_sedang', 3600, function () {
+        return PendidikanSedang::all();
+    });
+
+    return view('keluarga.detail_keluarga', compact(
+        'penduduk',
+        'banjar',
+        'type',
+        'status_penduduk',
+        'status_dasar',
+        'jenis_kelamin',
+        'kawin',
+        'warga_negara',
+        'agama',
+        'pendidikan',
+        'hubungan_keluarga',
+        'pekerjaan',
+        'pendidikan_sedang'
+    ));
+}
 
 
     public function kartu_keluarga($no_kk){

@@ -678,25 +678,29 @@
                       </div>
                   </div>
                     <!--end::Col-->
-                     <!--begin::Col-->
-                     <div class="col-md-6">
-                      <label for="pendidikan_sedang_id" class="form-label small px-2 py-1 rounded-top">Pendidikan saat ini</label>
-                      <div class="input-group has-validation input-group-sm">
-                        <span class="input-group-text" id=""><i class="bi bi-book"></i></span>
-                        <select class="form-control @error('pendidikan_sedang_id') is-invalid @enderror" id="pendidikan_sedang_id" name="pendidikan_sedang_id" required>
-                         <option value="">Pilih Pendidikan Sedang</option>
-                         @foreach ($pendidikan_sedang as $sp)
-                         <option value="{{ $sp->id }}" {{ isset($penduduk->pendidikan_sedang_id) && $penduduk->status_penduduk_id == $sp->id ? 'selected' : '' }}>{{ $sp->pendidikan_sedang }}</option>
-                         @endforeach
-                     </select>
-                     @error('pendidikan_sedang_id')
-                           <div class="invalid-feedback">
-                               {{ $message }}
-                           </div>
-                       @enderror
+                    <!--begin::Col-->
+                      <div class="col-md-6">
+                        <label for="pendidikan_sedang_id" class="form-label small px-2 py-1 rounded-top">Pendidikan saat ini</label>
+                        <div class="input-group has-validation input-group-sm">
+                          <span class="input-group-text"><i class="bi bi-book"></i></span>
+                          <select class="form-control @error('pendidikan_sedang_id') is-invalid @enderror" id="pendidikan_sedang_id" name="pendidikan_sedang_id" required>
+                            <option value="">Pilih Pendidikan Sedang</option>
+                            @foreach ($pendidikan_sedang as $sp)
+                              <option value="{{ $sp->id }}" {{ isset($penduduk->pendidikan_sedang_id) && $penduduk->pendidikan_sedang_id == $sp->id ? 'selected' : '' }}>
+                                {{ $sp->pendidikan_sedang }}
+                              </option>
+                            @endforeach
+                          </select>
+                          @error('pendidikan_sedang_id')
+                            <div class="invalid-feedback">
+                              {{ $message }}
+                            </div>
+                          @enderror
+                        </div>
                       </div>
-                    </div>
-                  <!--end::Col-->
+                      <!--end::Col-->
+
+                      
                       <!--begin::Col-->
                      <div class="col-md-6">
                       <label for="pekerjaan_id" class="form-label small px-2 py-1 rounded-top">Pekerjaan</label>

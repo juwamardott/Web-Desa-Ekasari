@@ -18,33 +18,29 @@
        <div class="container-fluid">
          <!--begin::Row-->
          <div class="row">
-           <div class="col-lg-4">
+           <div class="col-lg-6">
              <!-- /.card -->
-             <div class="card mb-2">
-               <div class="px-3 py-3 bg-info">
-                    <div class="mb-2">
-                      
-                         @if ($kepala->image)
-                         <img src="{{ asset('storage/'.$kepala->image) }}" class="rounded mx-auto d-block" alt="..." width="100">
-                        @elseif ($kepala->image == null && $kepala->jenis_kelamin_id == 1)
-                        <img src="{{ asset('lte/dist/assets/img/user1.png') }}" class="rounded mx-auto d-block" alt="..." width="100">
-                        @else
-                        <img src="{{ asset('lte/dist/assets/img/user2.png') }}" class="rounded mx-auto d-block" alt="..." width="100">
-                        @endif
-                         
-
-                      </div>
-                    <div class="card shadow-sm rounded px-2">
-                         <div class="card-body text-center d-flex flex-column align-items-center">
-                             <h3 class="card-title text-primary fw-bold mb-2">{{ $kepala->nama }}</h3>
-                             <span class="text-muted d-block">NIK: {{ $kepala->nik }}</span>
-                             <span class="text-muted d-block">{{ $kepala->hubungan_keluarga->hubungan_keluarga }}</span>
-                         </div>
-                     </div>
-               </div>
-               
-              
-             </div>
+             <div class="card mb-3 shadow">
+              <div class="card-header bg-info text-white text-center py-3">
+                  <strong>Data Kepala Keluarga</strong>
+              </div>
+              <div class="card-body text-center">
+                  <div class="mb-3">
+                      @if ($kepala->image)
+                          <img src="{{ asset('storage/'.$kepala->image) }}" class="rounded-circle shadow" alt="Foto Kepala Keluarga" width="100" height="100">
+                      @elseif ($kepala->jenis_kelamin_id == 1)
+                          <img src="{{ asset('lte/dist/assets/img/user1.png') }}" class="rounded-circle shadow" alt="Laki-laki" width="100" height="100">
+                      @else
+                          <img src="{{ asset('lte/dist/assets/img/user2.png') }}" class="rounded-circle shadow" alt="Perempuan" width="100" height="100">
+                      @endif
+                  </div>
+                  <h4 class="fw-bold text-primary">{{ $kepala->nama }}</h4>
+                  <p class="mb-1 text-muted">NIK: {{ $kepala->nik }}</p>
+                  <span class="badge bg-secondary">{{ $kepala->hubungan_keluarga->hubungan_keluarga }}</span>
+              </div>
+          </div>
+          
+            
              <div class="mt-3 mb-3">
               <div class="row">
                 <div class="col-md-6">
@@ -65,28 +61,38 @@
              <!-- /.card -->
            </div>
            {{-- Ubah NO KK --}}
-           <div class="col-md-12">
-            <form action="/{{ request()->segment(1) }}/list/{{ $kepala->no_kk }}" method="POST">
-              @csrf
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">NO KK BARU</span>
-                <input type="text" name="no_kk_baru" class="form-control" placeholder="Input No KK baru..." aria-label="Username" aria-describedby="basic-addon1">
-                <button class="btn btn-success" type="submit" id="inputGroupFileAddon04">Button</button>
+           <div class="col-lg-6">
+            <div class="card shadow rounded">
+              <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Perbarui Nomor KK</h5>
               </div>
-            </form>
+              <div class="card-body">
+                <form action="/{{ request()->segment(1) }}/list/{{ $kepala->no_kk }}" method="POST">
+                  @csrf
+                  <div class="mb-3">
+                    <label for="no_kk_baru" class="form-label fw-semibold">Nomor KK Baru</label>
+                    <div class="input-group">
+                      <span class="input-group-text" id="basic-addon1"><i class="bi bi-card-text"></i></span>
+                      <input type="text" name="no_kk_baru" id="no_kk_baru" class="form-control" placeholder="Masukkan No KK baru..." aria-describedby="basic-addon1" required>
+                    </div>
+                  </div>
+                  <div class="text-end">
+                    <button class="btn btn-success px-4" type="submit">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
+          
           {{-- End --}}
            <div class="col-lg-12">
                <!-- /.card -->
                <div class="card mb-4">
-                 <div class="card-header border-0">
-                   <h3 class="card-title">List Keluarga</h3>
-                 </div>
-             
-                  
+                 {{-- <div class="card-header border-0">
+                 </div> --}}
                  <div class="card-body table-responsive p-0">
                    <table class="table table-striped align-middle">
-                     <thead>
+                     <thead class="">
                        <tr>
                          <th>NAMA</th>
                          <th>ALAMAT</th>
@@ -98,28 +104,15 @@
                      <tbody>
                          @foreach ($penduduk as $p)
                          <tr>
-                              <td>
-                                   @if ($p->image)
-                                   <img
-                                   src="{{ asset('storage/'.$p->image) }}"
-                                   alt="Product 1"
-                                   class="rounded-circle img-size-32 me-2"
-                                 />
-                                        @elseif ($p->image == null && $p->jenis_kelamin_id == 1)
-                                        <img
-                                   src="{{ asset('lte/dist/assets/img/user1.png') }}"
-                                   alt="Product 1"
-                                   class="rounded-circle img-size-32 me-2"
-                                   />
-                                        @else
-                                        <img
-                                  src="{{ asset('lte/dist/assets/img/user2.png') }}"
-                                  alt="Product 1"
-                                  class="rounded-circle img-size-32 me-2"
-                                />
-                                        @endif
-                                {{ $p->nama }}
-                              </td>
+                          <td>
+                            @if ($p->jenis_kelamin_id == 1)
+                              <i class="bi bi-gender-male text-primary me-1"></i>
+                            @else
+                              <i class="bi bi-gender-female text-danger me-1"></i>
+                            @endif
+                            {{ $p->nama }}
+                          </td>
+                          
                               <td>{{ $p->alamat }}</td>
                               <td>{{ $p->no_kk }}</td>
                               <td>
